@@ -98,3 +98,4 @@ export const schema = {
   account,
   verification,
 };
+

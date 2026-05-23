@@ -67,7 +67,6 @@ export function LoginForm({
     setLoading(false);
   }
 
-
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -141,6 +140,6 @@ export function LoginForm({
           </form>
         </CardContent>
       </Card>
-    </div >
+    </div>
   )
 }
