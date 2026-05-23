@@ -23,6 +23,9 @@ import { signIn } from "@/server/users"
 import { z } from "zod"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { Loader2 } from "lucide-react"
+import { authClient } from "@/lib/auth-client"
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -34,6 +37,7 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"div">) {
 
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -44,8 +48,15 @@ export function LoginForm({
     },
   })
 
+  const signInWithGoogle = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/dashboard",
+    })
+  };
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
+    setLoading(true);
     const { success, message } = await signIn(data);
     if (success) {
       toast.success(message);
@@ -53,7 +64,9 @@ export function LoginForm({
     } else {
       toast.error(message);
     }
+    setLoading(false);
   }
+
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -114,14 +127,14 @@ export function LoginForm({
                 />
               </Field>
               <Field>
-                <Button type="submit" disabled={form.formState.isSubmitting}>
-                  Login
+                <Button type="submit" disabled={loading} className="w-full">
+                  {loading ? <Loader2 className="size-4 animate-spin" /> : "Login"}
                 </Button>
-                <Button variant="outline" type="button">
+                <Button variant="outline" type="button" onClick={signInWithGoogle}>
                   Login with Google
                 </Button>
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account? <a href="#">Sign up</a>
+                  Don&apos;t have an account? <a href="/signup">Sign up</a>
                 </FieldDescription>
               </Field>
             </FieldGroup>

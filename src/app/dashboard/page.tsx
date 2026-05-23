@@ -1,6 +1,11 @@
+import { Logout } from "@/components/logout";
 
 export default function page() {
     return (
-        <h1>Dashboard</h1>
+        <div>
+            <h1 className="text-2xl font-bold">Dashboard</h1>
+            <Logout />
+        </div>
+
     )
 }

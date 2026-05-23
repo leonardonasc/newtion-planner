@@ -28,11 +28,23 @@ export const signUp = async (data: {
   password: string;
   name: string;
 }) => {
-  await auth.api.signUpEmail({
-    body: {
-      email: data.email,
-      password: data.password,
-      name: data.name,
-    },
-  });
+  try {
+    await auth.api.signUpEmail({
+      body: {
+        email: data.email,
+        password: data.password,
+        name: data.name,
+      },
+    });
+    return {
+      success: true,
+      message: "Signed up successfully",
+    };
+  } catch (error) {
+    const e = error as Error;
+    return {
+      success: false,
+      message: e.message || "An error occurred while signing up",
+    };
+  }
 };
