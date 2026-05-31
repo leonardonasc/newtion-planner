@@ -1,15 +1,13 @@
-'use client'
+import { Logout } from "@/components/logout";
 
-import Sidebar from "@/components/sidebar/sidebar"
+export const revalidate = 60;
+export default async function Page() {
 
-export default function Page() {
   return (
 
-    <div className="flex">
-      <Sidebar />
-      <div className="flex-1 p-6">
-        <span>content</span>
-      </div>
-    </div>
+    <>
+      <h1>Dashboard</h1>
+      <Logout />
+    </>
   )
 }

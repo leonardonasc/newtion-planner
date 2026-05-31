@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner"
 import { ThemeProvider } from "@/components/theme-provider"
 import { ModeToggle } from "@/components/toggle-mode";
+import Link from "next/link";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html
       lang="en"
@@ -41,6 +43,9 @@ export default function RootLayout({
             <ModeToggle />
           </div>
           <Toaster />
+          <Link href="/" className="fixed bottom-4 left-4 text-blue-500 hover:underline">
+            Home
+          </Link>
         </ThemeProvider>
       </body>
     </html>
