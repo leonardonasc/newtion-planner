@@ -1,0 +1,1 @@
+ALTER TABLE "todo" ALTER COLUMN "category" SET NOT NULL;

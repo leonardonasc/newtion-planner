@@ -1,5 +1,12 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, index } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  text,
+  integer,
+  timestamp,
+  boolean,
+  index,
+} from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -73,9 +80,38 @@ export const verification = pgTable(
   (table) => [index("verification_identifier_idx").on(table.identifier)],
 );
 
+export const todo = pgTable("todo", {
+  id: text("id").primaryKey(),
+  title: text("title").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => /* @__PURE__ */ new Date())
+    .notNull(),
+});
+
+export const todoItems = pgTable("todo_item", {
+  id: text("id").primaryKey(),
+  content: text("content").notNull(),
+  completed: boolean("completed").default(false).notNull(),
+  position: integer("position").notNull(),
+  todoId: text("todo_id")
+    .notNull()
+    .references(() => todo.id, { onDelete: "cascade" }),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => /* @__PURE__ */ new Date())
+    .notNull(),
+});
+
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
+  todos: many(todo),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({
@@ -92,9 +128,31 @@ export const accountRelations = relations(account, ({ one }) => ({
   }),
 }));
 
+export const todoRelations = relations(todo, ({ one, many }) => ({
+  user: one(user, {
+    fields: [todo.userId],
+    references: [user.id],
+  }),
+  items: many(todoItems),
+}));
+
+export const todoItemsRelations = relations(todoItems, ({ one }) => ({
+  todo: one(todo, {
+    fields: [todoItems.todoId],
+    references: [todo.id],
+  }),
+}));
+
 export const schema = {
   user,
   session,
   account,
   verification,
+  todo,
+  todoItems,
+  userRelations,
+  sessionRelations,
+  accountRelations,
+  todoRelations,
+  todoItemsRelations,
 };
