@@ -1,6 +1,6 @@
 
 import { Suspense } from "react"
-import TodoCreateItem from "./_components/todo-create-item"
+import TodoCreate from "./_components/todo-create"
 import TodoLists from "./_components/todo-lists"
 import { cookies } from "next/headers";
 
@@ -20,7 +20,7 @@ export default async function TodoPage() {
     const todos = await res.json();
     return (
         <div className="flex min-h-svh w-full flex-col items-start justify-start gap-4 p-6 md:p-10">
-            <TodoCreateItem />
+            <TodoCreate />
             <Suspense fallback={<h1 className="text-lg text-white">Loading...</h1>}>
                 <TodoLists todos={todos} />
             </Suspense>

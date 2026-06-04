@@ -37,3 +37,41 @@ export async function GET(
   return NextResponse.json({ ...todoRow, todoItems: items });
 }
 
+export async function POST(request: Request) {
+  const session = await auth.api.getSession({ headers: request.headers });
+  if (!session)
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const userId = session.user.id;
+  if (!userId)
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const { content, position, completed, todoId } = await request.json();
+  if (!content || typeof content !== "string") {
+    return NextResponse.json(
+      { error: "Content is required and must be a string" },
+      { status: 400 },
+    );
+  }
+
+  if (!todoId || typeof todoId !== "string") {
+    return NextResponse.json(
+      { error: "Todo ID is required and must be a string" },
+      { status: 400 },
+    );
+  }
+
+  const newTodoItem = {
+    id: crypto.randomUUID(),
+    content,
+    position: typeof position === "number" ? position : 0,
+    completed: Boolean(completed),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    todoId,
+  };
+
+  await db.insert(todoItems).values(newTodoItem);
+
+  return NextResponse.json(newTodoItem, { status: 201 });
+}

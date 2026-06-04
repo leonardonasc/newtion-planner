@@ -136,6 +136,13 @@ export const todoRelations = relations(todo, ({ one, many }) => ({
   items: many(todoItems),
 }));
 
+export const todoItemsRelations = relations(todoItems, ({ one }) => ({
+  todo: one(todo, {
+    fields: [todoItems.todoId],
+    references: [todo.id],
+  }),
+}));
+
 export const schema = {
   user,
   session,
@@ -143,4 +150,9 @@ export const schema = {
   verification,
   todo,
   todoItems,
+  userRelations,
+  sessionRelations,
+  accountRelations,
+  todoRelations,
+  todoItemsRelations,
 };

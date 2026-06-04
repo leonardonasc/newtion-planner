@@ -1,52 +1,30 @@
-'use client'
 
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Todo } from "@/validations/todos";
-import { NotebookText } from "lucide-react";
-import { useParams } from "next/navigation"
-import { Suspense, useEffect, useState } from "react";
-import Loading from "../loading";
+import TodoItemCreate from "./_components/todo-items-create";
+import TodoItemsList from "./_components/todo-items-list";
+import { cookies } from "next/headers";
 
-export default function page() {
-    const { id } = useParams();
-    const [loading, setLoading] = useState(true);
-    const [todo, setTodo] = useState<Todo | null>(null);
+export default async function page(props: { params: { id: string } }) {
 
-    useEffect(() => {
-        async function fetchTodo() {
-            setLoading(true);
-            const response = await fetch(`/api/todo/${id}`);
-            const data = await response.json();
-            setTodo(data);
-            setLoading(false);
+    const { id } = await props.params;
+    const cookieStore = await cookies();
+
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/todo/${id}`,
+        {
+            headers: {
+                cookie: cookieStore.toString(),
+            },
+            cache: "no-store",
         }
-        fetchTodo()
-    }, [])
+    );
+    const todo = await res.json();
 
     return (
         <div className="container mx-auto p-4 w-[50%]">
 
             <h1>oi</h1>
-            <Suspense fallback={<Loading />}>
-                {loading ? (
-                    <Loading />
-                ) : (
-                    <div className="flex flex-col gap-y-3 border-primary p-4">
-                    {todo?.todoItems.length === 0 ? (
-                        <p className="text-muted-foreground">
-                            No todo items found.
-                        </p>
-                    ) : (
-                        todo?.todoItems.map((item) => (
-                            <div key={item.id}>
-                                <h2 className="text-lg font-semibold">{item.content}</h2>
-                            </div>
-                        ))
-                    )}
-                    </div>
-                )}
-            </Suspense>
+            <TodoItemCreate params={{ id }} />
+            <TodoItemsList todoItems={todo.todoItems} />
         </div>
     )
 }

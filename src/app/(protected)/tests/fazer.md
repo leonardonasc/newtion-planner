@@ -8,5 +8,9 @@
 -fazer os metadatas
 -pag para armazenar links, ex: videos para assistir mais tarde
 -pagina para pomodoro
--colocar toast nas reqs que esqueci
+-colocar toast nas reqs que esqueci (qnd cria lista ou deleta)
+-fazer o delete das listas/itens
 -fazer skeletons
+-arrumar o proxy
+-req quando nao esta logado ta quebrando porq o user n tem ID
+-fazer paginator / https://orm.drizzle.team/docs/guides/limit-offset-pagination
