@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/db/drizzle";
 import { todo, todoItems } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 
 export async function GET(request: Request) {
@@ -94,4 +94,42 @@ export async function DELETE(request: Request) {
 
   await db.delete(todo).where(eq(todo.id, id));
   return NextResponse.json({ message: "Todo deleted successfully" });
+}
+
+export async function PATCH(request: Request) {
+  const session = await auth.api.getSession({ headers: request.headers });
+  if (!session)
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const userId = session.user.id;
+  if (!userId)
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const { id, title } = await request.json();
+  if (!id) {
+    return NextResponse.json({ error: "ID is required" }, { status: 400 });
+  }
+  if (title && typeof title !== "string") {
+    return NextResponse.json(
+      { error: "Title must be a string" },
+      { status: 400 },
+    );
+  }
+
+  const [existingTodo] = await db
+    .select()
+    .from(todo)
+    .where(and(eq(todo.id, id), eq(todo.userId, userId)))
+    .limit(1);
+  if (!existingTodo) {
+    return NextResponse.json({ error: "Todo not found" }, { status: 404 });
+  }
+  const updatedTodo = {
+    ...existingTodo,
+    title: title ?? existingTodo.title,
+    updatedAt: new Date(),
+  };
+
+  await db.update(todo).set(updatedTodo).where(eq(todo.id, id));
+
+  return NextResponse.json(updatedTodo);
 }

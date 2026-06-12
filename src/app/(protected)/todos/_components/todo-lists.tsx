@@ -12,8 +12,8 @@ interface TodoListsProps {
 }
 
 
-
 export default function TodoLists({ todos }: TodoListsProps) {
+  console.log('todos', todos);
 
   const router = useRouter();
 
