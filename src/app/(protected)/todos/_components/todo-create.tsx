@@ -57,7 +57,7 @@ export default function TodoCreate() {
     return (
         <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex w-[50%] items-center gap-2"
+            className="flex w-full items-center gap-2"
         >
             <Field>
                 <Controller

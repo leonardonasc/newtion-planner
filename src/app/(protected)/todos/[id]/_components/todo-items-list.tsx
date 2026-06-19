@@ -154,7 +154,7 @@ export default function TodoItemsList({ todoItems }: TodoItemsListProps) {
                         ) : (
                             <>
                                 <h2 className="w-full text-secondary-foreground">
-                                    {item.content}
+                                    {item.completed ? <s>{item.content}</s> : item.content}
                                 </h2>
                                 <Button
                                     variant="outline"

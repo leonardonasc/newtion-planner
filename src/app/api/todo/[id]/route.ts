@@ -1,52 +1,44 @@
-import { db } from "@/db/drizzle";
-import { todo, todoItems } from "@/db/schema";
-import { auth } from "@/lib/auth";
-import { eq, and } from "drizzle-orm";
 import { NextResponse } from "next/server";
+import { auth } from "@/lib/auth";
+import {
+  getTodo,
+  createTodoItem,
+  deleteTodoItem,
+  updateTodoItem,
+} from "@/server/todo-items";
+
+async function getUserId(request: Request) {
+  const session = await auth.api.getSession({ headers: request.headers });
+  return session?.user?.id ?? null;
+}
 
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  const userId = await getUserId(request);
+  if (!userId) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const { id } = await params;
+  const todo = await getTodo(userId, id);
 
-  const session = await auth.api.getSession({ headers: request.headers });
-  if (!session)
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
-  const userId = session.user.id;
-  if (!userId)
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
-  const [todoRow] = await db
-    .select()
-    .from(todo)
-    .where(and(eq(todo.id, id), eq(todo.userId, userId)))
-    .limit(1);
-
-  if (!todoRow) {
+  if (!todo) {
     return NextResponse.json({ error: "Todo not found" }, { status: 404 });
   }
 
-  const items = await db
-    .select()
-    .from(todoItems)
-    .where(eq(todoItems.todoId, id))
-    .orderBy(todoItems.position);
-
-  return NextResponse.json({ ...todoRow, todoItems: items });
+  return NextResponse.json(todo);
 }
 
 export async function POST(request: Request) {
-  const session = await auth.api.getSession({ headers: request.headers });
-  if (!session)
+  const userId = await getUserId(request);
+  if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
-  const userId = session.user.id;
-  if (!userId)
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   const { content, position, completed, todoId } = await request.json();
+
   if (!content || typeof content !== "string") {
     return NextResponse.json(
       { error: "Content is required and must be a string" },
@@ -61,129 +53,61 @@ export async function POST(request: Request) {
     );
   }
 
-  const newTodoItem = {
-    id: crypto.randomUUID(),
+  const newTodoItem = await createTodoItem(userId, {
     content,
-    position: typeof position === "number" ? position : 0,
-    completed: Boolean(completed),
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    position,
+    completed,
     todoId,
-  };
+  });
 
-  await db.insert(todoItems).values(newTodoItem);
+  if (!newTodoItem) {
+    return NextResponse.json({ error: "Todo not found" }, { status: 404 });
+  }
 
   return NextResponse.json(newTodoItem, { status: 201 });
 }
 
 export async function DELETE(request: Request) {
-  const session = await auth.api.getSession({ headers: request.headers });
-  if (!session)
+  const userId = await getUserId(request);
+  if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const userId = session.user.id;
-  if (!userId)
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { id } = await request.json();
-  if (!id) {
+
+  if (!id || typeof id !== "string") {
     return NextResponse.json({ error: "ID is required" }, { status: 400 });
   }
 
-  // Verify that the todo item belongs to a todo that belongs to the user
-  const [todoItem] = await db
-    .select()
-    .from(todoItems)
-    .where(eq(todoItems.id, id))
-    .limit(1);
+  const deletedItem = await deleteTodoItem(userId, id);
 
-  if (!todoItem) {
+  if (!deletedItem) {
     return NextResponse.json({ error: "Todo item not found" }, { status: 404 });
   }
-
-  const [parentTodo] = await db
-    .select()
-    .from(todo)
-    .where(and(eq(todo.id, todoItem.todoId), eq(todo.userId, userId)))
-    .limit(1);
-
-  if (!parentTodo) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
-  await db.delete(todoItems).where(eq(todoItems.id, id));
 
   return NextResponse.json({ message: "Todo item deleted successfully" });
 }
 
 export async function PATCH(request: Request) {
-  const session = await auth.api.getSession({ headers: request.headers });
-  if (!session)
+  const userId = await getUserId(request);
+  if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
-  const userId = session.user.id;
-
-  if (!userId)
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   const { id, content, completed } = await request.json();
-  if (!id) {
+
+  if (!id || typeof id !== "string") {
     return NextResponse.json({ error: "ID is required" }, { status: 400 });
   }
 
-  // Verify that the todo item belongs to a todo that belongs to the user
-  const [todoItem] = await db
-    .select()
-    .from(todoItems)
-    .where(eq(todoItems.id, id))
-    .limit(1);
+  const updatedItem = await updateTodoItem(userId, id, {
+    content,
+    completed,
+  });
 
-  if (!todoItem) {
+  if (!updatedItem) {
     return NextResponse.json({ error: "Todo item not found" }, { status: 404 });
   }
 
-  // Check if the parent todo belongs to the user
-  const [parentTodo] = await db
-    .select()
-    .from(todo)
-    .where(and(eq(todo.id, todoItem.todoId), eq(todo.userId, userId)))
-    .limit(1);
-
-  if (!parentTodo) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
-  const updatedFields: Partial<typeof todoItems.$inferSelect> = {};
-
-  if (content !== undefined) {
-    if (typeof content !== "string") {
-      return NextResponse.json(
-        { error: "Content must be a string" },
-        { status: 400 },
-      );
-    }
-
-    updatedFields.content = content;
-  }
-
-  if (completed !== undefined) {
-    if (typeof completed !== "boolean") {
-      return NextResponse.json(
-        { error: "Completed must be a boolean" },
-        { status: 400 },
-      );
-    }
-
-    updatedFields.completed = completed;
-  }
-
-  if (Object.keys(updatedFields).length === 0) {
-    return NextResponse.json(
-      { error: "At least one field (content or completed) must be provided" },
-      { status: 400 },
-    );
-  }
-
-  await db.update(todoItems).set(updatedFields).where(eq(todoItems.id, id));
-
-  return NextResponse.json({ message: "Todo item updated successfully" });
+  return NextResponse.json(updatedItem);
 }

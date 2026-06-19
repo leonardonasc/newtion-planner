@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/field"
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { Loader2, Plus } from 'lucide-react';
 
 interface TodoItemCreateProps {
     params: {
@@ -65,9 +66,9 @@ export default function TodoItemCreate({ params }: TodoItemCreateProps) {
     return (
         <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex items-center gap-2"
+            className="flex items-start gap-2"
         >
-            <Field>
+            <Field className='h-11'>
                 <Controller
                     name="content"
                     control={form.control}
@@ -86,8 +87,8 @@ export default function TodoItemCreate({ params }: TodoItemCreateProps) {
                     )}
                 />
             </Field>
-            <Button type="submit" className='border-2 p-2 border-foreground rounded-md' disabled={loading}>
-                {loading ? "Creating..." : "Create"}
+            <Button type="submit" className='border-2 p-2 border-foreground rounded-md size-11' disabled={loading}>
+                {loading ? <Loader2 className="animate-spin" /> : <Plus />}
             </Button>
         </form>
     )

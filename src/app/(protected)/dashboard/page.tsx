@@ -16,6 +16,9 @@ export default async function Page() {
       <Link href="/todos" className="text-blue-500 hover:underline">
         Go to Todos
       </Link>
+      <Link href="/expenses" className="text-blue-500 hover:underline">
+        Go to Expenses
+      </Link>
       <Logout />
     </>
   )
