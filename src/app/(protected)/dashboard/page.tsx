@@ -10,9 +10,14 @@ export default async function Page() {
   return (
 
     <>
-
       <h1>Dashboard</h1>
       <p>Welcome, {user?.name}!</p>
+      <Link href="/dashboard" className="text-blue-500 hover:underline">
+        Go to Dashboard
+      </Link>
+      <Link href="/tests" className="text-blue-500 hover:underline">
+        Go to Tests
+      </Link>
       <Link href="/todos" className="text-blue-500 hover:underline">
         Go to Todos
       </Link>
