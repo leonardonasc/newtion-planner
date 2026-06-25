@@ -47,8 +47,8 @@ export default function Vendas() {
 
     return (
         <div className="w-full">
-            <p className="text-center text-lg font-semibold font-sans text-gray-700 mb-4">
-                Escolha o plano que melhor se adapta às suas necessidades
+            <p className="text-center text-4xl font-semibold font-sans text-gray-700 mb-4">
+                Planos
             </p>
             <div className="flex gap-x-4 flex-wrap items-center justify-center">
                 {data.map((item) => (
@@ -62,7 +62,7 @@ export default function Vendas() {
                             </div>
                         )}
 
-                        <div className={`flex flex-col w-90  p-4 rounded-md ${item.type === "most popular" ? "bg-white" : ""}`}>
+                        <div className={`flex flex-col w-90 p-4 rounded-md ${item.type === "most popular" ? "bg-white" : ""}`}>
                             <h2 className="text-lg font-semibold font-sans text-primary-foreground">{item.title}</h2>
                             <p className="text-gray-500 font-sans">{item.description}</p>
                             <p className="text-gray-800 font-bold my-4 font-sans text-3xl">{item.amount}</p>

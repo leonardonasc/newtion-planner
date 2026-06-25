@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { ThemeProvider } from "@/components/theme-provider"
 import { ModeToggle } from "@/components/toggle-mode";
 import Link from "next/link";
+import { TailwindIndicator } from "@/components/TailwindIndicator";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
@@ -43,9 +44,7 @@ export default function RootLayout({
             <ModeToggle />
           </div>
           <Toaster />
-          <Link href="/" className="fixed bottom-4 left-4 text-blue-500 hover:underline">
-            Home
-          </Link>
+          <TailwindIndicator />
         </ThemeProvider>
       </body>
     </html>
