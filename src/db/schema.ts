@@ -143,6 +143,19 @@ export const todoItemsRelations = relations(todoItems, ({ one }) => ({
   }),
 }));
 
+export const expenseTracker = pgTable("expenses_control", {
+  id: text("id").primaryKey(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  monthlyAmount: integer("monthly_amount").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => /* @__PURE__ */ new Date())
+    .notNull(),
+});
+
 export const schema = {
   user,
   session,

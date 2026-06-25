@@ -1,43 +1,34 @@
 import { NextResponse } from "next/server";
-import { db } from "@/db/drizzle";
-import { todo, todoItems } from "@/db/schema";
-import { eq } from "drizzle-orm";
 import { auth } from "@/lib/auth";
+import { createTodo, deleteTodo, listTodos, updateTodo } from "@/server/todos";
+
+async function getUserId(request: Request) {
+  const session = await auth.api.getSession({ headers: request.headers });
+
+  return session?.user?.id ?? null;
+}
 
 export async function GET(request: Request) {
-  const session = await auth.api.getSession({ headers: request.headers });
-  if (!session)
+  const userId = await getUserId(request);
+
+  if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-  const userId = session.user.id;
-  if (!userId)
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const todos = await listTodos(userId);
 
-  const todos = await db.query.todo.findMany({
-    where: eq(todo.userId, userId),
-    with: {
-      items: true,
-    },
-  });
-
-  return NextResponse.json(
-    todos.map((todo) => ({
-      ...todo,
-      todoItems: todo.items,
-    })),
-  );
+  return NextResponse.json(todos);
 }
 
 export async function POST(request: Request) {
-  const session = await auth.api.getSession({ headers: request.headers });
-  if (!session)
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const userId = await getUserId(request);
 
-  const userId = session.user.id;
-  if (!userId)
+  if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   const { title } = await request.json();
+
   if (!title || typeof title !== "string") {
     return NextResponse.json(
       { error: "Title is required and must be a string" },
@@ -45,53 +36,58 @@ export async function POST(request: Request) {
     );
   }
 
-  const newTodo = {
-    id: crypto.randomUUID(),
-    title,
-    userId,
-    todoItems: [],
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
+  const newTodo = await createTodo(userId, title);
 
-  await db.insert(todo).values(newTodo);
   return NextResponse.json(newTodo, { status: 201 });
 }
 
 export async function DELETE(request: Request) {
-  const session = await auth.api.getSession({ headers: request.headers });
-  if (!session)
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const userId = await getUserId(request);
 
-  const userId = session.user.id;
-  if (!userId)
+  if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   const { id } = await request.json();
-  if (!id) {
+
+  if (!id || typeof id !== "string") {
     return NextResponse.json({ error: "ID is required" }, { status: 400 });
   }
 
-  const todoToDelete = async (page = 1, pageSize = 10) => {
-    const sq = db
-      .select({ todoId: todo.id })
-      .from(todo)
-      .orderBy(todo.id)
-      .where(eq(todo.id, id))
-      .limit(pageSize)
-      .offset((page - 1) * pageSize)
-      .as("subquery");
+  const deletedTodo = await deleteTodo(userId, id);
 
-    await db
-      .select()
-      .from(todoItems)
-      .innerJoin(sq, eq(todoItems.todoId, sq.todoId))
-      .where(eq(todo.userId, userId));
-  };
-  if (todoToDelete.length === 0) {
+  if (!deletedTodo) {
     return NextResponse.json({ error: "Todo not found" }, { status: 404 });
   }
 
-  await db.delete(todo).where(eq(todo.id, id));
   return NextResponse.json({ message: "Todo deleted successfully" });
+}
+
+export async function PATCH(request: Request) {
+  const userId = await getUserId(request);
+
+  if (!userId) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { id, title } = await request.json();
+
+  if (!id || typeof id !== "string") {
+    return NextResponse.json({ error: "ID is required" }, { status: 400 });
+  }
+
+  if (title !== undefined && typeof title !== "string") {
+    return NextResponse.json(
+      { error: "Title must be a string" },
+      { status: 400 },
+    );
+  }
+
+  const updatedTodo = await updateTodo(userId, id, { title });
+
+  if (!updatedTodo) {
+    return NextResponse.json({ error: "Todo not found" }, { status: 404 });
+  }
+
+  return NextResponse.json(updatedTodo);
 }

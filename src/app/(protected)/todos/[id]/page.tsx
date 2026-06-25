@@ -1,7 +1,9 @@
 
+import Link from "next/link";
 import TodoItemCreate from "./_components/todo-items-create";
 import TodoItemsList from "./_components/todo-items-list";
 import { cookies } from "next/headers";
+import { ArrowLeft } from "lucide-react";
 
 export default async function page(props: { params: { id: string } }) {
 
@@ -20,9 +22,16 @@ export default async function page(props: { params: { id: string } }) {
     const todo = await res.json();
 
     return (
-        <div className="container mx-auto p-4 w-[50%]">
+        <div className="container mx-auto w-[50%] p-4">
+            <div className="flex flex-col gap-4 mb-6">
+                <Link href="/todos" className="flex gap-x-2 items-center text-xs text-primary">
+                    <ArrowLeft size={15} /> <span>Suas listas</span>
+                </Link>
+                <div className="rounded-xl border border-primary p-4">
+                    <h1 className="text-2xl font-bold">{todo.title}</h1>
+                </div>
 
-            <h1>oi</h1>
+            </div>
             <TodoItemCreate params={{ id }} />
             <TodoItemsList todoItems={todo.todoItems} />
         </div>
