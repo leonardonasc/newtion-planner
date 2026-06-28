@@ -38,7 +38,8 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        {/* enablesystem desativado para manter apenas o whitetheme na aplicacao */}
+        <ThemeProvider attribute="class" defaultTheme="white">
           {children}
           <div className="fixed bottom-4 right-4">
             <ModeToggle />
