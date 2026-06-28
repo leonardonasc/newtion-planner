@@ -2,7 +2,7 @@ import { GitFork } from 'lucide-react'
 
 export default function Navbar() {
     return (
-        <div className='w-full border-b p-3 border-b-primary font-sans fixed top-0 left-0 bg-white'>
+        <div className='w-full border-b p-3 border-b-primary font-sans fixed top-0 z-20 left-0 bg-white'>
             <div className='flex items-center justify-between mx-auto max-w-6xl'>
                 <h1 className='text-md text-gray-900 font-semibold'>Newtion</h1>
                 <div className='flex gap-x-2 items-center'>
