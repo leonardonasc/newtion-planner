@@ -6,7 +6,7 @@ export default function Stacks() {
         name: "Next.js",
         color: "bg-blue-500"
     }, {
-        name: "Drizzle",
+        name: "Drizzle ORM",
         color: "bg-green-500"
     }, {
         name: "NeonDB",
@@ -17,11 +17,17 @@ export default function Stacks() {
     }, {
         name: "TypeScript",
         color: "bg-blue-600"
+    }, {
+        name: "Better Auth",
+        color: "bg-pink-500"
+    }, {
+        name: "Zod",
+        color: "bg-yellow-500"
     }];
 
     return (
-        <div className='flex flex-col w-full h-70 bg-accent-foreground my-20 border-b border-t border-t-primary border-b-primary items-center justify-center gap-y-6'>
-            <p className='text-4xl font-bold text-gray-900 font-sans'>Stacks utilizadas</p>
+        <div className='flex flex-col w-full h-70 bg-accent-foreground mt-20 border-b border-t border-t-primary border-b-primary items-center justify-center gap-y-6'>
+            <p className='text-4xl font-bold text-gray-700 font-sans'>Stacks utilizadas</p>
             <span className='text-sm text-gray-500 w-[30%]'>Next.js, Drizzle, NeonDB, Tailwind CSS, TypeScript. Feitos com propósitos de performance,escalabilidade e boas práticas.</span>
             <div>
                 <div className='flex gap-x-2 text-sm'>

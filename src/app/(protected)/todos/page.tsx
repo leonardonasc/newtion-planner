@@ -27,7 +27,7 @@ export default async function TodoPage() {
                 <Link href="/dashboard" className="text-blue-500 hover:underline border border-primary p-2 rounded">
                     <ArrowBigLeft />
                 </Link>
-                <h1 className="text-2xl font-bold">Your Todos</h1>
+                <h1 className="text-2xl font-bold text-primary-foreground">Your Todos</h1>
             </div>
             <TodoCreate />
             <Suspense fallback={<h1 className="text-lg text-white">Loading...</h1>}>

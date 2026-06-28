@@ -57,7 +57,7 @@ export default function TodoCreate() {
     return (
         <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex w-full items-center gap-2"
+            className="flex w-full items-center gap-2 font-sans"
         >
             <Field>
                 <Controller
@@ -71,14 +71,14 @@ export default function TodoCreate() {
                                 type="text"
                                 placeholder="Enter todo title"
                                 aria-invalid={fieldState.invalid}
-                                className='border-2 p-2 border-foreground rounded-md'
+                                className='border border-stone-300 p-2 bg-white text-stone-950 placeholder:text-stone-400 rounded-md'
                             />
                             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                         </Field>
                     )}
                 />
             </Field>
-            <Button type="submit" className='border-2 p-2 border-foreground rounded-md' disabled={loading}>
+            <Button type="submit" className='bg-stone-950 text-white hover:bg-stone-800 h-10 rounded-md' disabled={loading}>
                 {loading ? "Creating..." : "Create"}
             </Button>
         </form>

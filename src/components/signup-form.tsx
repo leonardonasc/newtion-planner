@@ -76,11 +76,11 @@ export function SignUpForm({
 
 
     return (
-        <div className={cn("flex flex-col gap-6", className)} {...props}>
-            <Card>
+        <div className={cn("flex flex-col gap-6 font-sans font-semibold", className)} {...props}>
+            <Card className="bg-white border border-stone-200">
                 <CardHeader>
-                    <CardTitle>Sign up for an account</CardTitle>
-                    <CardDescription>
+                    <CardTitle className="text-stone-950">Sign up for an account</CardTitle>
+                    <CardDescription className="text-stone-600">
                         Enter your details below to create an account
                     </CardDescription>
                 </CardHeader>
@@ -93,13 +93,14 @@ export function SignUpForm({
                                     control={form.control}
                                     render={({ field, fieldState }) => (
                                         <Field data-invalid={fieldState.invalid}>
-                                            <FieldLabel htmlFor={field.name}>Name</FieldLabel>
+                                            <FieldLabel htmlFor={field.name} className="text-stone-950">Name</FieldLabel>
                                             <Input
                                                 {...field}
                                                 id={field.name}
                                                 type="text"
                                                 placeholder="John Doe"
                                                 aria-invalid={fieldState.invalid}
+                                                className="border border-stone-300 bg-white text-stone-950 placeholder:text-stone-400"
                                             />
                                             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                                         </Field>
@@ -112,13 +113,14 @@ export function SignUpForm({
                                     control={form.control}
                                     render={({ field, fieldState }) => (
                                         <Field data-invalid={fieldState.invalid}>
-                                            <FieldLabel htmlFor={field.name}>Email</FieldLabel>
+                                            <FieldLabel htmlFor={field.name} className="text-stone-950">Email</FieldLabel>
                                             <Input
                                                 {...field}
                                                 id={field.name}
                                                 type="email"
                                                 placeholder="m@example.com"
                                                 aria-invalid={fieldState.invalid}
+                                                className="border border-stone-300 bg-white text-stone-950 placeholder:text-stone-400"
                                             />
                                             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                                         </Field>
@@ -126,7 +128,7 @@ export function SignUpForm({
                                 />
                             </Field>
                             <Field>
-                                <FieldLabel htmlFor="password">Password</FieldLabel>
+                                <FieldLabel htmlFor="password" className="text-stone-950">Password</FieldLabel>
                                 <Controller
                                     name="password"
                                     control={form.control}
@@ -138,6 +140,7 @@ export function SignUpForm({
                                                 type="password"
                                                 placeholder="********"
                                                 aria-invalid={fieldState.invalid}
+                                                className="border border-stone-300 bg-white text-stone-950 placeholder:text-stone-400"
                                             />
                                             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                                         </Field>
@@ -146,7 +149,7 @@ export function SignUpForm({
                             </Field>
 
                             <Field>
-                                <FieldLabel htmlFor="confirmPassword">Confirm Password</FieldLabel>
+                                <FieldLabel htmlFor="confirmPassword" className="text-stone-950">Confirm Password</FieldLabel>
                                 <Controller
                                     name="confirmPassword"
                                     control={form.control}
@@ -158,6 +161,7 @@ export function SignUpForm({
                                                 type="password"
                                                 placeholder="********"
                                                 aria-invalid={fieldState.invalid}
+                                                className="border border-stone-300 bg-white text-stone-950 placeholder:text-stone-400"
                                             />
                                             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                                         </Field>
@@ -168,20 +172,21 @@ export function SignUpForm({
 
 
                             <Field>
-                                <Button type="submit" disabled={loading} className="w-full">
+                                <Button type="submit" disabled={loading} className="w-full bg-stone-950 text-white hover:bg-stone-800">
                                     {loading ? <Loader2 className="size-4 animate-spin" /> : "Sign Up"}
                                 </Button>
-                                <Button variant="outline" type="button" onClick={signInWithGoogle}>
+                                <Button type="button" onClick={signInWithGoogle} className="w-full border-stone-300 text-stone-950 hover:bg-stone-50">
                                     Sign Up with Google
                                 </Button>
-                                <FieldDescription className="text-center">
-                                    Already have an account? <a href="/sign-in">Log in</a>
+                                <FieldDescription className="text-center text-stone-600">
+                                    Already have an account? <a href="/sign-in" className="text-blue-600 hover:underline hover:text-blue-700">Log in</a>
                                 </FieldDescription>
                             </Field>
                         </FieldGroup>
                     </form>
                 </CardContent>
             </Card>
-        </div >
+        </div>
     )
 }
+

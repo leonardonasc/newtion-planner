@@ -1,5 +1,4 @@
 import { Check } from "lucide-react"
-import { Button } from "./ui/button"
 
 export default function Vendas() {
 
@@ -10,7 +9,7 @@ export default function Vendas() {
             description: "Plano inicial",
             amount: "Grátis",
             type: "normal",
-            buyButton: "Plano atual",
+            buyButton: "Plano base",
             upgradeList: [
                 "Até 3 notas",
                 "Até 3 todos",
@@ -46,7 +45,7 @@ export default function Vendas() {
     ]
 
     return (
-        <div className="w-full">
+        <div className="w-full" id="planos">
             <p className="text-center text-4xl font-semibold font-sans text-gray-700 mb-4">
                 Planos
             </p>

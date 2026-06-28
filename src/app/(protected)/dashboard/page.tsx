@@ -9,9 +9,9 @@ export default async function Page() {
   const user = session?.user;
   return (
 
-    <>
+    <div className="p-4 text-primary-foreground flex flex-col">
       <h1>Dashboard</h1>
-      <p>Welcome, {user?.name}!</p>
+      <p className="text-primary-foreground">Welcome, {user?.name}!</p>
       <Link href="/dashboard" className="text-blue-500 hover:underline">
         Go to Dashboard
       </Link>
@@ -24,7 +24,10 @@ export default async function Page() {
       <Link href="/expenses" className="text-blue-500 hover:underline">
         Go to Expenses
       </Link>
-      <Logout />
-    </>
+      <div className="flex items-center justify-start mt-4">
+        <Logout />
+
+      </div>
+    </div>
   )
 }

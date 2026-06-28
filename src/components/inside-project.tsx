@@ -21,13 +21,13 @@ export default function InsideProject() {
         {
             id: 4,
             description: "Gastos - criação, edição e exclusão de gastos",
-            image: "/molodoy.png"
+            image: "https://placehold.co/600x400"
         },
     ];
 
     return (
         <div>
-            <div className="flex flex-col gap-y-8 mt-8 items-center justify-center">
+            <div className="flex flex-col gap-y-8 items-center justify-center h-screen" id="inside-project">
                 <p className='text-4xl font-sans font-semibold text-gray-700'>
                     Por dentro do projeto
                 </p>

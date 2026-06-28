@@ -96,9 +96,9 @@ export default function TodoLists({ todos }: TodoListsProps) {
   }
 
   return (
-    <div className="flex w-full items-start justify-start gap-4">
+    <div className="flex w-full items-start justify-start gap-4 font-sans">
       {items.map((todo) => (
-        <div key={todo.id} className="flex border border-primary p-4">
+        <div key={todo.id} className="flex border border-stone-200 bg-white text-stone-950 p-4 rounded-lg">
           <div className="flex flex-col gap-y-2">
             {editingId === todo.id ? (
               <>
@@ -114,23 +114,24 @@ export default function TodoLists({ todos }: TodoListsProps) {
                       cancelEdit()
                     }
                   }}
+                  className="border border-stone-300 bg-white text-stone-950 placeholder:text-stone-400"
                   autoFocus
                 />
                 <div className="flex gap-2">
-                  <Button onClick={() => handleSaveEdit(todo.id)} variant="outline">
+                  <Button onClick={() => handleSaveEdit(todo.id)} className="bg-stone-950 text-white hover:bg-stone-800">
                     Save
                   </Button>
-                  <Button onClick={cancelEdit} variant="ghost">
+                  <Button onClick={cancelEdit} className="border border-stone-300 text-stone-950 hover:bg-stone-50">
                     Cancel
                   </Button>
                 </div>
               </>
             ) : (
               <>
-                <h2>{todo.title}</h2>
+                <h2 className="font-semibold text-stone-950">{todo.title}</h2>
                 <Button
                   onClick={() => startEdit(todo.id, todo.title)}
-                  variant="outline"
+                  className="border border-stone-300 text-stone-950 hover:bg-stone-50"
                 >
                   Edit
                 </Button>
@@ -141,9 +142,9 @@ export default function TodoLists({ todos }: TodoListsProps) {
                   Delete
                 </Button>
                 <Link href={`/todos/${todo.id}`}>
-                  <Button variant="outline">View Details</Button>
+                  <Button className="border border-stone-300 text-stone-950 hover:bg-stone-50">View Details</Button>
                 </Link>
-                <p>{todo.todoItems?.length ?? 0} items</p>
+                <p className="text-stone-600">{todo.todoItems?.length ?? 0} items</p>
               </>
             )}
           </div>
