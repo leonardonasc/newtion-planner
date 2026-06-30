@@ -26,19 +26,15 @@ export default function InsideProject() {
     ];
 
     return (
-        <div>
-            <div className="flex flex-col gap-y-8 items-center justify-center h-screen" id="inside-project">
-                <p className='text-4xl font-sans font-semibold text-gray-700'>
-                    Por dentro do projeto
-                </p>
-                <div className="flex flex-wrap gap-y-5 items-center justify-between gap-x-2">
-                    {data.map((item) => (
-                        <div key={item.id} className="flex flex-col items-center justify-between gap-y-2">
-                            <img src={item.image} alt={item.description} className="w-140 h-80 border border-gray-300 rounded-md object-cover" />
-                            <p className="text-gray-500 font-sans">{item.description}</p>
-                        </div>
-                    ))}
-                </div>
+        <div className='flex flex-col gap-x-4 w-full items-center justify-center'>
+            <p className='text-gray-700 font-sans font-bold text-3xl md:text-5xl w-full text-center mb-10'>Dentro do projeto</p>
+            <div className='grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 items-start'>
+                {data.map((item) => (
+                    <div key={item.id} className='flex h-full w-full flex-col gap-2 items-start'>
+                        <img src={item.image} alt={item.description} className='w-full aspect-3/2 rounded-lg object-cover shadow-md' />
+                        <p className='text-gray-600 font-sans text-lg'>{item.description}</p>
+                    </div>
+                ))}
             </div>
         </div>
     )
