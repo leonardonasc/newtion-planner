@@ -9,7 +9,7 @@ export default function LandingMain() {
             <div />
             <div className="flex max-w-4xl flex-col gap-y-8 text-start md:items-start md:text-left">
 
-                <p className="max-w-3xl text-4xl font-bold leading-tight md:text-6xl lg:text-7xl">
+                <p className="max-w-3xl text-4xl font-bold md:text-6xl lg:text-7xl">
                     Todo o seu <span className="bg-linear-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">planejamento</span> em um só lugar
                 </p>
 
