@@ -41,9 +41,6 @@ export default function RootLayout({
         {/* enablesystem desativado para manter apenas o whitetheme na aplicacao */}
         <ThemeProvider attribute="class" defaultTheme="white">
           {children}
-          <div className="fixed bottom-4 right-4">
-            <ModeToggle />
-          </div>
           <Toaster />
           <TailwindIndicator />
         </ThemeProvider>
