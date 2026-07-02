@@ -48,6 +48,20 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+@theme colors {
+  --color-offwhite-50: #fcfcfa;
+  --color-offwhite-100: #f8f7f2;
+  --color-offwhite-200: #f2efe6;
+  --color-offwhite-300: #e8e2d2;
+  --color-offwhite-400: #d9cfb8;
+  --color-offwhite-500: #c6b69a;
+  --color-offwhite-600: #a9987d;
+  --color-offwhite-700: #8b7c67;
+  --color-offwhite-800: #6e6254;
+  --color-offwhite-900: #52493f;
+  --color-offwhite-950: #302b25;
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);

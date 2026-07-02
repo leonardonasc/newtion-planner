@@ -1,47 +1,23 @@
-import { and, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { db } from "@/db/drizzle";
 import { todo, todoItems } from "@/db/schema";
 
-export async function getTodo(userId: string, id: string) {
-  const [todoRow] = await db
+export async function listTodoItems(userId: string, todoId: string) {
+  const [parentTodo] = await db
     .select()
     .from(todo)
-    .where(and(eq(todo.id, id), eq(todo.userId, userId)))
+    .where(and(eq(todo.id, todoId), eq(todo.userId, userId)))
     .limit(1);
 
-  if (!todoRow) {
+  if (!parentTodo) {
     return null;
   }
 
-  const items = await db
+  return db
     .select()
     .from(todoItems)
-    .where(eq(todoItems.todoId, id))
+    .where(eq(todoItems.todoId, todoId))
     .orderBy(todoItems.position);
-
-  return {
-    ...todoRow,
-    todoItems: items,
-  };
-}
-
-async function getTodoItemForUser(userId: string, itemId: string) {
-  const [todoItem] = await db
-    .select({
-      id: todoItems.id,
-      content: todoItems.content,
-      completed: todoItems.completed,
-      position: todoItems.position,
-      todoId: todoItems.todoId,
-      createdAt: todoItems.createdAt,
-      updatedAt: todoItems.updatedAt,
-    })
-    .from(todoItems)
-    .innerJoin(todo, eq(todoItems.todoId, todo.id))
-    .where(and(eq(todoItems.id, itemId), eq(todo.userId, userId)))
-    .limit(1);
-
-  return todoItem ?? null;
 }
 
 export async function createTodoItem(
@@ -49,7 +25,6 @@ export async function createTodoItem(
   data: {
     content: string;
     todoId: string;
-    position?: number;
     completed?: boolean;
   },
 ) {
@@ -63,11 +38,20 @@ export async function createTodoItem(
     return null;
   }
 
+  const [lastItem] = await db
+    .select({
+      position: todoItems.position,
+    })
+    .from(todoItems)
+    .where(eq(todoItems.todoId, data.todoId))
+    .orderBy(desc(todoItems.position))
+    .limit(1);
+
   const newTodoItem = {
     id: crypto.randomUUID(),
     content: data.content,
     completed: data.completed ?? false,
-    position: data.position ?? 0,
+    position: (lastItem?.position ?? -1) + 1,
     todoId: data.todoId,
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -78,18 +62,6 @@ export async function createTodoItem(
   return newTodoItem;
 }
 
-export async function deleteTodoItem(userId: string, id: string) {
-  const todoItem = await getTodoItemForUser(userId, id);
-
-  if (!todoItem) {
-    return null;
-  }
-
-  await db.delete(todoItems).where(eq(todoItems.id, id));
-
-  return todoItem;
-}
-
 export async function updateTodoItem(
   userId: string,
   id: string,
@@ -98,9 +70,14 @@ export async function updateTodoItem(
     completed?: boolean;
   },
 ) {
-  const todoItem = await getTodoItemForUser(userId, id);
+  const [existingItem] = await db
+    .select()
+    .from(todoItems)
+    .innerJoin(todo, eq(todoItems.todoId, todo.id))
+    .where(and(eq(todoItems.id, id), eq(todo.userId, userId)))
+    .limit(1);
 
-  if (!todoItem) {
+  if (!existingItem) {
     return null;
   }
 
@@ -116,13 +93,27 @@ export async function updateTodoItem(
     updatedFields.completed = data.completed;
   }
 
-  await db
-    .update(todoItems)
-    .set(updatedFields)
-    .where(eq(todoItems.id, id));
+  await db.update(todoItems).set(updatedFields).where(eq(todoItems.id, id));
 
   return {
-    ...todoItem,
+    ...existingItem,
     ...updatedFields,
   };
+}
+
+export async function deleteTodoItem(userId: string, id: string) {
+  const [existingItem] = await db
+    .select()
+    .from(todoItems)
+    .innerJoin(todo, eq(todoItems.todoId, todo.id))
+    .where(and(eq(todoItems.id, id), eq(todo.userId, userId)))
+    .limit(1);
+
+  if (!existingItem) {
+    return null;
+  }
+
+  await db.delete(todoItems).where(eq(todoItems.id, id));
+
+  return existingItem;
 }

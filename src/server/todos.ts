@@ -1,37 +1,11 @@
 import { and, eq } from "drizzle-orm";
 import { db } from "@/db/drizzle";
-import { todo, todoItems } from "@/db/schema";
+import { todo } from "@/db/schema";
 
 export async function listTodos(userId: string) {
   return db.query.todo.findMany({
     where: eq(todo.userId, userId),
-    with: {
-      items: true,
-    },
   });
-}
-
-export async function getTodo(userId: string, id: string) {
-  const [existingTodo] = await db
-    .select()
-    .from(todo)
-    .where(and(eq(todo.id, id), eq(todo.userId, userId)))
-    .limit(1);
-
-  if (!existingTodo) {
-    return null;
-  }
-
-  const items = await db
-    .select()
-    .from(todoItems)
-    .where(eq(todoItems.todoId, id))
-    .orderBy(todoItems.position);
-
-  return {
-    ...existingTodo,
-    todoItems: items,
-  };
 }
 
 export async function createTodo(userId: string, title: string) {
@@ -45,10 +19,7 @@ export async function createTodo(userId: string, title: string) {
 
   await db.insert(todo).values(newTodo);
 
-  return {
-    ...newTodo,
-    todoItems: [],
-  };
+  return newTodo;
 }
 
 export async function updateTodo(
@@ -56,7 +27,11 @@ export async function updateTodo(
   id: string,
   data: { title?: string },
 ) {
-  const existingTodo = await getTodo(userId, id);
+  const [existingTodo] = await db
+    .select()
+    .from(todo)
+    .where(and(eq(todo.id, id), eq(todo.userId, userId)))
+    .limit(1);
 
   if (!existingTodo) {
     return null;
@@ -80,7 +55,11 @@ export async function updateTodo(
 }
 
 export async function deleteTodo(userId: string, id: string) {
-  const existingTodo = await getTodo(userId, id);
+  const [existingTodo] = await db
+    .select()
+    .from(todo)
+    .where(and(eq(todo.id, id), eq(todo.userId, userId)))
+    .limit(1);
 
   if (!existingTodo) {
     return null;

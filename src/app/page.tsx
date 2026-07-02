@@ -12,8 +12,8 @@ export default async function Home() {
       <nav className="fixed p-2 top-0 left-0 right-0 z-50">
         <Navbar />
       </nav>
-      <main className="lg:mx-20">
-        <div className="h-screen p-4">
+      <main className="lg:max-w-6xl lg:mx-auto">
+        <div>
           <LandingMain />
         </div>
         <div className="min-h-screen flex flex-col p-4">

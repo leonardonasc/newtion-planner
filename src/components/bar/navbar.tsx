@@ -1,7 +1,8 @@
 'use client'
 import { useIsMobile } from "@/hooks/use-mobile"
-import { Menu } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { useState } from "react"
+import { Button } from "../ui/button"
 
 export default function Navbar() {
     const [open, setOpen] = useState(false)
@@ -9,13 +10,15 @@ export default function Navbar() {
     return (
         <div className="font-sans">
             {mobile ? (
-                <div className="flex border shadow h-14 items-center bg-white mt-3 rounded-full justify-between px-4 text-secondary">
+                <div className="flex border shadow h-14 items-center bg-white/70 backdrop-blur-md text-gray-700 mt-3 rounded-full justify-between px-4">
                     <div>Newtion</div>
-                    <div>
-                        <Menu onClick={() => setOpen(!open)} />
-                    </div>
+                    <Button className="bg-transparent rounded-full text-gray-700" onClick={() => setOpen(!open)}>
+                        {
+                            open ? <X size={16} /> : <Menu size={16} />
+                        }
+                    </Button>
                     {open && (
-                        <ul className="flex flex-col gap-4 absolute top-20 left-1/2 -translate-x-1/2 w-[calc(100%-1rem)] bg-white shadow rounded-lg p-4">
+                        <ul className="flex flex-col gap-4 absolute top-16 left-1/2 -translate-x-1/2 w-[calc(100%)] bg-white shadow rounded-lg p-4 border-zinc-200 border">
                             <li className="cursor-pointer">Home</li>
                             <li className="cursor-pointer">About</li>
                             <li className="cursor-pointer">Projects</li>
@@ -24,17 +27,21 @@ export default function Navbar() {
                     )}
                 </div>
             ) : (
-                <div className="mx-auto flex w-[80%] md:w-[95%] 2xl:w-[80%] border bg-white shadow h-14 items-center mt-3 rounded-full justify-between px-4 text-secondary">
+                <div className="mx-auto flex w-[80%] md:w-[95%] 2xl:w-[60%] border bg-white/70 backdrop-blur-md shadow h-14 items-center mt-3 rounded-full justify-between px-4 text-gray-700 border-zinc-200">
                     <div>Newtion</div>
                     <div className="block lg:hidden">
-                        <Menu onClick={() => setOpen(!open)} />
+                        <Button className="bg-transparent rounded-full text-gray-700" onClick={() => setOpen(!open)}>
+                            {
+                                open ? <X size={16} /> : <Menu size={16} />
+                            }
+                        </Button>
                     </div>
                     {open && (
-                        <ul className="flex flex-col gap-4 font-semibold absolute top-23 left-1/2 -translate-x-1/2 w-[calc(80%-1rem)] md:w-[calc(95%-1rem)] lg:hidden bg-white shadow rounded-lg p-4">
-                            <li className="cursor-pointer">Home</li>
-                            <li className="cursor-pointer">About</li>
-                            <li className="cursor-pointer">Projects</li>
-                            <li className="cursor-pointer">Contact</li>
+                        <ul className="flex flex-col gap-y-1 font-semibold absolute top-23 md:top-18 left-1/2 -translate-x-1/2 w-[calc(80%-1rem)] md:w-[calc(100%)] lg:hidden bg-white shadow rounded-lg p-4 border-zinc-200 border">
+                            <li className="cursor-pointer hover:bg-zinc-100 p-1 rounded-lg">Home</li>
+                            <li className="cursor-pointer hover:bg-zinc-100 p-1 rounded-lg">About</li>
+                            <li className="cursor-pointer hover:bg-zinc-100 p-1 rounded-lg">Projects</li>
+                            <li className="cursor-pointer hover:bg-zinc-100 p-1 rounded-lg">Contact</li>
                         </ul>
                     )}
                     <ul className="hidden lg:flex gap-x-1 font-semibold">

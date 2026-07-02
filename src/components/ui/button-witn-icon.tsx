@@ -11,7 +11,7 @@ const ButtonWithIconDemo = () => {
         <span className="relative z-10 transition-all duration-500">
           Começar agora
         </span>
-        <div className="absolute right-1 flex h-9 w-9 items-center justify-center rounded-full bg-background text-foreground transition-all duration-500 group-hover:right-[calc(100%-40px)] group-hover:rotate-45 lg:h-10 lg:w-10 lg:group-hover:right-[calc(100%-44px)]">
+        <div className="absolute right-1 flex h-9 w-9 items-center justify-center rounded-full bg-gray-200 text-foreground transition-all duration-500 group-hover:right-[calc(100%-40px)] group-hover:rotate-45 lg:h-10 lg:w-10 lg:group-hover:right-[calc(100%-44px)]">
           <ArrowUpRight size={16} />
         </div>
       </Link>

@@ -3,7 +3,7 @@ import { Input } from '@base-ui/react'
 import { useState } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, Form, useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import {
     Field,
@@ -12,6 +12,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { Loader2, Plus } from 'lucide-react';
+import { createTodoItemSchema } from "@/validations/todos";
 
 interface TodoItemCreateProps {
     params: {
@@ -24,13 +25,9 @@ export default function TodoItemCreate({ params }: TodoItemCreateProps) {
     const router = useRouter();
     const { id } = params;
 
-    const formSchema = z.object({
-        content: z.string().min(1, "Content is required"),
-        todoId: z.string().min(1, "Todo ID is required"),
-        completed: z.boolean(),
-    });
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+
+    const form = useForm<z.input<typeof createTodoItemSchema>>({
+        resolver: zodResolver(createTodoItemSchema),
         defaultValues: {
             content: "",
             todoId: id,
@@ -38,20 +35,30 @@ export default function TodoItemCreate({ params }: TodoItemCreateProps) {
         },
     });
 
-    async function onSubmit(data: z.infer<typeof formSchema>) {
+    async function onSubmit(data: z.input<typeof createTodoItemSchema>) {
         setLoading(true);
         try {
-            const res = await fetch(`/api/todo/${id}`, {
+            const payload = {
+                content: data.content,
+                todoId: data.todoId,
+                completed: data.completed,
+            };
+
+            const res = await fetch(`/api/todo-items`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify(payload),
             });
             if (!res.ok) {
                 throw new Error("Failed to create todo item");
             }
-            form.reset();
+            form.reset({
+                content: "",
+                todoId: id,
+                completed: false,
+            });
             router.refresh();
             toast.success("Todo item created successfully");
         } catch (error) {

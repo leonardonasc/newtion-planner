@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { createTodo, deleteTodo, listTodos, updateTodo } from "@/server/todos";
+import {
+  createTodoSchema,
+  deleteTodoSchema,
+  updateTodoSchema,
+} from "@/validations/todos";
 
 async function getUserId(request: Request) {
   const session = await auth.api.getSession({ headers: request.headers });
-
   return session?.user?.id ?? null;
 }
 
@@ -16,7 +20,6 @@ export async function GET(request: Request) {
   }
 
   const todos = await listTodos(userId);
-
   return NextResponse.json(todos);
 }
 
@@ -27,16 +30,17 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { title } = await request.json();
+  const body = await request.json();
+  const parsed = createTodoSchema.safeParse(body);
 
-  if (!title || typeof title !== "string") {
+  if (!parsed.success) {
     return NextResponse.json(
-      { error: "Title is required and must be a string" },
+      { error: "Invalid data", details: parsed.error.format() },
       { status: 400 },
     );
   }
 
-  const newTodo = await createTodo(userId, title);
+  const newTodo = await createTodo(userId, parsed.data.title);
 
   return NextResponse.json(newTodo, { status: 201 });
 }
@@ -48,13 +52,17 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { id } = await request.json();
+  const body = await request.json();
+  const parsed = deleteTodoSchema.safeParse(body);
 
-  if (!id || typeof id !== "string") {
-    return NextResponse.json({ error: "ID is required" }, { status: 400 });
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: "Invalid data", details: parsed.error.format() },
+      { status: 400 },
+    );
   }
 
-  const deletedTodo = await deleteTodo(userId, id);
+  const deletedTodo = await deleteTodo(userId, parsed.data.id);
 
   if (!deletedTodo) {
     return NextResponse.json({ error: "Todo not found" }, { status: 404 });
@@ -70,20 +78,19 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { id, title } = await request.json();
+  const body = await request.json();
+  const parsed = updateTodoSchema.safeParse(body);
 
-  if (!id || typeof id !== "string") {
-    return NextResponse.json({ error: "ID is required" }, { status: 400 });
-  }
-
-  if (title !== undefined && typeof title !== "string") {
+  if (!parsed.success) {
     return NextResponse.json(
-      { error: "Title must be a string" },
+      { error: "Invalid data", details: parsed.error.format() },
       { status: 400 },
     );
   }
 
-  const updatedTodo = await updateTodo(userId, id, { title });
+  const updatedTodo = await updateTodo(userId, parsed.data.id, {
+    title: parsed.data.title,
+  });
 
   if (!updatedTodo) {
     return NextResponse.json({ error: "Todo not found" }, { status: 404 });

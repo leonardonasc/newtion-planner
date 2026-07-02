@@ -54,7 +54,7 @@ export default function Plans() {
                                 Mais Popular
                             </div>
                         )}
-                        <div className={`flex flex-col gap-y-6 rounded-md p-4 ${item.type === "most popular" ? "bg-white" : "bg-gray-50"}`}>
+                        <div className={`flex h-60 flex-col gap-y-6 rounded-md p-4 ${item.type === "most popular" ? "bg-white" : "bg-gray-50"}`}>
                             <div>
                                 <p className='text-gray-700 font-sans font-bold text-2xl'>{item.title}</p>
                                 <p className='text-gray-700 font-sans font-bold text-xl'>{item.amount}<span className={'text-lg font-normal ' + (item.amount === "Grátis" ? "hidden" : "")}>/mês</span></p>
