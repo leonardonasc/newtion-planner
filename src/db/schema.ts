@@ -80,27 +80,49 @@ export const verification = pgTable(
   (table) => [index("verification_identifier_idx").on(table.identifier)],
 );
 
-export const todo = pgTable("todo", {
+export const todo = pgTable(
+  "todo",
+  {
+    id: text("id").primaryKey(),
+    title: text("title").notNull(),
+    description: text("description"),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .notNull(),
+  },
+  (table) => [index("todo_userId_idx").on(table.userId)],
+);
+
+export const todoItems = pgTable(
+  "todo_item",
+  {
+    id: text("id").primaryKey(),
+    content: text("content").notNull(),
+    completed: boolean("completed").default(false).notNull(),
+    position: integer("position").notNull(),
+    todoId: text("todo_id")
+      .notNull()
+      .references(() => todo.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .notNull(),
+  },
+  (table) => [index("todo_item_todoId_idx").on(table.todoId)],
+);
+
+export const expenseTracker = pgTable("expenses_control", {
   id: text("id").primaryKey(),
-  title: text("title").notNull(),
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at")
-    .defaultNow()
-    .$onUpdate(() => /* @__PURE__ */ new Date())
-    .notNull(),
-});
-
-export const todoItems = pgTable("todo_item", {
-  id: text("id").primaryKey(),
-  content: text("content").notNull(),
-  completed: boolean("completed").default(false).notNull(),
-  position: integer("position").notNull(),
-  todoId: text("todo_id")
-    .notNull()
-    .references(() => todo.id, { onDelete: "cascade" }),
+  monthlyAmount: integer("monthly_amount").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
@@ -128,12 +150,12 @@ export const accountRelations = relations(account, ({ one }) => ({
   }),
 }));
 
-export const todoRelations = relations(todo, ({ one, many }) => ({
+export const todoRelations = relations(todo, ({ many, one }) => ({
+  items: many(todoItems),
   user: one(user, {
     fields: [todo.userId],
     references: [user.id],
   }),
-  items: many(todoItems),
 }));
 
 export const todoItemsRelations = relations(todoItems, ({ one }) => ({
@@ -143,19 +165,6 @@ export const todoItemsRelations = relations(todoItems, ({ one }) => ({
   }),
 }));
 
-export const expenseTracker = pgTable("expenses_control", {
-  id: text("id").primaryKey(),
-  userId: text("user_id")
-    .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
-  monthlyAmount: integer("monthly_amount").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at")
-    .defaultNow()
-    .$onUpdate(() => /* @__PURE__ */ new Date())
-    .notNull(),
-});
-
 export const schema = {
   user,
   session,
@@ -163,6 +172,7 @@ export const schema = {
   verification,
   todo,
   todoItems,
+  expenseTracker,
   userRelations,
   sessionRelations,
   accountRelations,

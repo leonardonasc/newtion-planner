@@ -54,14 +54,14 @@ export default function Plans() {
                                 Mais Popular
                             </div>
                         )}
-                        <div className={`flex h-60 flex-col gap-y-6 rounded-md p-4 ${item.type === "most popular" ? "bg-white" : "bg-gray-50"}`}>
+                        <div className={`flex flex-col gap-y-6 rounded-md p-4 ${item.type === "most popular" ? "bg-white" : "bg-gray-50"}`}>
                             <div>
                                 <p className='text-gray-700 font-sans font-bold text-2xl'>{item.title}</p>
                                 <p className='text-gray-700 font-sans font-bold text-xl'>{item.amount}<span className={'text-lg font-normal ' + (item.amount === "Grátis" ? "hidden" : "")}>/mês</span></p>
                             </div>
                             <ul className='flex flex-col'>
                                 {item.upgradeList.map((upgrade, index) => (
-                                    <li key={index} className='text-gray-500 font-sans text-sm '><span className='border-b border-dotted border-b-gray-200'>{upgrade}</span></li>
+                                    <li key={index} className='text-gray-500 font-sans text-sm'><span className='border-b border-dotted border-b-gray-200'>{upgrade}</span></li>
                                 ))}
                             </ul>
                         </div>

@@ -1,71 +1,170 @@
-import { and, eq } from "drizzle-orm";
+"use server";
+
+import { auth } from "@/lib/auth";
 import { db } from "@/db/drizzle";
-import { todo } from "@/db/schema";
+import { todo, todoItems } from "@/db/schema";
+import {
+  createTodoSchema,
+  createTodoItemSchema,
+  deleteTodoSchema,
+  deleteTodoItemSchema,
+  toggleTodoItemSchema,
+  todoSortSchema,
+} from "@/validations/todos";
+import { asc, desc, eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 
-export async function listTodos(userId: string) {
-  return db.query.todo.findMany({
-    where: eq(todo.userId, userId),
+type SortOption = "title" | "createdAt";
+
+const getSession = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
   });
-}
 
-export async function createTodo(userId: string, title: string) {
-  const newTodo = {
-    id: crypto.randomUUID(),
-    title,
-    userId,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
-
-  await db.insert(todo).values(newTodo);
-
-  return newTodo;
-}
-
-export async function updateTodo(
-  userId: string,
-  id: string,
-  data: { title?: string },
-) {
-  const [existingTodo] = await db
-    .select()
-    .from(todo)
-    .where(and(eq(todo.id, id), eq(todo.userId, userId)))
-    .limit(1);
-
-  if (!existingTodo) {
-    return null;
+  if (!session?.user) {
+    throw new Error("Unauthorized");
   }
+  return session;
+};
 
-  const updatedTodo = {
-    ...existingTodo,
-    title: data.title ?? existingTodo.title,
-    updatedAt: new Date(),
-  };
+export const createTodo = async (data: {
+  title: string;
+  description?: string;
+}) => {
+  const user = await getSession();
+  const parsed = createTodoSchema.parse(data);
 
-  await db
-    .update(todo)
-    .set({
-      title: updatedTodo.title,
-      updatedAt: updatedTodo.updatedAt,
+  const [newTodo] = await db
+    .insert(todo)
+    .values({
+      id: crypto.randomUUID(),
+      title: parsed.title,
+      description: data.description ?? null,
+      userId: user.user.id,
     })
-    .where(and(eq(todo.id, id), eq(todo.userId, userId)));
+    .returning();
 
-  return updatedTodo;
-}
+  revalidatePath("/todo");
+  return { success: true, todo: newTodo };
+};
 
-export async function deleteTodo(userId: string, id: string) {
-  const [existingTodo] = await db
-    .select()
-    .from(todo)
-    .where(and(eq(todo.id, id), eq(todo.userId, userId)))
-    .limit(1);
+export const createTodoItem = async (data: {
+  content: string;
+  todoId: string;
+}) => {
+  const user = await getSession();
+  const parsed = createTodoItemSchema.parse(data);
 
-  if (!existingTodo) {
-    return null;
+  const todoOwner = await db.query.todo.findFirst({
+    where: eq(todo.id, parsed.todoId),
+  });
+
+  if (!todoOwner || todoOwner.userId !== user.user.id) {
+    throw new Error("Todo not found or unauthorized");
   }
 
-  await db.delete(todo).where(and(eq(todo.id, id), eq(todo.userId, userId)));
+  const [newTodoItem] = await db
+    .insert(todoItems)
+    .values({
+      id: crypto.randomUUID(),
+      content: parsed.content,
+      completed: false,
+      position: 0,
+      todoId: parsed.todoId,
+    })
+    .returning();
 
-  return existingTodo;
-}
+  revalidatePath("/todo");
+  return { success: true, todoItem: newTodoItem };
+};
+
+export const getTodos = async (sortBy: SortOption = "createdAt") => {
+  const user = await getSession();
+  const parsedSort = todoSortSchema.parse(sortBy);
+
+  const todos = await db.query.todo.findMany({
+    where: eq(todo.userId, user.user.id),
+    orderBy: [parsedSort === "title" ? asc(todo.title) : desc(todo.createdAt)],
+    with: {
+      items: {
+        orderBy: asc(todoItems.position),
+      },
+    },
+  });
+
+  return todos;
+};
+
+export const deleteTodo = async (data: { id: string }) => {
+  const user = await getSession();
+  const parsed = deleteTodoSchema.parse(data);
+
+  const todoOwner = await db.query.todo.findFirst({
+    where: eq(todo.id, parsed.id),
+  });
+
+  if (!todoOwner || todoOwner.userId !== user.user.id) {
+    throw new Error("Todo not found or unauthorized");
+  }
+
+  await db.delete(todo).where(eq(todo.id, parsed.id));
+
+  revalidatePath("/todo");
+  return { success: true };
+};
+
+export const deleteTodoItem = async (data: { id: string; todoId: string }) => {
+  const user = await getSession();
+  const parsed = deleteTodoItemSchema.parse(data);
+
+  const item = await db.query.todoItems.findFirst({
+    where: eq(todoItems.id, parsed.id),
+    with: {
+      todo: true,
+    },
+  });
+
+  if (
+    !item ||
+    item.todo.userId !== user.user.id ||
+    item.todo.id !== parsed.todoId
+  ) {
+    throw new Error("Todo item not found or unauthorized");
+  }
+
+  await db.delete(todoItems).where(eq(todoItems.id, parsed.id));
+
+  revalidatePath("/todo");
+  return { success: true };
+};
+
+export const toggleTodoItem = async (data: {
+  id: string;
+  completed: boolean;
+}) => {
+  const user = await getSession();
+  const parsed = toggleTodoItemSchema.parse(data);
+
+  const item = await db.query.todoItems.findFirst({
+    where: eq(todoItems.id, parsed.id),
+    with: {
+      todo: true,
+    },
+  });
+
+  if (!item || item.todo.userId !== user.user.id) {
+    throw new Error("Todo item not found or unauthorized");
+  }
+
+  const [updatedItem] = await db
+    .update(todoItems)
+    .set({
+      completed: parsed.completed,
+    })
+    .where(eq(todoItems.id, parsed.id))
+    .returning();
+
+  revalidatePath("/todo");
+  return { success: true, todoItem: updatedItem };
+};

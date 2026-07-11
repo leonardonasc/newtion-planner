@@ -1,5 +1,5 @@
 'use client'
-import { ArrowDown, Mouse, TriangleAlert } from "lucide-react";
+import { ArrowDown, Info, Mouse, TriangleAlert } from "lucide-react";
 import ButtonWithIconDemo from "@/components/ui/button-witn-icon";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -38,7 +38,7 @@ export default function LandingMain() {
                 <div className="flex w-full flex-col gap-4 font-normal sm:flex-row lg:flex-wrap sm:items-center">
                     <ButtonWithIconDemo />
                     <Link href="/about" className="inline-flex h-12 w-full lg:w-fit items-center justify-center rounded-full border border-stone-300 px-6 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-100 hover:text-stone-950">
-                        Saiba mais
+                        Saiba mais <Info className="ml-2" size={16} />
                     </Link>
                     <Button
                         onClick={() => setIsModalOpen(true)}
