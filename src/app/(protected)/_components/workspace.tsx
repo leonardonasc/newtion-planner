@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button"
 import CreateTodoForm from "./create-todo-form"
 import CreateTaskButton from "./create-task-button"
 import { Checkbox } from "@/components/ui/checkbox"
+import DeleteTodo from "./delete-todo"
+import DeleteTodoItemButton from "./delete-todo-item"
 
 // todo: arrumar a tipagem depois
 type TodoItem = Awaited<ReturnType<typeof getTodos>>[number]
@@ -63,11 +65,10 @@ export default function Workspace({ todos }: WorkspaceProps) {
                     {filteredTodos.map((todo) => (
                         <li
                             key={todo.id}
-                            className={`cursor-pointer p-2 ${
-                                selectedTodoId === todo.id
-                                    ? "bg-offwhite-200 rounded-md"
-                                    : ""
-                            }`}
+                            className={`cursor-pointer p-2 ${selectedTodoId === todo.id
+                                ? "bg-offwhite-200 rounded-md"
+                                : ""
+                                }`}
                             onClick={() => setSelectedTodoId(todo.id)}
                         >
                             <div className="flex items-center justify-between">
@@ -83,10 +84,13 @@ export default function Workspace({ todos }: WorkspaceProps) {
                 {selectedTodo ? (
                     <div>
                         <div className="flex justify-between items-start mb-4">
-                            <div>
-                                <h2 className="text-lg font-bold">
-                                    {selectedTodo.title}
-                                </h2>
+                            <div className="flex-1">
+                                <div className="flex justify-between">
+                                    <h2 className="text-lg font-bold">
+                                        {selectedTodo.title}
+                                    </h2>
+                                    <DeleteTodo selectedTodoId={selectedTodo.id} />
+                                </div>
                                 <p className="text-sm text-muted-foreground">
                                     {selectedTodo.description}
                                 </p>
@@ -102,8 +106,11 @@ export default function Workspace({ todos }: WorkspaceProps) {
                                     className="border rounded-md p-2 flex justify-between items-center"
                                 >
                                     <p>{item.content}</p>
-                                    <Checkbox checked={item.completed} onCheckedChange={() => {
+                                    <div className="flex items-center gap-2">
+                                        <DeleteTodoItemButton todoItemId={item.id} />
+                                        <Checkbox checked={item.completed} onCheckedChange={() => {
                                     }} />
+                                    </div>
                                 </li>
                             ))}
                         </ul>

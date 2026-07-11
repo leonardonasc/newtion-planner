@@ -108,13 +108,15 @@ export const deleteTodo = async (data: { id: string }) => {
     throw new Error("Todo not found or unauthorized");
   }
 
+  await db.delete(todoItems).where(eq(todoItems.todoId, parsed.id));
+
   await db.delete(todo).where(eq(todo.id, parsed.id));
 
   revalidatePath("/todo");
   return { success: true };
 };
 
-export const deleteTodoItem = async (data: { id: string; todoId: string }) => {
+export const deleteTodoItem = async (data: { id: string }) => {
   const user = await getSession();
   const parsed = deleteTodoItemSchema.parse(data);
 
@@ -125,17 +127,14 @@ export const deleteTodoItem = async (data: { id: string; todoId: string }) => {
     },
   });
 
-  if (
-    !item ||
-    item.todo.userId !== user.user.id ||
-    item.todo.id !== parsed.todoId
-  ) {
+  if (!item || item.todo.userId !== user.user.id) {
     throw new Error("Todo item not found or unauthorized");
   }
 
   await db.delete(todoItems).where(eq(todoItems.id, parsed.id));
 
   revalidatePath("/todo");
+
   return { success: true };
 };
 

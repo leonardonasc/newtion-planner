@@ -16,7 +16,6 @@ export const deleteTodoSchema = z.object({
 
 export const deleteTodoItemSchema = z.object({
   id: z.string().uuid("Invalid todo item ID"),
-  todoId: z.string().uuid("Invalid todo ID"),
 });
 
 export const updateTodoItemSchema = z.object({
