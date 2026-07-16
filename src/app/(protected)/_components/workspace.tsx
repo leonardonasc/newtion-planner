@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from "react"
-import { getTodos } from "@/server/todos"
-import { ArrowRight } from "lucide-react"
+import { useState, type ChangeEvent } from "react"
+import { getTodos, updateTodoItem } from "@/server/todos"
+import { ArrowRight, Pencil } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import CreateTodoForm from "./create-todo-form"
@@ -23,7 +23,12 @@ export default function Workspace({ todos }: WorkspaceProps) {
     const [searchTerm, setSearchTerm] = useState("")
     const [isCreateTodoFormOpen, setIsCreateTodoFormOpen] = useState(false)
 
-    const handleTodoSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const [editingTodoItemId, setEditingTodoItemId] = useState<string | null>(null)
+    const [editingContent, setEditingContent] = useState("")
+
+    const [editingTodoId, setEditingTodoId] = useState<string | null>(null)
+
+    const handleTodoSearch = (event: ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value.toLowerCase())
     }
 
@@ -35,14 +40,14 @@ export default function Workspace({ todos }: WorkspaceProps) {
         todos.find(todo => todo.id === selectedTodoId) ?? null
 
     return (
-        <div className="flex gap-4 w-full">
+        <div className="flex md:flex-row flex-col mt-15 md:0 gap-4 w-full">
             {isCreateTodoFormOpen && (
                 <CreateTodoForm
                     onClose={() => setIsCreateTodoFormOpen(false)}
                 />
             )}
 
-            <div className="w-[30%] h-full border rounded-md shadow p-4">
+            <div className="w-full h-full border rounded-md shadow p-4">
                 <h1>Listas de Tarefas</h1>
 
                 <div>
@@ -105,11 +110,54 @@ export default function Workspace({ todos }: WorkspaceProps) {
                                     key={item.id}
                                     className="border rounded-md p-2 flex justify-between items-center"
                                 >
-                                    <p>{item.content}</p>
+                                    {editingTodoItemId === item.id ? (
+                                        <form
+                                            className="flex items-center gap-2 flex-1"
+                                            action={async () => {
+                                                await updateTodoItem({
+                                                    id: item.id,
+                                                    content: editingContent,
+                                                })
+                                                setEditingTodoItemId(null)
+                                            }}
+                                        >
+                                            <Input
+                                                value={editingContent}
+                                                onChange={(event) => setEditingContent(event.target.value)}
+                                            />
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                type="submit"
+                                            >
+                                                Salvar
+                                            </Button>
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() => setEditingTodoItemId(null)}
+                                            >
+                                                Cancelar
+                                            </Button>
+                                        </form>
+                                    ) : (
+                                        <p>{item.content}</p>
+                                    )}
                                     <div className="flex items-center gap-2">
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            className="px-2 py-1"
+                                            onClick={() => {
+                                                setEditingTodoItemId(item.id)
+                                                setEditingContent(item.content)
+                                            }}
+                                        >
+                                            <Pencil size={16} />
+                                        </Button>
                                         <DeleteTodoItemButton todoItemId={item.id} />
                                         <Checkbox checked={item.completed} onCheckedChange={() => {
-                                    }} />
+                                        }} />
                                     </div>
                                 </li>
                             ))}

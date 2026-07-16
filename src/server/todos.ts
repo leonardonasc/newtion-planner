@@ -8,6 +8,7 @@ import {
   createTodoItemSchema,
   deleteTodoSchema,
   deleteTodoItemSchema,
+  updateTodoItemSchema,
   toggleTodoItemSchema,
   todoSortSchema,
 } from "@/validations/todos";
@@ -136,6 +137,34 @@ export const deleteTodoItem = async (data: { id: string }) => {
   revalidatePath("/todo");
 
   return { success: true };
+};
+
+export const updateTodoItem = async (data: { id: string; content: string }) => {
+  const user = await getSession();
+  const parsed = updateTodoItemSchema.parse(data);
+
+  const item = await db.query.todoItems.findFirst({
+    where: eq(todoItems.id, parsed.id),
+    with: {
+      todo: true,
+    },
+  });
+
+  if (!item || item.todo.userId !== user.user.id) {
+    throw new Error("Todo item not found or unauthorized");
+  }
+
+  const [updatedItem] = await db
+    .update(todoItems)
+    .set({
+      content: parsed.content,
+    })
+    .where(eq(todoItems.id, parsed.id))
+    .returning();
+
+  revalidatePath("/todo");
+
+  return { success: true, todoItem: updatedItem };
 };
 
 export const toggleTodoItem = async (data: {
