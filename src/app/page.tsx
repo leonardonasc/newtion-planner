@@ -3,7 +3,8 @@ import InsideProject from "@/components/inside-project";
 import Navbar from "@/components/bar/navbar";
 import LandingMain from "@/components/landing-main";
 import Plans from "@/components/plans";
-import About from "@/components/about";
+import Footer from "@/components/footer";
+
 
 export default async function Home() {
 
@@ -22,12 +23,11 @@ export default async function Home() {
         </div>
         <div className="flex flex-col p-4">
           <Plans />
-          <div className="h-px my-6 bg-gray-200"></div>
-        </div>
-        <div className="p-4">
-          <About />
         </div>
       </main>
+      <footer className="w-full border-t border-gray-200">
+       <Footer />
+      </footer>
     </div>
   );
 }

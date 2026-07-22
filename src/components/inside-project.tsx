@@ -27,12 +27,12 @@ export default function InsideProject() {
 
     return (
         <div className='flex flex-col gap-x-4 w-full items-center justify-center'>
-            <p className='text-gray-700 font-sans font-bold text-3xl md:text-5xl w-full text-center mb-10'>Dentro do projeto</p>
+            <p className='text-gray-700 font-medium text-3xl md:text-5xl w-full text-center mb-10 font-work-sans'>Dentro do projeto</p>
             <div className='grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 items-start'>
                 {data.map((item) => (
                     <div key={item.id} className='flex h-full w-full flex-col gap-2 items-start'>
                         <img src={item.image} alt={item.description} className='w-full aspect-3/2 rounded-lg object-cover shadow-md' />
-                        <p className='text-gray-600 font-sans text-lg'>{item.description}</p>
+                        <p className='text-gray-600 font-work-sans font-normal text-lg'>{item.id}. {item.description}</p>
                     </div>
                 ))}
             </div>
