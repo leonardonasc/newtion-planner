@@ -3,8 +3,7 @@ import InsideProject from "@/components/inside-project";
 import Navbar from "@/components/bar/navbar";
 import LandingMain from "@/components/landing-main";
 import Plans from "@/components/plans";
-import Footer from "@/components/footer";
-
+import About from "@/components/about";
 
 export default function Home() {
   return (
@@ -26,6 +25,10 @@ export default function Home() {
 
         <div className="p-4">
           <Plans />
+          <div className="h-px my-6 bg-gray-200"></div>
+        </div>
+        <div className="p-4">
+          <About />
         </div>
 
         <Footer />

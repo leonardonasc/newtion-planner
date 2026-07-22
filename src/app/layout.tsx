@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, JetBrains_Mono, Work_Sans, Arapey, Caveat, EB_Garamond } from "next/font/google";
+import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner"
+import { ThemeProvider } from "@/components/theme-provider"
+import { ModeToggle } from "@/components/toggle-mode";
+import Link from "next/link";
 import { TailwindIndicator } from "@/components/TailwindIndicator";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
@@ -15,29 +18,6 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-});
-
-const workSans = Work_Sans({
-  variable: "--font-work-sans",
-  subsets: ["latin"],
-});
-
-const arapey = Arapey({
-  variable: "--font-arapey",
-  subsets: ["latin"],
-  weight: ["400"],
-});
-
-const caveat = Caveat({
-  variable: "--font-caveat",
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
-
-const ebGaramond = EB_Garamond({
-  variable: "--font-eb-garamond",
-  subsets: ["latin"],
-  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -54,14 +34,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-mono", jetbrainsMono.variable, workSans.variable, "font-work-sans", arapey.variable, "font-arapey", caveat.variable, "font-caveat", ebGaramond.variable, "font-eb-garamond")}
+      className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-mono", jetbrainsMono.variable)}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-offwhite-50">
         {/* enablesystem desativado para manter apenas o whitetheme na aplicacao */}
-        {children}
-        <Toaster />
-        <TailwindIndicator />
+          {children}
+          <Toaster />
+          <TailwindIndicator />
       </body>
     </html>
   );
