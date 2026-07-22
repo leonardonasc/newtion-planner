@@ -1,4 +1,5 @@
-import React from 'react'
+'use client'
+import { motion } from "framer-motion"
 
 export default function InsideProject() {
 
@@ -26,16 +27,29 @@ export default function InsideProject() {
     ];
 
     return (
-        <div className='flex flex-col gap-x-4 w-full items-center justify-center'>
+        <div className='flex flex-col gap-x-4 w-full items-center justify-center mb-5'>
             <p className='text-gray-700 font-medium text-3xl md:text-5xl w-full text-center mb-10 font-work-sans'>Dentro do projeto</p>
-            <div className='grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 items-start'>
+            <motion.div
+                initial={{
+                    opacity: 0,
+                    y: 50,
+                }}
+                whileInView={{
+                    opacity: 1,
+                    y: 0,
+                }}
+                transition={{
+                    duration: 0.8,
+                }}
+                viewport={{ once: true }}
+                className='grid w-full grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-2 gap-y-8 items-start'>
                 {data.map((item) => (
                     <div key={item.id} className='flex h-full w-full flex-col gap-2 items-start'>
                         <img src={item.image} alt={item.description} className='w-full aspect-3/2 rounded-lg object-cover shadow-md' />
                         <p className='text-gray-600 font-work-sans font-normal text-lg'>{item.id}. {item.description}</p>
                     </div>
                 ))}
-            </div>
+            </motion.div>
         </div>
     )
 }

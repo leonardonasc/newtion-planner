@@ -1,4 +1,6 @@
+'use client'
 import { Button } from "./ui/button"
+import { motion } from "framer-motion"
 
 export default function Plans() {
 
@@ -21,7 +23,7 @@ export default function Plans() {
             title: "Premium",
             description: "Plano com mais recursos",
             amount: "R$20,00",
-            type: "most popular",
+            type: "popular",
             buyButton: "Melhorar plano",
             upgradeList: [
                 "Até 5 notas",
@@ -45,17 +47,33 @@ export default function Plans() {
     ]
 
     return (
-        <div className='flex flex-col gap-x-4 w-full font-work-sans'>
+        <motion.div
+            initial={{
+                opacity: 0,
+                y: 50,
+            }}
+            whileInView={{
+                opacity: 1,
+                y: 0,
+            }}
+            transition={{
+                duration: 0.8,
+            }}
+            viewport={{ once: true }}
+            className='flex flex-col gap-x-4 w-full font-work-sans'>
             <p className='text-gray-700 font-medium text-3xl md:text-5xl w-full text-center mb-10'>Planos</p>
             <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 items-start'>
                 {data.map((item) => (
-                    <div key={item.id} className={`relative rounded-md mb-4 ${item.type === "most popular" ? "bg-linear-to-r from-blue-500 via-fuchsia-500 to-purple-500 p-0.5" : "border border-gray-300"}`}>
-                        {item.type === "most popular" && (
-                            <div className="absolute top-1 right-1 z-10 rounded-md font-sans bg-linear-to-r from-purple-500 via-blue-500 to-fuchsia-500 px-3 py-1 text-xs  text-white">
-                                Mais Popular
+                    <motion.div
+                        whileHover={{ scale: 1.01 }}
+                        transition={{ duration: 0.1 }}
+                        key={item.id} className={`relative rounded-md hover:shadow-lg mb-4 ${item.type === "popular" ? "bg-linear-to-r from-blue-400 to-blue-600 p-0.5" : "border border-gray-300"}`}>
+                        {item.type === "popular" && (
+                            <div className="absolute top-1 right-1 z-10 rounded-sm font-work-sans font-normal bg-linear-to-r from-blue-400 to-blue-600 px-3 py-1 text-xs  text-white">
+                               Popular
                             </div>
                         )}
-                        <div className={`flex flex-col gap-y-6 font-work-sans rounded-md p-4 ${item.type === "most popular" ? "bg-white" : "bg-gray-50"}`}>
+                        <div className={`flex flex-col gap-y-6 font-work-sans rounded-md p-4 ${item.type === "popular" ? "bg-white" : "bg-gray-50"}`}>
                             <div>
                                 <p className='text-gray-700 font-bold text-2xl'>{item.title}</p>
                                 <p className='text-gray-700 font-semibold text-xl'>{item.amount}<span className={'text-lg font-normal ' + (item.amount === "Grátis" ? "hidden" : "")}>/mês</span></p>
@@ -69,9 +87,9 @@ export default function Plans() {
                                 Escolher Plano
                             </Button>
                         </div>
-                    </div>
+                    </motion.div>
                 ))}
             </div>
-        </div>
+        </motion.div>
     )
 }

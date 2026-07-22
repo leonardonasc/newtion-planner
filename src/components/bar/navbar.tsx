@@ -3,12 +3,14 @@ import { useIsMobile } from "@/hooks/use-mobile"
 import { Menu, X } from "lucide-react"
 import { useState } from "react"
 import { Button } from "../ui/button"
+import Link from "next/link"
+
 
 export default function Navbar() {
     const [open, setOpen] = useState(false)
     const mobile = useIsMobile()
 
-    const items = ["Home", "About", "Projects", "Contact"];
+    const items = ["Inicio", "Sobre", "Contato"];
 
     return (
         <div className="font-work-sans">
@@ -22,10 +24,9 @@ export default function Navbar() {
                     </Button>
                     {open && (
                         <ul className="flex flex-col gap-4 absolute top-16 left-1/2 -translate-x-1/2 w-[calc(100%)] bg-white shadow rounded-lg p-4 border-zinc-200 border">
-                            <li className="cursor-pointer">Home</li>
-                            <li className="cursor-pointer">About</li>
-                            <li className="cursor-pointer">Projects</li>
-                            <li className="cursor-pointer">Contact</li>
+                            {items.map((item) => (
+                                <li key={item} className="cursor-pointer px-2 py-2">{item}</li>
+                            ))}
                         </ul>
                     )}
                 </div>
@@ -41,10 +42,9 @@ export default function Navbar() {
                     </div>
                     {open && (
                         <ul className="flex flex-col gap-y-1 font-work-sans absolute top-23 md:top-18 left-1/2 -translate-x-1/2 w-[calc(80%-1rem)] md:w-[calc(100%)] lg:hidden bg-white shadow rounded-lg p-4 border-zinc-200 border">
-                            <li className="cursor-pointer hover:bg-zinc-100 p-1 rounded-lg">Home</li>
-                            <li className="cursor-pointer hover:bg-zinc-100 p-1 rounded-lg">About</li>
-                            <li className="cursor-pointer hover:bg-zinc-100 p-1 rounded-lg">Projects</li>
-                            <li className="cursor-pointer hover:bg-zinc-100 p-1 rounded-lg">Contact</li>
+                            {items.map((item) => (
+                                <li key={item} className="cursor-pointer px-2 py-2" ><Link href={`${item.toLowerCase() === "inicio" ? "/" : `#${item.toLowerCase()}`}`}>{item}</Link></li>
+                            ))}
                         </ul>
                     )}
                     <ul className="hidden lg:flex gap-x-1 font-medium">
@@ -66,7 +66,9 @@ export default function Navbar() {
                                         hover:after:scale-x-100
         "
                                 >
-                                    {item}
+                                    <Link href={`${item.toLowerCase() === "inicio" ? "/" : `#${item.toLowerCase()}`}`} className="text-md text-gray-700">
+                                        {item}
+                                    </Link>
                                 </span>
                             </li>
                         ))}

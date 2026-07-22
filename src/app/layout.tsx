@@ -4,6 +4,8 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner"
 import { TailwindIndicator } from "@/components/TailwindIndicator";
+import SmoothScroll from "@/components/providers/smooth-scroll";
+import CustomCursor from "@/components/custom-cursor";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
@@ -41,7 +43,7 @@ const ebGaramond = EB_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Newtion Planner",
+  title: "Newtion — Organize suas tarefas e gerencie seus gastos",
   description: "Organize suas tarefas, acompanhe seus projetos e gerencie seus gastos de forma eficiente com o Newtion Planner. Nossa plataforma intuitiva e fácil de usar ajuda você a alcançar seus objetivos e manter o controle de suas atividades diárias.",
 };
 
@@ -59,7 +61,11 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-offwhite-50">
         {/* enablesystem desativado para manter apenas o whitetheme na aplicacao */}
-        {children}
+          <CustomCursor />
+        <SmoothScroll>
+          {children}
+        </SmoothScroll>
+
         <Toaster />
         <TailwindIndicator />
       </body>
