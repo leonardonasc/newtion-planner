@@ -43,7 +43,7 @@ export default function Navbar() {
                     {open && (
                         <ul className="flex flex-col gap-y-1 font-work-sans absolute top-23 md:top-18 left-1/2 -translate-x-1/2 w-[calc(80%-1rem)] md:w-[calc(100%)] lg:hidden bg-white shadow rounded-lg p-4 border-zinc-200 border">
                             {items.map((item) => (
-                                <li key={item} className="cursor-pointer px-2 py-2" ><Link href={`${item.toLowerCase() === "inicio" ? "/" : `#${item.toLowerCase()}`}`}>{item}</Link></li>
+                                <li key={item} className="cursor-pointer px-2 py-2"><Link href={`#${item.toLowerCase()}`}>{item}</Link></li>
                             ))}
                         </ul>
                     )}
@@ -66,7 +66,7 @@ export default function Navbar() {
                                         hover:after:scale-x-100
         "
                                 >
-                                    <Link href={`${item.toLowerCase() === "inicio" ? "/" : `#${item.toLowerCase()}`}`} className="text-md text-gray-700">
+                                    <Link href={`#${item.toLowerCase()}`} className="text-md text-gray-700">
                                         {item}
                                     </Link>
                                 </span>

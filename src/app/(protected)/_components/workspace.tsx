@@ -1,174 +1,91 @@
 'use client'
 
-import { useState, type ChangeEvent } from "react"
-import { getTodos, updateTodoItem } from "@/server/todos"
-import { ArrowRight, Pencil } from "lucide-react"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import CreateTodoForm from "./create-todo-form"
-import CreateTaskButton from "./create-task-button"
 import { Checkbox } from "@/components/ui/checkbox"
-import DeleteTodo from "./delete-todo"
-import DeleteTodoItemButton from "./delete-todo-item"
-
+import { Input } from "@/components/ui/input"
+import { getTodos } from "@/server/todos"
+import { Ellipsis, Trash } from "lucide-react"
 // todo: arrumar a tipagem depois
-type TodoItem = Awaited<ReturnType<typeof getTodos>>[number]
 
 type WorkspaceProps = {
-    todos: TodoItem[]
+    todos: Awaited<ReturnType<typeof getTodos>>
 }
 
 export default function Workspace({ todos }: WorkspaceProps) {
-    const [selectedTodoId, setSelectedTodoId] = useState<string | null>(null)
-    const [searchTerm, setSearchTerm] = useState("")
-    const [isCreateTodoFormOpen, setIsCreateTodoFormOpen] = useState(false)
 
-    const [editingTodoItemId, setEditingTodoItemId] = useState<string | null>(null)
-    const [editingContent, setEditingContent] = useState("")
-
-    const [editingTodoId, setEditingTodoId] = useState<string | null>(null)
-
-    const handleTodoSearch = (event: ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value.toLowerCase())
-    }
-
-    const filteredTodos = todos.filter(todo =>
-        todo.title.toLowerCase().includes(searchTerm)
-    )
-
-    const selectedTodo =
-        todos.find(todo => todo.id === selectedTodoId) ?? null
-
+    console.log(todos)
     return (
-        <div className="flex md:flex-row flex-col mt-15 md:0 gap-4 w-full">
-            {isCreateTodoFormOpen && (
-                <CreateTodoForm
-                    onClose={() => setIsCreateTodoFormOpen(false)}
-                />
-            )}
+        <div className="flex flex-col w-full h-full bg-offwhite-50 md:max-w-6xl md:justify-center md:mx-auto">
+            <header className="flex flex-col">
+                <div className="flex flex-col gap-y-3">
+                    <span className="uppercase font-work-sans text-xs font-normal tracking-widest text-neutral-400">Lista ativa</span>
+                    <h1 className="text-3xl flex-1 font-work-sans font-normal mb-2">Titulo grande da porra so pra testar o tamanho como fica essa bomba de texto</h1>
 
-            <div className="w-full h-full border rounded-md shadow p-4">
-                <h1>Listas de Tarefas</h1>
-
-                <div>
-                    <Input
-                        placeholder="Buscar tarefas..."
-                        className="mb-4 rounded-md"
-                        onChange={handleTodoSearch}
-                    />
-
-                    <Button
-                        variant="outline"
-                        className="w-full mb-4"
-                        onClick={() => setIsCreateTodoFormOpen(true)}
-                    >
-                        Nova Lista
-                    </Button>
-                </div>
-
-                <ul>
-                    {filteredTodos.map((todo) => (
-                        <li
-                            key={todo.id}
-                            className={`cursor-pointer p-2 ${selectedTodoId === todo.id
-                                ? "bg-offwhite-200 rounded-md"
-                                : ""
-                                }`}
-                            onClick={() => setSelectedTodoId(todo.id)}
-                        >
-                            <div className="flex items-center justify-between">
-                                <p>{todo.title}</p>
-                                <ArrowRight size={16} />
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-
-            <div className="flex-1 h-full border rounded-md shadow p-4">
-                {selectedTodo ? (
-                    <div>
-                        <div className="flex justify-between items-start mb-4">
-                            <div className="flex-1">
-                                <div className="flex justify-between">
-                                    <h2 className="text-lg font-bold">
-                                        {selectedTodo.title}
-                                    </h2>
-                                    <DeleteTodo selectedTodoId={selectedTodo.id} />
-                                </div>
-                                <p className="text-sm text-muted-foreground">
-                                    {selectedTodo.description}
-                                </p>
-                            </div>
+                    {/* quadrados para ver as tarefas */}
+                    <div className="w-full flex justify-between border h-25">
+                        <div className="flex justify-center border-r p-3 flex-col w-[calc(100%/3)]">
+                            <span className="uppercase font-work-sans text-[0.625rem] font-normal text-neutral-700">Total</span>
+                            <span className="uppercase font-work-sans text-lg font-bold">0</span>
                         </div>
-
-                        <CreateTaskButton todoId={selectedTodo.id} />
-
-                        <ul className="mt-4 space-y-2">
-                            {selectedTodo.items.map((item) => (
-                                <li
-                                    key={item.id}
-                                    className="border rounded-md p-2 flex justify-between items-center"
-                                >
-                                    {editingTodoItemId === item.id ? (
-                                        <form
-                                            className="flex items-center gap-2 flex-1"
-                                            action={async () => {
-                                                await updateTodoItem({
-                                                    id: item.id,
-                                                    content: editingContent,
-                                                })
-                                                setEditingTodoItemId(null)
-                                            }}
-                                        >
-                                            <Input
-                                                value={editingContent}
-                                                onChange={(event) => setEditingContent(event.target.value)}
-                                            />
-                                            <Button
-                                                variant="outline"
-                                                size="sm"
-                                                type="submit"
-                                            >
-                                                Salvar
-                                            </Button>
-                                            <Button
-                                                variant="outline"
-                                                size="sm"
-                                                onClick={() => setEditingTodoItemId(null)}
-                                            >
-                                                Cancelar
-                                            </Button>
-                                        </form>
-                                    ) : (
-                                        <p>{item.content}</p>
-                                    )}
-                                    <div className="flex items-center gap-2">
-                                        <Button
-                                            variant="outline"
-                                            size="sm"
-                                            className="px-2 py-1"
-                                            onClick={() => {
-                                                setEditingTodoItemId(item.id)
-                                                setEditingContent(item.content)
-                                            }}
-                                        >
-                                            <Pencil size={16} />
-                                        </Button>
-                                        <DeleteTodoItemButton todoItemId={item.id} />
-                                        <Checkbox checked={item.completed} onCheckedChange={() => {
-                                        }} />
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
+                        <div className="flex justify-center border-r p-3 flex-col w-[calc(100%/3)] bg-green-200">
+                            <span className="uppercase font-work-sans text-[0.625rem] font-normal text-neutral-700">Concluidas</span>
+                            <span className="uppercase font-work-sans text-lg font-bold">0</span>
+                        </div>
+                        <div className="flex justify-center border-r p-3 flex-col w-[calc(100%/3)]">
+                            <span className="uppercase font-work-sans text-[0.625rem] font-normal text-neutral-700">Pendentes</span>
+                            <span className="uppercase font-work-sans text-lg font-bold">0</span>
+                        </div>
                     </div>
-                ) : (
-                    <p className="text-gray-500">
-                        Selecione ou crie uma lista para ver os detalhes.
-                    </p>
-                )}
-            </div>
+
+                    {/* porcentagem */}
+                    <div className="w-full h-2 bg-gray-200 rounded-full mt-2">
+                        <div className="h-2 bg-green-500 rounded-full" style={{ width: "50%" }}></div>
+                    </div>
+                </div>
+            </header>
+
+            {/* divider */}
+            <div className="w-full h-px bg-gray-200 mt-4"></div>
+
+            <main className="overflow-y-auto flex-1 font-work-sans">
+                <section className="flex gap-x-1 items-center my-4">
+                    <Input placeholder="Adicionar nova tarefa" className="w-full h-10 font-work-sans rounded-md placeholder:font-normal" />
+                    <Button className="h-10 rounded-md bg-black text-white font-work-sans font-bold hover:bg-blue-600">+</Button>
+                </section>
+
+                <section className="flex flex-col gap-y-2">
+                    <ul className="flex flex-col gap-y-2">
+                        <li className="flex gap-x-2 justify-between items-center border p-2 py-4 rounded-md">
+                            <div className="flex gap-x-2 items-center">
+                                <Checkbox />
+                                <span className="font-work-sans self-start font-normal text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio ratione cumque soluta maiores reprehenderit unde porro, sint voluptatum maxime est impedit beatae sed, vel a mollitia animi consequatur ullam? Dolores.</span>
+                            </div>
+                            <button><Ellipsis /></button>
+                        </li>
+                        <li className="flex gap-x-2 justify-between items-center border p-2 py-4 rounded-md">
+                            <div className="flex gap-x-2 items-center">
+                                <Checkbox />
+                                <span className="font-work-sans self-start font-normal text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio ratione cumque soluta</span>
+                            </div>
+                            <button><Ellipsis /></button>
+                        </li>
+                        <li className="flex gap-x-2 justify-between items-center border p-2 py-4 rounded-md">
+                            <div className="flex gap-x-2 items-center">
+                                <Checkbox />
+                                <span className="font-work-sans self-start font-normal text-sm">Lorem ipsum dolor sit amet consectetur adipisicing</span>
+                            </div>
+                            <button><Ellipsis /></button>
+                        </li>
+                        <li className="flex gap-x-2 justify-between items-center border p-2 py-4 rounded-md">
+                            <div className="flex gap-x-2 items-center">
+                                <Checkbox />
+                                <span className="font-work-sans self-start font-normal text-sm">Lorem ipsum dolor</span>
+                            </div>
+                            <button><Ellipsis /></button>
+                        </li>
+                    </ul>
+                </section>
+            </main>
         </div>
     )
 }

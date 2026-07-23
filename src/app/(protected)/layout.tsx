@@ -1,6 +1,5 @@
 import { auth } from "@/lib/auth"
 import { headers } from "next/headers"
-import TodoNav from "./_components/TodoNav"
 
 export default async function TodoLayout({
     children,
@@ -11,8 +10,7 @@ export default async function TodoLayout({
     const userName = session?.user?.name ?? ""
 
     return (
-        <div className="flex w-full min-h-screen flex-col gap-y p-4">
-            <TodoNav userName={userName} />
+        <div className="w-full min-h-screen gap-y p-4">
             <main className="flex-1 min-w-0">{children}</main>
         </div>
     )

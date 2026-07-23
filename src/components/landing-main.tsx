@@ -166,7 +166,7 @@ export default function LandingMain() {
                         lg:text-xl
                     "
                 >
-                    Planeje suas tarefas, organize seus gastos e acompanhe o progresso de seus projetos com facilidade. Nossa plataforma oferece uma experiência intuitiva e eficiente para ajudá-lo a alcançar seus objetivos.
+                    — Planeje suas tarefas, organize seus gastos e acompanhe o progresso de seus projetos com facilidade. Nossa plataforma oferece uma experiência intuitiva e eficiente para ajudá-lo a alcançar seus objetivos.
                 </motion.span>
 
                 <div className="flex w-full flex-col gap-4 font-normal sm:flex-row lg:flex-wrap sm:items-center">
