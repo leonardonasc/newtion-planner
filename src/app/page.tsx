@@ -12,7 +12,7 @@ export default function Home() {
       </nav>
 
       <main className="relative isolate">
-        <section className="sticky top-0 h-screen z-0 bg-offwhite-50" id="início">
+        <section className="sticky top-0 h-screen z-0 bg-offwhite-50" id="inicio">
           <div className="h-full max-w-6xl mx-auto">
             <LandingMain />
           </div>

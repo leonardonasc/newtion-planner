@@ -174,6 +174,7 @@ export default function LandingMain() {
                         <ButtonWithIconDemo />
                         <a
                             href="https://github.com/leonardonasc/newtion-planner"
+                            target="_blank"
                             className="flex gap-x-2 h-12 w-full lg:w-fit items-center justify-center rounded-full border border-stone-300 px-6 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-100 hover:text-stone-950"
                         >
                             Repositório <GithubLogoIcon size={18} />
@@ -194,7 +195,7 @@ export default function LandingMain() {
                 className={["flex-col self-center hidden md:flex justify-center gap-y-1 text-gray-700 transition-opacity duration-300", isAtTop ? "opacity-100" : "opacity-0 pointer-events-none"].join(" ")}
             >
                 <a href="#inside-project" className="flex flex-col items-center gap-y-1 hover:cursor-pointer">
-                    <Mouse size={24} />
+                    <Mouse size={18} />
                     <ArrowDown size={16} />
                 </a>
             </motion.div>

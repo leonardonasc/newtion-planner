@@ -1,10 +1,8 @@
-import { Logout } from "@/components/logout";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { auth } from "@/lib/auth";
-import { ArrowUpRight, Check, ExternalLink, ExternalLinkIcon, SquareCheckBig } from "lucide-react";
+import { ArrowUpRight, SquareCheckBig } from "lucide-react";
 import { headers } from "next/headers";
-import Link from "next/link";
 
 export const revalidate = 60;
 export default async function Page() {
@@ -69,21 +67,21 @@ export default async function Page() {
               <div className="flex justify-between items-center text-neutral-700">
                 <div className="flex flex-1 gap-x-2 items-center">
                   <Checkbox />
-                  <span className="font-normal text-sm max-w-[150px] text-ellipsis overflow-hidden whitespace-nowrap">Arrumar alguma coisa ababa</span>
+                  <span className="font-normal text-sm max-w-37.5 text-ellipsis overflow-hidden whitespace-nowrap">Arrumar alguma coisa ababa</span>
                 </div>
                 <span className="text-xs text-neutral-500 uppercase">trabalho</span>
               </div>
               <div className="flex justify-between items-center text-neutral-700">
                 <div className="flex flex-1 gap-x-2 items-center">
                   <Checkbox />
-                  <span className="font-normal text-sm max-w-[150px] text-ellipsis overflow-hidden whitespace-nowrap">Arrumar alguma coisa ababa</span>
+                  <span className="font-normal text-sm max-w-37.5 text-ellipsis overflow-hidden whitespace-nowrap">Arrumar alguma coisa ababa</span>
                 </div>
                 <span className="text-xs text-neutral-500 uppercase">trabalho</span>
               </div>
               <div className="flex justify-between items-center text-neutral-700">
                 <div className="flex flex-1 gap-x-2 items-center">
                   <Checkbox />
-                  <span className="font-normal text-sm max-w-[150px] text-ellipsis overflow-hidden whitespace-nowrap">Arrumar alguma coisa ababa</span>
+                  <span className="font-normal text-sm max-w-37.5 text-ellipsis overflow-hidden whitespace-nowrap">Arrumar alguma coisa ababa</span>
                 </div>
                 <span className="text-xs text-neutral-500 uppercase">trabalho</span>
               </div>
