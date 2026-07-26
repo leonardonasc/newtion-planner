@@ -138,7 +138,7 @@ src/
 Clone o projeto
 
 ```bash
-git clone https://github.com/seuusuario/newtion.git
+git clone https://github.com/leonardonasc/newtion-planner.git
 ```
 
 Entre na pasta
@@ -221,19 +221,13 @@ O foco da interface é manter:
 
 - [ ] Calendário
 - [ ] Hábitos
-- [ ] Objetivos
 - [ ] IA integrada
-- [ ] Compartilhamento de páginas
-- [ ] Colaboração em tempo real
-- [ ] Aplicativo Mobile
 - [ ] Exportação em PDF
-- [ ] Sincronização em nuvem
 
 ## Em desenvolvimento
 
-- [ ] Melhorias de performance
-- [ ] Sistema de notificações
 - [ ] Dashboard avançado
+- [ ] UI final de cada página
 
 ---
 
