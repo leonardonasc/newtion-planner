@@ -43,11 +43,7 @@ const ebGaramond = EB_Garamond({
 });
 
 export const metadata: Metadata = {
-<<<<<<< HEAD
-  title: "Newtion — Organize suas tarefas",
-=======
   title: "Newtion — Organize suas tarefas e gerencie seus gastos",
->>>>>>> dev
   description: "Organize suas tarefas, acompanhe seus projetos e gerencie seus gastos de forma eficiente com o Newtion Planner. Nossa plataforma intuitiva e fácil de usar ajuda você a alcançar seus objetivos e manter o controle de suas atividades diárias.",
 };
 
