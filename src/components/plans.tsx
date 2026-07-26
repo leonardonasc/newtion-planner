@@ -1,73 +1,170 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Check, Sparkles } from "lucide-react";
+
+import { Button } from "./ui/button";
 
 export default function Plans() {
-
-    const data = [
+    const plans = [
         {
             id: 1,
             title: "Básico",
-            description: "Plano inicial",
+            description: "Ideal para começar a organizar sua rotina.",
             amount: "Grátis",
-            type: "normal",
-            buyButton: "Plano base",
-            upgradeList: [
-                "Até 3 notas",
-                "Até 3 todos",
-                "Até 3 wishlists",
-            ]
+            popular: false,
+            button: "Plano atual",
+            benefits: [
+                "Projetos ilimitados",
+                "Notas ilimitadas",
+                "Controle de tarefas",
+                "Dashboard básico",
+            ],
         },
         {
             id: 2,
             title: "Premium",
-            description: "Plano com mais recursos",
-            amount: "R$20,00",
-            type: "most popular",
-            buyButton: "Melhorar plano",
-            upgradeList: [
-                "Até 5 notas",
-                "Até 5 todos",
-                "Até 5 wishlists",
-            ]
+            description: "Todos os recursos para elevar sua produtividade.",
+            amount: "R$20",
+            popular: true,
+            button: "Assinar Premium",
+            benefits: [
+                "Tudo do plano Básico",
+                "Dashboard avançado",
+                "Widgets exclusivos",
+                "Exportação em PDF",
+                "Temas personalizados",
+                "Sincronização em nuvem",
+            ],
         },
         {
             id: 3,
-            title: "Suporter",
-            description: "Plano para apoiar o projeto",
-            amount: "R$50,00",
-            type: "normal",
-            buyButton: "Melhorar plano",
-            upgradeList: [
-                "Benefício 1",
-                "Benefício 2",
-                "Benefício 3"
-            ]
-        }
-    ]
+            title: "Supporter",
+            description: "Ajude a manter o projeto vivo e em constante evolução.",
+            amount: "R$50",
+            popular: false,
+            button: "Apoiar projeto",
+            benefits: [
+                "Tudo do Premium",
+                "Cargo exclusivo no Discord",
+                "Acesso antecipado às novidades",
+                "Badge de apoiador",
+            ],
+        },
+    ];
 
     return (
-        <div className='flex flex-col gap-x-4 w-full font-sans'>
-            <p className='text-gray-700 font-sans font-bold text-3xl md:text-5xl w-full text-center mb-10'>Planos</p>
-            <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 items-start'>
-                {data.map((item) => (
-                    <div key={item.id} className={`relative rounded-md mb-4 ${item.type === "most popular" ? "bg-linear-to-r from-blue-500 via-fuchsia-500 to-purple-500 p-0.5" : "border border-gray-300"}`}>
-                        {item.type === "most popular" && (
-                            <div className="absolute top-1 right-1 z-10 rounded-md font-sans bg-linear-to-r from-purple-500 via-blue-500 to-fuchsia-500 px-3 py-1 text-xs  text-white">
-                                Mais Popular
+        <section className="w-full py-24 font-work-sans">
+            <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                className="mx-auto max-w-7xl"
+            >
+                <div className="mb-16 text-center">
+                    <span className="rounded-full border border-blue-200 bg-blue-50 px-4 py-1 text-sm font-medium text-blue-600">
+                        Planos
+                    </span>
+
+                    <h2 className="mt-5 text-4xl font-bold tracking-tight text-gray-900 md:text-5xl">
+                        Escolha o plano ideal
+                    </h2>
+
+                    <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-gray-600">
+                        Comece gratuitamente e faça upgrade apenas quando precisar de
+                        recursos mais avançados.
+                    </p>
+                </div>
+
+                <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+                    {plans.map((plan) => (
+                        <motion.div
+                            key={plan.id}
+                            whileHover={{
+                                y: -6,
+                                transition: { duration: 0.2 },
+                            }}
+                            className={`relative flex h-full flex-col rounded-3xl ${plan.popular
+                                    ? "bg-linear-to-br from-blue-500 to-blue-700 p-px shadow-xl shadow-blue-500/20"
+                                    : "border border-gray-200 bg-white"
+                                }`}
+                        >
+                            {plan.popular && (
+                                <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
+                                    <div className="flex items-center gap-2 rounded-full bg-blue-600 px-4 py-1.5 text-sm font-medium text-white shadow-lg">
+                                        {/* <Sparkles size={15} /> */}
+                                        Mais popular
+                                    </div>
+                                </div>
+                            )}
+
+                            <div
+                                className={`flex h-full flex-col rounded-[23px] p-8 ${plan.popular ? "bg-white" : ""
+                                    }`}
+                            >
+                                <div>
+                                    <h3 className="text-2xl font-bold text-gray-900">
+                                        {plan.title}
+                                    </h3>
+
+                                    <p className="mt-2 text-sm leading-6 h-6 text-gray-500">
+                                        {plan.description}
+                                    </p>
+
+                                    <div className="mt-8">
+                                        <div className="flex items-end gap-1">
+                                            <span className="text-5xl font-bold tracking-tight text-gray-900">
+                                                {plan.amount}
+                                            </span>
+
+                                            {plan.amount !== "Grátis" && (
+                                                <span className="mb-1 text-gray-500">/mês</span>
+                                            )}
+                                        </div>
+
+                                        <p className="mt-2 text-sm text-gray-500">
+                                            Sem taxas ocultas. Cancele quando quiser.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="my-8 h-px bg-gray-200" />
+
+                                <ul className="flex-1 space-y-4">
+                                    {plan.benefits.map((benefit) => (
+                                        <li
+                                            key={benefit}
+                                            className="flex items-center gap-3 text-gray-700"
+                                        >
+                                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+                                                <Check size={14} strokeWidth={3} />
+                                            </div>
+
+                                            <span>{benefit}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                <Button
+                                    className={`mt-10 h-12 w-full cursor-pointer rounded-xl text-base ${plan.popular
+                                            ? ""
+                                            : "border-gray-300 hover:border-gray-400"
+                                        }`}
+                                    variant={plan.popular ? "default" : "outline"}
+                                    disabled={plan.amount === "Grátis"}
+                                >
+                                    {plan.button}
+                                </Button>
                             </div>
-                        )}
-                        <div className={`flex flex-col gap-y-6 rounded-md p-4 ${item.type === "most popular" ? "bg-white" : "bg-gray-50"}`}>
-                            <div>
-                                <p className='text-gray-700 font-sans font-bold text-2xl'>{item.title}</p>
-                                <p className='text-gray-700 font-sans font-bold text-xl'>{item.amount}<span className={'text-lg font-normal ' + (item.amount === "Grátis" ? "hidden" : "")}>/mês</span></p>
-                            </div>
-                            <ul className='flex flex-col'>
-                                {item.upgradeList.map((upgrade, index) => (
-                                    <li key={index} className='text-gray-500 font-sans text-sm'><span className='border-b border-dotted border-b-gray-200'>{upgrade}</span></li>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-    )
+                        </motion.div>
+                    ))}
+                </div>
+
+                <p className="mt-10 text-center text-sm text-gray-500">
+                    Todos os planos incluem atualizações constantes e suporte à plataforma.
+                </p>
+            </motion.div>
+        </section>
+    );
 }
