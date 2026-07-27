@@ -4,13 +4,9 @@ import Link from "next/link";
 export default function AboutPage() {
     return (
         <div className="min-h-screen bg-white font-work-sans">
-            <main className="mx-auto max-w-3xl px-6 py-16">
+            <main className="mx-auto max-w-5xl px-6 py-16">
                 <header className="mb-12 border-b border-gray-200 pb-8 flex flex-col">
-                    <Link href="/" className="text-sm mb-7 font-medium text-blue-600 hover:underline">
-                        &larr; Voltar para a página inicial
-                    </Link>
-
-                    <div className="mt-4 flex flex-col">
+                    <div className="mt-30 flex flex-col">
                         <span className="text-md font-bold uppercase tracking-wider text-blue-600">
                             Sobre
                         </span>

@@ -1,6 +1,23 @@
 "use client";
 
-import { ReactLenis } from "lenis/react";
+import { ReactLenis, useLenis } from "lenis/react";
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+
+function ScrollManager() {
+  const lenis = useLenis();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    lenis?.scrollTo(0, {
+      immediate: true,
+    });
+
+    lenis?.resize();
+  }, [pathname, lenis]);
+
+  return null;
+}
 
 export default function SmoothScroll({
   children,
@@ -17,6 +34,7 @@ export default function SmoothScroll({
         touchMultiplier: 1.5,
       }}
     >
+      <ScrollManager />
       {children}
     </ReactLenis>
   );

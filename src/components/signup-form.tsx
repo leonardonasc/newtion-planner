@@ -26,6 +26,7 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { Loader2 } from "lucide-react"
 import { authClient } from "@/lib/auth-client"
+import Link from "next/link"
 
 const formSchema = z.object({
     name: z.string().min(3),
@@ -179,7 +180,7 @@ export function SignUpForm({
                                     Sign Up with Google
                                 </Button>
                                 <FieldDescription className="text-center text-stone-600">
-                                    Already have an account? <a href="/sign-in" className="text-blue-600 hover:underline hover:text-blue-700">Log in</a>
+                                    Already have an account? <Link href="/sign-in" className="text-blue-600 hover:underline hover:text-blue-700">Log in</Link>
                                 </FieldDescription>
                             </Field>
                         </FieldGroup>

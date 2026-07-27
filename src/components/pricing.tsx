@@ -1,11 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, Sparkles } from "lucide-react";
+import { Check, Zap } from "lucide-react";
 
 import { Button } from "./ui/button";
+import Tag from "./tag";
+import SubDescription from "./sub-description";
+import { useState } from "react";
 
 export default function Plans() {
+
+    const [selectYearly, setSelectYearly] = useState(false);
+
     const plans = [
         {
             id: 1,
@@ -13,13 +19,12 @@ export default function Plans() {
             description: "Ideal para começar a organizar sua rotina.",
             amount: "Grátis",
             popular: false,
-            button: "Plano atual",
+            button: "Plano Básico",
             benefits: [
-                "Projetos ilimitados",
-                "Notas ilimitadas",
-                "Controle de tarefas",
-                "Dashboard básico",
-            ],
+                { id: 1, text: "Projetos ilimitados" },
+                { id: 2, text: "A definir" },
+                { id: 3, text: "A definir" },
+            ]
         },
         {
             id: 2,
@@ -29,12 +34,9 @@ export default function Plans() {
             popular: true,
             button: "Assinar Premium",
             benefits: [
-                "Tudo do plano Básico",
-                "Dashboard avançado",
-                "Widgets exclusivos",
-                "Exportação em PDF",
-                "Temas personalizados",
-                "Sincronização em nuvem",
+                { id: 1, text: "Tudo do plano Básico" },
+                { id: 2, text: "Exportação em PDF" },
+                { id: 3, text: "A definir" },
             ],
         },
         {
@@ -45,10 +47,9 @@ export default function Plans() {
             popular: false,
             button: "Apoiar projeto",
             benefits: [
-                "Tudo do Premium",
-                "Cargo exclusivo no Discord",
-                "Acesso antecipado às novidades",
-                "Badge de apoiador",
+                { id: 1, text: "Tudo do Premium" },
+                { id: 2, text: "Badge de apoiador" },
+                { id: 3, text: "A definir" },
             ],
         },
     ];
@@ -63,18 +64,12 @@ export default function Plans() {
                 className="mx-auto max-w-7xl"
             >
                 <div className="mb-16 text-center">
-                    <span className="rounded-full border border-blue-200 bg-blue-50 px-4 py-1 text-sm font-medium text-blue-600">
-                        Planos
-                    </span>
-
-                    <h2 className="mt-5 text-4xl font-bold tracking-tight text-gray-900 md:text-5xl">
-                        Escolha o plano ideal
-                    </h2>
-
-                    <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-gray-600">
-                        Comece gratuitamente e faça upgrade apenas quando precisar de
-                        recursos mais avançados.
-                    </p>
+                    <Tag text="Planos" />
+                    <SubDescription
+                        title="Escolha o plano ideal"
+                        description="Comece gratuitamente e faça upgrade apenas quando precisar de
+                        recursos mais avançados."
+                    />
                 </div>
 
                 <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
@@ -86,14 +81,14 @@ export default function Plans() {
                                 transition: { duration: 0.2 },
                             }}
                             className={`relative flex h-full flex-col rounded-3xl ${plan.popular
-                                    ? "bg-linear-to-br from-blue-500 to-blue-700 p-px shadow-xl shadow-blue-500/20"
-                                    : "border border-gray-200 bg-white"
+                                ? "bg-linear-to-br from-blue-500 to-blue-700 p-px shadow-xl shadow-blue-500/20"
+                                : "border border-gray-200 bg-white"
                                 }`}
                         >
                             {plan.popular && (
                                 <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
                                     <div className="flex items-center gap-2 rounded-full bg-blue-600 px-4 py-1.5 text-sm font-medium text-white shadow-lg">
-                                        {/* <Sparkles size={15} /> */}
+                                        <Zap size={15} />
                                         Mais popular
                                     </div>
                                 </div>
@@ -104,52 +99,44 @@ export default function Plans() {
                                     }`}
                             >
                                 <div>
-                                    <h3 className="text-2xl font-bold text-gray-900">
+                                    <h3 className="text-2xl font-semibold text-gray-900">
                                         {plan.title}
                                     </h3>
 
-                                    <p className="mt-2 text-sm leading-6 h-6 text-gray-500">
-                                        {plan.description}
-                                    </p>
-
-                                    <div className="mt-8">
+                                    <div>
                                         <div className="flex items-end gap-1">
                                             <span className="text-5xl font-bold tracking-tight text-gray-900">
                                                 {plan.amount}
                                             </span>
 
                                             {plan.amount !== "Grátis" && (
-                                                <span className="mb-1 text-gray-500">/mês</span>
+                                                <span className="mb-1 text-gray-500 font-normal">/mês</span>
                                             )}
                                         </div>
-
-                                        <p className="mt-2 text-sm text-gray-500">
-                                            Sem taxas ocultas. Cancele quando quiser.
-                                        </p>
                                     </div>
                                 </div>
 
-                                <div className="my-8 h-px bg-gray-200" />
+                                <div className="my-8 border-t border-dotted" />
 
-                                <ul className="flex-1 space-y-4">
+                                <ul className="flex-1 space-y-3">
                                     {plan.benefits.map((benefit) => (
                                         <li
-                                            key={benefit}
+                                            key={benefit.id}
                                             className="flex items-center gap-3 text-gray-700"
                                         >
-                                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 text-blue-600">
-                                                <Check size={14} strokeWidth={3} />
+                                            <div>
+                                                <Check size={16} className="text-blue-600" />
                                             </div>
 
-                                            <span>{benefit}</span>
+                                            <span className="text-md font-normal text-gray-500">{benefit.text}</span>
                                         </li>
                                     ))}
                                 </ul>
 
                                 <Button
                                     className={`mt-10 h-12 w-full cursor-pointer rounded-xl text-base ${plan.popular
-                                            ? ""
-                                            : "border-gray-300 hover:border-gray-400"
+                                        ? ""
+                                        : "border-gray-300 hover:border-gray-400"
                                         }`}
                                     variant={plan.popular ? "default" : "outline"}
                                     disabled={plan.amount === "Grátis"}
@@ -160,10 +147,6 @@ export default function Plans() {
                         </motion.div>
                     ))}
                 </div>
-
-                <p className="mt-10 text-center text-sm text-gray-500">
-                    Todos os planos incluem atualizações constantes e suporte à plataforma.
-                </p>
             </motion.div>
         </section>
     );

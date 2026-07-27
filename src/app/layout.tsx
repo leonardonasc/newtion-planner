@@ -6,6 +6,8 @@ import { Toaster } from "@/components/ui/sonner"
 import { TailwindIndicator } from "@/components/TailwindIndicator";
 import SmoothScroll from "@/components/providers/smooth-scroll";
 import CustomCursor from "@/components/custom-cursor";
+import LandingNavbar from "@/components/bar/landing-navbar";
+import Footer from "@/components/footer";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
@@ -59,15 +61,29 @@ export default function RootLayout({
       className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-mono", jetbrainsMono.variable, workSans.variable, "font-work-sans", arapey.variable, "font-arapey", caveat.variable, "font-caveat", ebGaramond.variable, "font-eb-garamond")}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-offwhite-50">
-        {/* enablesystem desativado para manter apenas o whitetheme na aplicacao */}
-          <CustomCursor />
-        <SmoothScroll>
-          {children}
-        </SmoothScroll>
 
-        <Toaster />
-        <TailwindIndicator />
+      <body className="min-h-full flex flex-col bg-offwhite-50">
+        <header>
+          <nav className="fixed top-0 left-0 right-0 z-50 p-2">
+            <LandingNavbar />
+          </nav>
+        </header>
+        <main>
+          {/* enablesystem desativado para manter apenas o whitetheme na aplicacao */}
+          <CustomCursor />
+          <SmoothScroll>
+            {children}
+          </SmoothScroll>
+
+          <Toaster />
+          <TailwindIndicator />
+        </main>
+
+        <footer className="relative z-30 bg-offwhite-50 border-t border-gray-200">
+          <div className="max-w-6xl mx-auto p-4">
+            <Footer />
+          </div>
+        </footer>
       </body>
     </html>
   );

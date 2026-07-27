@@ -1,12 +1,18 @@
+import Link from 'next/link'
 import React from 'react'
 
 export default function Footer() {
 
-    const items = [
+    const primary = [
         { label: "Como surgiu", href: "/about" },
         { label: "Repositório", href: "https://github.com/leonardonasc/newtion-planner" },
-        { label: "Taskmap", href: "/mapping" },
+        { label: "Roadmap", href: "/mapping" },
         { label: "Contato", href: "/contact" },
+    ]
+
+    const secondary = [
+        { label: "Política de Privacidade", href: "/privacy" },
+        { label: "Termos de Serviço", href: "/terms" },
     ]
 
     return (
@@ -20,11 +26,23 @@ export default function Footer() {
             <div className='flex flex-col'>
                 <h2 className="font-work-sans font-semibold text-xl mb-2">Sobre</h2>
                 <ul className="flex flex-col gap-y-1">
-                    {items.map((item) => (
+                    {primary.map((item) => (
                         <li key={item.href} className="text-gray-500 font-work-sans font-medium text-md hover:cursor-pointer hover:text-blue-500 hover:underline underline-offset-2">
-                            <a href={item.href} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                            <Link href={item.href} target="_blank" rel="noopener noreferrer" className="hover:underline">
                                 {item.label}
-                            </a>
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            <div className='flex flex-col'>
+                <h2 className="font-work-sans font-semibold text-xl mb-2">Legal</h2>
+                <ul className="flex flex-col gap-y-1">
+                    {secondary.map((item) => (
+                        <li key={item.href} className="text-gray-500 font-work-sans font-medium text-md hover:cursor-pointer hover:text-blue-500 hover:underline underline-offset-2">
+                            <Link href={item.href} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                                {item.label}
+                            </Link>
                         </li>
                     ))}
                 </ul>

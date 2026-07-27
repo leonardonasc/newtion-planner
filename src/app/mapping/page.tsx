@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ArrowUpRightIcon } from "lucide-react";
+import Link from "next/link";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState("all");
@@ -47,7 +48,7 @@ export default function Page() {
     },
     {
       id: 9,
-      description: "pagina para pomodoro + integrar musica (lofi)",
+      description: "página para pomodoro + integrar musica (lofi)",
       status: "planning",
     },
     {
@@ -67,13 +68,13 @@ export default function Page() {
     },
     {
       id: 13,
-      description: "fazer a página de login",
+      description: "arrumar a página de login e register",
       status: "progress",
     },
     {
       id: 14,
       description: "fazer paginator",
-      status: "review",
+      status: "progress",
       link: 'https://orm.drizzle.team/docs/guides/limit-offset-pagination'
     },
     {
@@ -84,16 +85,29 @@ export default function Page() {
     {
       id: 16,
       description: "fazer a página sobre o projeto",
-      status: "planning",
+      status: "progress",
     }, {
       id: 17,
       description: "fazer a página de 404",
-      status: "planning",
+      status: "review",
     },
     {
       id: 18,
       description: "erro ao visitar uma página e voltar, ex: abrir a página de sobre e apertar o botão de voltar do navegador, a página renderiza mas todos os elementos ficam errados",
+      status: "review",
+    }, {
+      id: 19,
+      description: "arrumar tipagem da dashboard header",
       status: "planning",
+    }, {
+      id: 20,
+      description: "arrumar a velocidade do hover, ta muito lento",
+      status: "review",
+    },
+    {
+      id: 21,
+      description: "colocar um layout com nav e footer",
+      status: "review",
     }
   ];
   const tabs = [
@@ -107,7 +121,7 @@ export default function Page() {
   const filteredData = activeTab === "all" ? data : data.filter((item) => item.status === activeTab);
 
   return (
-    <div className="min-h-screen font-work-sans p-4 md:px-60 md:py-10">
+    <div className="min-h-screen font-work-sans p-4 md:px-60 md:py-10 mt-20">
       <header className="mb-8">
         <h1 className="text-xl font-semibold text-gray-900">
           Mapping de tarefas
@@ -117,10 +131,6 @@ export default function Page() {
           Aqui estão todas as tarefas mapeadas até o momento e o seu respectivo
           estado.
         </p>
-
-        <a href="/" className="mt-4 inline-flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-          Voltar para a página inicial
-        </a>
       </header>
 
       <div className="flex gap-2 border-b border-gray-200 mb-6 overflow-x-auto">
