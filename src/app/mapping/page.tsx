@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import { ArrowUpRightIcon } from "lucide-react";
-import Link from "next/link";
 
 export default function Page() {
-  const [activeTab, setActiveTab] = useState("all");
+  const [activeTab, setActiveTab] = useState("planning");
 
   const data = [
     {
@@ -123,13 +122,14 @@ export default function Page() {
   return (
     <div className="min-h-screen font-work-sans p-4 md:px-60 md:py-10 mt-20">
       <header className="mb-8">
-        <h1 className="text-xl font-semibold text-gray-900">
+        <h1 className="text-xl mb-4 font-semibold text-gray-900">
           Mapping de tarefas
         </h1>
 
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-gray-600 font-normal md:text-lg">
           Aqui estão todas as tarefas mapeadas até o momento e o seu respectivo
-          estado.
+          estado, lembrando que isso é apenas um mapeamento para usar na parte de desenvolvimento e será removido futuramente,
+          substituído por um roadmap profissional.
         </p>
       </header>
 
@@ -138,7 +138,7 @@ export default function Page() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`pb-3 px-2 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${activeTab === tab.id
+            className={`pb-3 px-2 text-sm font-normal border-b-2 transition-colors whitespace-nowrap ${activeTab === tab.id
               ? "border-blue-600 text-blue-600"
               : "border-transparent text-gray-500 hover:text-gray-900"
               }`}
@@ -148,7 +148,7 @@ export default function Page() {
         ))}
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 font-normal">
         {filteredData.length > 0 ? (
           filteredData.map((item) => (
             <div
@@ -167,7 +167,7 @@ export default function Page() {
                   <ArrowUpRightIcon size={15} className="ml-1" />
                 </a>
               ) : (
-                <p className="text-gray-700">
+                <p className="text-gray-600">
                   {item.description.charAt(0).toUpperCase() +
                     item.description.slice(1)}
                 </p>
@@ -175,7 +175,7 @@ export default function Page() {
             </div>
           ))
         ) : (
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-500 font-normal text-md">
             Nenhuma tarefa encontrada.
           </p>
         )}

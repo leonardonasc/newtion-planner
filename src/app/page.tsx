@@ -1,7 +1,7 @@
 import InsideProject from "@/components/inside-project";
 import LandingNavbar from "@/components/bar/landing-navbar";
 import LandingMain from "@/components/landing-main";
-import Plans from "@/components/pricing";
+import Pricing from "@/components/pricing";
 import Footer from "@/components/footer";
 
 export default function Home() {
@@ -22,7 +22,7 @@ export default function Home() {
 
         <section className="relative z-20 bg-offwhite-50 ">
           <div className="max-w-6xl mx-auto p-4">
-            <Plans />
+            <Pricing />
           </div>
         </section>
       </main>

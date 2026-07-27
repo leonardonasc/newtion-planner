@@ -8,7 +8,7 @@ import Tag from "./tag";
 import SubDescription from "./sub-description";
 import { useState } from "react";
 
-export default function Plans() {
+export default function Pricing() {
 
     const [selectYearly, setSelectYearly] = useState(false);
 
@@ -78,7 +78,7 @@ export default function Plans() {
                             key={plan.id}
                             whileHover={{
                                 y: -6,
-                                transition: { duration: 0.2 },
+                                transition: { duration: 0.1 },
                             }}
                             className={`relative flex h-full flex-col rounded-3xl ${plan.popular
                                 ? "bg-linear-to-br from-blue-500 to-blue-700 p-px shadow-xl shadow-blue-500/20"

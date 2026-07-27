@@ -73,12 +73,9 @@ export default function InsideProject() {
                 whileInView={{ opacity: 1, y: 0 }}
                 whileHover={{
                   y: -6,
-                  transition: { duration: 0.2 },
+                  transition: { duration: 0.1 },
                 }}
-                transition={{
-                  delay: index * 0.08,
-                  duration: 0.1,
-                }}
+
                 viewport={{ once: true }}
                 className="group overflow-hidden rounded-3xl border border-gray-200 bg-white"
               >

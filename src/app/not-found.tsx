@@ -31,7 +31,7 @@ export default function NotFound() {
       </p>
 
       <span className="my-6 max-w-60 text-center font-normal text-gray-500 md:max-w-100">
-        Infelizmente, a página que você está procurando não existe. Verifique a
+        Infelizmente, a página que você está procurando não existe ou ainda não foi implementada. Verifique a
         URL ou volte para a página inicial.
       </span>
 
