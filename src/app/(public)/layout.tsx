@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, JetBrains_Mono, Work_Sans, Arapey, Caveat, EB_Garamond } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner"
 import { TailwindIndicator } from "@/components/TailwindIndicator";
@@ -49,6 +49,8 @@ export const metadata: Metadata = {
   description: "Organize suas tarefas, acompanhe seus projetos e gerencie seus gastos de forma eficiente com o Newtion Planner. Nossa plataforma intuitiva e fácil de usar ajuda você a alcançar seus objetivos e manter o controle de suas atividades diárias.",
 };
 
+// public layout
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -63,6 +65,12 @@ export default function RootLayout({
     >
 
       <body className="min-h-full flex flex-col bg-offwhite-50">
+        <header>
+          <nav className="fixed top-0 left-0 right-0 z-50 p-2">
+            <LandingNavbar />
+          </nav>
+        </header>
+        <main>
           {/* enablesystem desativado para manter apenas o whitetheme na aplicacao */}
           <CustomCursor />
           <SmoothScroll>
@@ -71,7 +79,13 @@ export default function RootLayout({
 
           <Toaster />
           <TailwindIndicator />
+        </main>
 
+        <footer className="relative z-30 bg-offwhite-50 border-t border-gray-200">
+          <div className="max-w-6xl mx-auto p-4">
+            <Footer />
+          </div>
+        </footer>
       </body>
     </html>
   );

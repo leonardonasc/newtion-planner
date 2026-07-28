@@ -155,9 +155,9 @@
    
   }
   body {
-    @apply bg-white text-foreground;
+    @apply bg-offwhite-50 text-foreground;
   }
   html {
-    @apply font-light;
+    @apply font-normal font-work-sans;
   }
 }

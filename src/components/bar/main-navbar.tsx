@@ -1,4 +1,3 @@
-import React from 'react'
 
 interface MainNavbarProps {
    user: any
@@ -6,6 +5,8 @@ interface MainNavbarProps {
 
 export default function MainNavbar({ user }: MainNavbarProps) {
     return (
-        <div>main-navbar</div>
+        <div className="bg-white shadow-md w-full h-10">
+            {user?.name}
+        </div>
     )
 }
