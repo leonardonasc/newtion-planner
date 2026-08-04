@@ -1,33 +1,25 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, JetBrains_Mono, Work_Sans, Arapey, Caveat, EB_Garamond } from "next/font/google";
+import { Geist, Work_Sans, EB_Garamond, Crimson_Text, Caveat, Annie_Use_Your_Telescope } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner"
 import { TailwindIndicator } from "@/components/TailwindIndicator";
 import SmoothScroll from "@/components/providers/smooth-scroll";
 import CustomCursor from "@/components/custom-cursor";
-import LandingNavbar from "@/components/bar/landing-navbar";
-import Footer from "@/components/footer";
-
-const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const crimsonText = Crimson_Text({
+  variable: "--font-crimson-text",
   subsets: ["latin"],
+  weight: ["400", "600", "700"],
 });
 
-const workSans = Work_Sans({
-  variable: "--font-work-sans",
-  subsets: ["latin"],
-});
-
-const arapey = Arapey({
-  variable: "--font-arapey",
+const annieUseYourTelescope = Annie_Use_Your_Telescope({
+  variable: "--font-annie-use-your-telescope",
   subsets: ["latin"],
   weight: ["400"],
 });
@@ -36,6 +28,11 @@ const caveat = Caveat({
   variable: "--font-caveat",
   subsets: ["latin"],
   weight: ["400", "700"],
+});
+
+const workSans = Work_Sans({
+  variable: "--font-work-sans",
+  subsets: ["latin"],
 });
 
 const ebGaramond = EB_Garamond({
@@ -58,20 +55,18 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-mono", jetbrainsMono.variable, workSans.variable, "font-work-sans", arapey.variable, "font-arapey", caveat.variable, "font-caveat", ebGaramond.variable, "font-eb-garamond")}
+      className={cn("h-full", "antialiased", geistSans.variable, workSans.variable, caveat.variable, "font-work-sans", ebGaramond.variable, "font-eb-garamond", crimsonText.variable, "font-crimson-text", annieUseYourTelescope.variable, "font-indie-flower")}
       suppressHydrationWarning
     >
 
       <body className="min-h-full flex flex-col bg-offwhite-50">
-          {/* enablesystem desativado para manter apenas o whitetheme na aplicacao */}
-          <CustomCursor />
-          <SmoothScroll>
-            {children}
-          </SmoothScroll>
+        <CustomCursor />
+        <SmoothScroll>
+          {children}
+        </SmoothScroll>
 
-          <Toaster />
-          <TailwindIndicator />
-
+        <Toaster />
+        <TailwindIndicator />
       </body>
     </html>
   );

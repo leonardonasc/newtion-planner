@@ -21,7 +21,7 @@ export default function LandingNavbar() {
             {mobile ? (
                 <div className="flex border shadow h-14 items-center bg-white/70 backdrop-blur-md text-gray-700 mt-3 rounded-full justify-between px-4">
                     <Link href="/" className="text-sm font-bold uppercase text-blue-500">Newtion</Link>
-                    <Button className="bg-transparent rounded-full text-gray-700" onClick={() => setOpen(!open)}>
+                    <Button className="bg-transparent rounded-full text-blue-500" onClick={() => setOpen(!open)}>
                         {
                             open ? <X size={16} /> : <Menu size={16} />
                         }
@@ -42,7 +42,7 @@ export default function LandingNavbar() {
                 <div className="mx-auto flex w-[80%] md:w-[95%] 2xl:w-[60%] border bg-white/70 backdrop-blur-md shadow h-14 items-center mt-3 rounded-full justify-between px-4 text-gray-700 border-zinc-200">
                     <Link href="/" className="text-sm font-bold uppercase text-blue-500 ml-2">Newtion</Link>
                     <div className="block lg:hidden">
-                        <Button className="bg-transparent rounded-full text-gray-700" onClick={() => setOpen(!open)}>
+                        <Button className="bg-transparent rounded-full text-blue-500" onClick={() => setOpen(!open)}>
                             {
                                 open ? <X size={16} /> : <Menu size={16} />
                             }

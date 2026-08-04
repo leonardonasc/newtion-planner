@@ -1,48 +1,11 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono, JetBrains_Mono, Work_Sans, Arapey, Caveat, EB_Garamond } from "next/font/google";
+
 import "../globals.css";
-import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner"
 import { TailwindIndicator } from "@/components/TailwindIndicator";
 import SmoothScroll from "@/components/providers/smooth-scroll";
 import CustomCursor from "@/components/custom-cursor";
 import LandingNavbar from "@/components/bar/landing-navbar";
 import Footer from "@/components/footer";
-
-const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const workSans = Work_Sans({
-  variable: "--font-work-sans",
-  subsets: ["latin"],
-});
-
-const arapey = Arapey({
-  variable: "--font-arapey",
-  subsets: ["latin"],
-  weight: ["400"],
-});
-
-const caveat = Caveat({
-  variable: "--font-caveat",
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
-
-const ebGaramond = EB_Garamond({
-  variable: "--font-eb-garamond",
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
 
 // public layout
 

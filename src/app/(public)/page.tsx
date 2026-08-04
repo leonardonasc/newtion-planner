@@ -1,8 +1,6 @@
 import InsideProject from "@/components/inside-project";
-import LandingNavbar from "@/components/bar/landing-navbar";
 import LandingMain from "@/components/landing-main";
 import Pricing from "@/components/pricing";
-import Footer from "@/components/footer";
 
 export default function Home() {
   return (

@@ -8,7 +8,7 @@ type Props = {
 export default function CreateTodoForm({ onClose }: Props) {
 
     return (
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded-md shadow-md">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-background text-foreground border border-border p-4 rounded-md shadow-md">
             <form action={async (formData) => {
                 await createTodo({
                     title: formData.get("title") as string,

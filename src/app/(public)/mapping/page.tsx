@@ -107,7 +107,30 @@ export default function Page() {
       id: 21,
       description: "colocar um layout com nav e footer",
       status: "review",
+    },
+    {
+      id: 22,
+      description: "adicionar categoria das tarefas",
+      status: "planning",
+    }, {
+      id: 23,
+      description: "criar uma admin page",
+      status: "planning",
+    }, {
+      id: 24,
+      description: "Fazer as páginas responsivas para web",
+      status: "planning",
+    }, {
+      id: 25,
+      description: "Corrigir o erro de fundo brando nas páginas protegidas",
+      status: "done",
+    },{
+      id: 26,
+      description: "Fazer um proxy para não conseguir ir no login/register caso esteja logado",
+      status: "done",
     }
+
+
   ];
   const tabs = [
     { id: "all", label: "Todas" },
@@ -160,14 +183,16 @@ export default function Page() {
                   href={item.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center text-blue-800 hover:underline"
+                  className="flex gap-x-1 items-center text-blue-800 hover:underline"
                 >
+                  <span>{item.id} - </span>
                   {item.description.charAt(0).toUpperCase() +
                     item.description.slice(1)}
                   <ArrowUpRightIcon size={15} className="ml-1" />
                 </a>
               ) : (
                 <p className="text-gray-600">
+                  <span>{item.id} - </span>
                   {item.description.charAt(0).toUpperCase() +
                     item.description.slice(1)}
                 </p>

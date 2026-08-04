@@ -94,7 +94,7 @@ export default function InsideProject() {
                         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-blue-600">
                         <Zap size={16} /> 
                       </div>
-                      <p className="text-md font-medium text-blue-600">Pro</p>
+                      <p className="text-md font-medium text-blue-600">Premium</p>
                       </>)
                     }
                     

@@ -1,39 +1,33 @@
 import MainNavbar from "@/components/bar/main-navbar"
+import { ThemeProvider } from "@/components/theme-provider"
+import { ModeToggle } from "@/components/toggle-mode"
 import { auth } from "@/lib/auth"
-import { cn } from "@/lib/utils"
-import { Work_Sans } from "next/font/google"
 import { headers } from "next/headers"
-
-// protected layout
-
-const workSans = Work_Sans({
-    variable: "--font-work-sans",
-    subsets: ["latin"],
-});
-
 
 export default async function TodoLayout({
     children,
 }: {
     children: React.ReactNode
 }) {
-    const session = await auth.api.getSession({ headers: await headers() })
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    })
 
     return (
-        <html
-            lang="en"
-            className={cn("h-full", "antialiased", workSans.variable, "font-work-sans")}
-            suppressHydrationWarning
-        >
-            <body className="min-h-full flex flex-col bg-offwhite-50">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+            <div className="flex min-h-screen flex-col bg-background">
                 <header className="fixed top-0 left-0 right-0 z-50">
-                    <MainNavbar user={session?.user} />
+                    <MainNavbar />
                 </header>
-                {/* arrumar o espaçamento */}
-                <main className="flex-1 mt-8 p-4">
+
+                <main className="mt-16 flex-1  text-foreground p-4">
                     {children}
                 </main>
-            </body>
-        </html>
+
+                <footer className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-center border-t border-border bg-background p-4">
+                    <ModeToggle />
+                </footer>
+            </div>
+        </ThemeProvider>
     )
 }

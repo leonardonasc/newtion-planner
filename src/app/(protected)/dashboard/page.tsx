@@ -1,32 +1,22 @@
 
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import DashboardHeader from "./_components/dashboard-header";
-import CardsResumo from "./_components/cards-resumo";
-import DashboardItems from "./_components/dashboard-items";
+import { getTodos } from "@/server/todos";
+import Workspace from "../_components/workspace";
+import Greetings from "@/components/greetings";
+import News from "@/components/news";
 
 export const revalidate = 60;
 export default async function Page() {
   const session = await auth.api.getSession({ headers: await headers() });
   const user = session?.user;
+  const todos = await getTodos();
+
   return (
-
-    <div className="bg-offwhite-50 font-work-sans">
-
-      {/* Header com informações do usuário */}
-      <header>
-        <DashboardHeader user={user} />
-
-        {/* Cards de resumo */}
-        <CardsResumo />
-      </header>
-
-      <main className="flex flex-col mt-6">
-
-        <DashboardItems />
-
-      </main>
-
+    <div className="font-work-sans flex flex-col gap-y-6">
+      <Greetings name={user?.name} />
+      <Workspace todos={todos} />
+      <News />
     </div>
   )
 }

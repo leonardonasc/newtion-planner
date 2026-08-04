@@ -2,13 +2,15 @@
 
 import { GithubLogoIcon } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
-import { ArrowDown, Mouse } from "lucide-react";
+import { ArrowDown, ArrowRight, Mouse } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import ButtonWithIconDemo from "@/components/ui/button-witn-icon";
+import { Button } from "./ui/button";
 
 export default function LandingMain() {
     const [isAtTop, setIsAtTop] = useState(true);
+    const disabled = true;
 
     useEffect(() => {
         const handleScroll = () => {
@@ -115,33 +117,32 @@ export default function LandingMain() {
                         max-w-3xl
                         text-[2.5rem]
                         leading-9
-                        font-eb-garamond
-                        font-medium
+                        font-crimson-text
+                        font-normal
                         md:text-6xl
                         md:leading-13
                     "
                 >
                     Centralize seu{" "}
-                    <motion.span className="relative inline-block mx-1 text-blue-500 font-caveat">
+                    <motion.span className="relative inline-block mx-1 text-blue-500 font-caveat text-5xl md:text-7xl">
                         planejamento
                         <motion.svg
-                            viewBox="0 0 200 20"
+                            viewBox="0 0 220 24"
                             aria-hidden="true"
-                            focusable="false"
-                            className="absolute -bottom-2 md:-bottom-3 left-0 w-full overflow-visible"
+                            className="absolute -bottom-1.5 left-0 w-full overflow-visible -z-10"
                             initial={{ pathLength: 0 }}
                             animate={{ pathLength: 1 }}
                             transition={{
-                                duration: 1.2, delay: 0.8, ease: "easeInOut",
+                                duration: 1.2,
+                                delay: 0.8,
+                                ease: "easeInOut",
                             }}
                         >
                             <motion.path
-                                d="M5 12
-                                C40 5, 90 18, 140 10
-                                C165 6, 185 10, 195 8"
-                                fill="transparent"
-                                stroke="currentColor"
-                                strokeWidth="1"
+                                d="M8 18 Q110 11 212 18"
+                                fill="none"
+                                stroke="#86a8f0"
+                                strokeWidth="2.4"
                                 strokeLinecap="round"
                             />
                         </motion.svg>
@@ -168,17 +169,56 @@ export default function LandingMain() {
                 >
                     — Planeje suas tarefas, organize seus gastos e acompanhe o progresso de seus projetos com facilidade. Nossa plataforma oferece uma experiência intuitiva e eficiente para ajudá-lo a alcançar seus objetivos.
                 </motion.span>
-
-                <div className="flex w-full flex-col gap-4 font-normal sm:flex-row lg:flex-wrap sm:items-center">
+                <div className="flex w-full flex-col gap-4 font-work-sans sm:flex-row lg:flex-wrap sm:items-center">
                     <motion.div animate={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: -20 }} transition={{ duration: 1, delay: 0.4 }} className="w-full sm:w-auto flex flex-col gap-4 sm:flex-row lg:flex-wrap sm:items-center">
-                        <ButtonWithIconDemo />
-                        <a
-                            href="https://github.com/leonardonasc/newtion-planner"
-                            target="_blank"
-                            className="flex gap-x-2 h-12 w-full lg:w-fit items-center justify-center rounded-full border border-stone-300 px-6 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-100 hover:text-stone-950"
+                        <Button asChild variant="default" className={`w-full p-6 font-semibold rounded-xl sm:w-auto`}
+                            onClick={() => {
+                                alert("No momento, a aplicação está desativada para manutenção. Em breve, estará disponível novamente!");
+                            }}>
+                            <div className="flex items-center justify-center">
+                                <p>Começar agora</p>
+                                <ArrowRight size={16} className="ml-2" />
+                            </div>
+                        </Button>
+
+                        <Button
+                            asChild
+                            variant="ghost"
+                            className="w-full p-6 font-semibold rounded-xl sm:w-auto"
                         >
-                            Repositório <GithubLogoIcon size={18} />
-                        </a>
+                            <a
+                                href="https://github.com/leonardonasc/newtion-planner"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group"
+                            >
+                                <span className="relative inline-flex items-center text-blue-500">
+                                    <GithubLogoIcon size={16} className="mr-2 shrink-0" />
+
+                                    <span>Ver no GitHub</span>
+
+                                    <motion.svg
+                                        viewBox="0 0 220 24"
+                                        aria-hidden="true"
+                                        className="absolute left-0 -bottom-1.5 w-full overflow-visible pointer-events-none"
+                                        initial={{ pathLength: 0 }}
+                                        whileHover={{ pathLength: 1 }}
+                                        transition={{
+                                            duration: 0.5,
+                                            ease: "easeInOut",
+                                        }}
+                                    >
+                                        <motion.path
+                                            d="M8 18 Q110 11 212 18"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2.2"
+                                            strokeLinecap="round"
+                                        />
+                                    </motion.svg>
+                                </span>
+                            </a>
+                        </Button>
                     </motion.div>
                 </div>
             </div>

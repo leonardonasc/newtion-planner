@@ -81,62 +81,62 @@ export default function Pricing() {
                                 transition: { duration: 0.1 },
                             }}
                             className={`relative flex h-full flex-col rounded-3xl ${plan.popular
-                                ? "bg-linear-to-br from-blue-500 to-blue-700 p-px shadow-xl shadow-blue-500/20"
-                                : "border border-gray-200 bg-white"
+                                    ? "border-2 border-primary bg-card shadow-card"
+                                    : "border border-border bg-card shadow-card"
                                 }`}
                         >
                             {plan.popular && (
-                                <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
-                                    <div className="flex items-center gap-2 rounded-full bg-blue-600 px-4 py-1.5 text-sm font-medium text-white shadow-lg">
-                                        <Zap size={15} />
+                                <div className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2">
+                                    <div className="rounded-full bg-primary px-4 py-1.5 text-sm font-medium text-primary-foreground shadow-lg">
                                         Mais popular
                                     </div>
                                 </div>
                             )}
 
-                            <div
-                                className={`flex h-full flex-col rounded-[23px] p-8 ${plan.popular ? "bg-white" : ""
-                                    }`}
-                            >
+                            <div className="flex h-full flex-col p-8">
                                 <div>
-                                    <h3 className="text-2xl font-semibold text-gray-900">
+                                    <h3 className="text-2xl font-semibold text-foreground">
                                         {plan.title}
                                     </h3>
 
                                     <div>
                                         <div className="flex items-end gap-1">
-                                            <span className="text-5xl font-bold tracking-tight text-gray-900">
+                                            <span className="text-5xl font-bold tracking-tight text-foreground">
                                                 {plan.amount}
                                             </span>
 
                                             {plan.amount !== "Grátis" && (
-                                                <span className="mb-1 text-gray-500 font-normal">/mês</span>
+                                                <span className="mb-1 font-normal text-muted-foreground">
+                                                    /mês
+                                                </span>
                                             )}
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="my-8 border-t border-dotted" />
+                                <div className="my-8 border-t border-dotted border-border" />
 
                                 <ul className="flex-1 space-y-3">
                                     {plan.benefits.map((benefit) => (
                                         <li
                                             key={benefit.id}
-                                            className="flex items-center gap-3 text-gray-700"
+                                            className="flex items-center gap-3 text-muted-foreground"
                                         >
                                             <div>
-                                                <Check size={16} className="text-blue-600" />
+                                                <Check size={16} className="text-primary" />
                                             </div>
 
-                                            <span className="text-md font-normal text-gray-500">{benefit.text}</span>
+                                            <span className="text-md font-normal">
+                                                {benefit.text}
+                                            </span>
                                         </li>
                                     ))}
                                 </ul>
 
                                 <Button
                                     className={`mt-10 h-12 w-full cursor-pointer rounded-xl text-base ${plan.popular
-                                        ? ""
-                                        : "border-gray-300 hover:border-gray-400"
+                                            ? ""
+                                            : "border-border hover:border-border"
                                         }`}
                                     variant={plan.popular ? "default" : "outline"}
                                     disabled={plan.amount === "Grátis"}

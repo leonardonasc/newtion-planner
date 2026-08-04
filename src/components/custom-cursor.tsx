@@ -86,7 +86,7 @@ export default function CustomCursor() {
                     w-8
                     rounded-full
                     border
-                    border-blue-500/50
+                    border-primary/50
                     md:block
                 "
             />
@@ -114,7 +114,7 @@ export default function CustomCursor() {
                     h-1.5
                     w-1.5
                     rounded-full
-                    bg-blue-500
+                    bg-primary
                     md:block
                 "
             />
@@ -136,12 +136,12 @@ export default function CustomCursor() {
                     fixed
                     left-0
                     top-0
-                    z-[9998]
+                    z-9998
                     hidden
-                    h-[70px]
-                    w-[70px]
+                    h-10
+                    w-10
                     rounded-full
-                    bg-blue-400
+                    bg-primary
                     blur-2xl
                     md:block
                 "
