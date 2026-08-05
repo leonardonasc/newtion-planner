@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🧠 Newtion
+# Newtion
 
 **Tudo o que você precisa para organizar sua rotina em um único lugar.**
 
@@ -9,17 +9,17 @@ Organize tarefas, notas, viagens, gastos, wishlists e muito mais em uma interfac
 <!-- Banner -->
 <!-- <img src="./public/banner.png" alt="Newtion Banner" /> -->
 
-[🚀 Demonstração](#-demonstração) •
-[✨ Recursos](#-recursos) •
-[🛠 Tecnologias](#-tecnologias) •
-[⚙️ Instalação](#️-instalação) •
-[🗺 Roadmap](#-roadmap)
+[Demonstração](#-demonstração) •
+[Recursos](#-recursos) •
+[Tecnologias](#-tecnologias) •
+[Instalação](#️-instalação) •
+[Roadmap](#-roadmap)
 
 </div>
 
 ---
 
-# 📖 Sobre
+# Sobre
 
 O **Newtion** é uma plataforma de organização pessoal desenvolvida para centralizar tudo o que normalmente fica espalhado entre diversos aplicativos.
 
@@ -29,7 +29,7 @@ O projeto foi desenvolvido utilizando tecnologias modernas do ecossistema React,
 
 ---
 
-# 🚀 Demonstração
+# Demonstração
 
 ### Landing Page
 
@@ -47,7 +47,7 @@ O projeto foi desenvolvido utilizando tecnologias modernas do ecossistema React,
 
 ---
 
-# ✨ Recursos
+# Recursos
 
 ## Atualmente ✅
 
@@ -62,12 +62,13 @@ O projeto foi desenvolvido utilizando tecnologias modernas do ecossistema React,
 - ✅ Criar tarefas
 - ✅ Editar tarefas
 - ✅ Excluir tarefas
+- ⌛ UI
 
 ### Notas 
 
-- 🚧 Criar notas
-- 🚧 Editar notas
-- 🚧 Excluir notas
+- ⌛ Criar notas
+- ⌛ Editar notas
+- ⌛ Excluir notas
 
 ### Wishlists
 
@@ -87,7 +88,7 @@ O projeto foi desenvolvido utilizando tecnologias modernas do ecossistema React,
 
 ---
 
-# 🛠 Tecnologias
+# Tecnologias
 
 ## Front-end
 
@@ -116,24 +117,26 @@ O projeto foi desenvolvido utilizando tecnologias modernas do ecossistema React,
 
 ---
 
-# 🏗 Estrutura do projeto
+# Estrutura do projeto
 
 ```text
 src/
 │
 ├── app/
 ├── components/
+    ├── providers/
+    ├── UI/
 ├── db/
 ├── hooks/
 ├── lib/
 ├── server/
 ├── validations/
-├── providers/
+
 ```
 
 ---
 
-# ⚙️ Instalação
+# Instalação
 
 Clone o projeto
 
@@ -181,7 +184,7 @@ npm run dev
 
 ---
 
-# 📂 Arquitetura
+# Arquitetura
 
 O projeto utiliza:
 
@@ -197,7 +200,7 @@ O projeto utiliza:
 
 ---
 
-# 🎨 Design
+# Design
 
 O visual do projeto foi inspirado em aplicações modernas como:
 
@@ -215,7 +218,7 @@ O foco da interface é manter:
 
 ---
 
-# 📈 Roadmap
+# Roadmap futuro
 
 ## Planejado
 
@@ -231,7 +234,7 @@ O foco da interface é manter:
 
 ---
 
-# 📷 Screenshots
+# Screenshots
 
 ## Landing
 
@@ -263,7 +266,7 @@ O foco da interface é manter:
 
 ---
 
-# 💡 Filosofia
+# Ideia/Objetivo
 
 O objetivo do Newtion é reduzir a quantidade de ferramentas necessárias para organizar a rotina.
 
@@ -271,7 +274,7 @@ Em vez de utilizar um aplicativo para tarefas, outro para notas, outro para gast
 
 ---
 
-# 🤝 Contribuições
+# Contribuições
 
 Contribuições são sempre bem-vindas.
 
@@ -279,16 +282,6 @@ Caso encontre algum problema ou tenha alguma sugestão de melhoria, fique à von
 
 ---
 
-# 📄 Licença
+# Licença
 
 Este projeto está licenciado sob a licença MIT.
-
----
-
-<div align="center">
-
-Desenvolvido por **Leonardo Willian Silva do Nascimento**
-
-⭐ Se este projeto foi útil para você, considere deixar uma estrela no repositório.
-
-</div>
