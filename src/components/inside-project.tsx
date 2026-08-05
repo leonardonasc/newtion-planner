@@ -9,10 +9,10 @@ export default function InsideProject() {
   const data = [
     {
       id: 1,
-      title: "Notas",
+      title: "Dashboard",
       description:
-        "Crie, edite e organize todas as suas anotações em um único lugar.",
-      image: "https://placehold.co/1200x800",
+        "Tenha uma visão geral de todas as suas atividades, tarefas e projetos em um só lugar.",
+      image: "/dashboard.png",
       pro: false,
     },
     {
@@ -66,7 +66,7 @@ export default function InsideProject() {
           </div>
 
           <div className="grid gap-8 md:grid-cols-2">
-            {data.map((item, index) => (
+            {data.map((item) => (
               <motion.div
                 key={item.id}
                 initial={{ opacity: 0, y: 40 }}

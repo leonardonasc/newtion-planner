@@ -124,10 +124,14 @@ export default function Page() {
       id: 25,
       description: "Corrigir o erro de fundo brando nas páginas protegidas",
       status: "done",
-    },{
+    }, {
       id: 26,
       description: "Fazer um proxy para não conseguir ir no login/register caso esteja logado",
       status: "done",
+    }, {
+      id: 27,
+      description: "Fazer tela de calendário",
+      status: "planning",
     }
 
 

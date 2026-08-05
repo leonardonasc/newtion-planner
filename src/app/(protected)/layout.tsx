@@ -15,18 +15,14 @@ export default async function TodoLayout({
 
     return (
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-            <div className="flex min-h-screen flex-col bg-background">
-                <header className="fixed top-0 left-0 right-0 z-50">
-                    <MainNavbar />
-                </header>
+            <div className="min-h-screen bg-background">
+                <MainNavbar />
 
-                <main className="mt-16 flex-1  text-foreground p-4">
-                    {children}
+                <main className="flex-1 md:ml-72 pt-16 md:pt-0">
+                    <div className="p-8">
+                        {children}
+                    </div>
                 </main>
-
-                <footer className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-center border-t border-border bg-background p-4">
-                    <ModeToggle />
-                </footer>
             </div>
         </ThemeProvider>
     )

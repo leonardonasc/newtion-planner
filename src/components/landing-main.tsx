@@ -172,11 +172,12 @@ export default function LandingMain() {
                 <div className="flex w-full flex-col gap-4 font-work-sans sm:flex-row lg:flex-wrap sm:items-center">
                     <motion.div animate={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: -20 }} transition={{ duration: 1, delay: 0.4 }} className="w-full sm:w-auto flex flex-col gap-4 sm:flex-row lg:flex-wrap sm:items-center">
                         <Button asChild variant="default" className={`w-full p-6 font-semibold rounded-xl sm:w-auto`}
-                            onClick={() => {
-                                alert("No momento, a aplicação está desativada para manutenção. Em breve, estará disponível novamente!");
-                            }}>
+                            onClick={() => { alert("Estamos repaginando o projeto, em breve estará disponível!"); }}
+                        >
                             <div className="flex items-center justify-center">
-                                <p>Começar agora</p>
+                                {/* <a href="/dashboard"> */}
+                                Acessar o Newtion
+                                {/* </a> */}
                                 <ArrowRight size={16} className="ml-2" />
                             </div>
                         </Button>
