@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Zap } from "lucide-react";
 import Tag from "./tag";
 import SubDescription from "./sub-description";
+import Image from "next/image";
 
 export default function InsideProject() {
   const data = [
@@ -80,9 +81,14 @@ export default function InsideProject() {
                 className="group overflow-hidden rounded-3xl border border-gray-200 bg-white"
               >
                 <div className="overflow-hidden">
-                  <img
+                  <Image
                     src={item.image}
                     alt={item.title}
+                    unoptimized
+                    priority
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    width={1200}
+                    height={800}
                     className="aspect-16/10 w-full object-cover transition duration-500 group-hover:scale-[1.03]"
                   />
                 </div>
@@ -92,12 +98,12 @@ export default function InsideProject() {
                     {item.pro &&
                       (<>
                         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-blue-600">
-                        <Zap size={16} /> 
-                      </div>
-                      <p className="text-md font-medium text-blue-600">Premium</p>
+                          <Zap size={16} />
+                        </div>
+                        <p className="text-md font-medium text-blue-600">Premium</p>
                       </>)
                     }
-                    
+
                   </div>
 
                   <h3 className="text-2xl font-semibold text-gray-900">

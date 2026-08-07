@@ -142,10 +142,10 @@ export default function MainNavbar() {
                             key={href}
                             href={href}
                             className={cn(
-                                "flex items-center gap-3 rounded-lg px-4 py-3 transition-colors",
+                                "flex items-center gap-3 rounded-lg px-4 py-3 transition-colors hover:bg-secondary",
                                 pathname === href
                                     ? "bg-secondary text-blue-500 font-bold border-l-2 border-l-blue-800"
-                                    : "hover:bg-background"
+                                    : "text-muted-foreground hover:text-blue-500"
                             )}
                         >
                             <Icon className="size-5" />

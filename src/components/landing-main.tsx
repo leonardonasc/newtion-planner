@@ -5,12 +5,10 @@ import { motion } from "framer-motion";
 import { ArrowDown, ArrowRight, Mouse } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import ButtonWithIconDemo from "@/components/ui/button-witn-icon";
 import { Button } from "./ui/button";
 
 export default function LandingMain() {
     const [isAtTop, setIsAtTop] = useState(true);
-    const disabled = true;
 
     useEffect(() => {
         const handleScroll = () => {

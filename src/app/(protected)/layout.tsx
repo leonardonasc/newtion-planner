@@ -17,9 +17,9 @@ export default async function TodoLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <div className="min-h-screen bg-background">
                 <MainNavbar />
-
-                <main className="flex-1 md:ml-72 pt-16 md:pt-0">
-                    <div className="p-8">
+                <main className="flex-1 md:ml-72 pt-16 md:pt-6">
+                    <div className="p-4 border-b border-b-accent hidden md:flex"></div>
+                    <div className="p-4 md:p-4 lg:p-6 max-w-7xl mx-auto">
                         {children}
                     </div>
                 </main>

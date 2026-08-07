@@ -133,6 +133,11 @@ export default function Page() {
       description: "Fazer tela de calendário",
       status: "planning",
     }
+    , {
+      id: 28,
+      description: "Corrigir a velocidade web, usar next/image nas imagens e validar os atrasos",
+      status: "planning",
+    }
 
 
   ];
