@@ -3,6 +3,10 @@ import React from 'react'
 import TaskTag from './task-tag'
 import PriorityTag from './priority-tag'
 
+interface Tasks {
+
+}
+
 export default function PendingTasks() {
 
     const tasks = [

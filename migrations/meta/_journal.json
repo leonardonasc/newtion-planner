@@ -43,6 +43,13 @@
       "when": 1783459726748,
       "tag": "0005_low_typhoid_mary",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1786081032812,
+      "tag": "0006_majestic_doctor_spectrum",
+      "breakpoints": true
     }
   ]
 }

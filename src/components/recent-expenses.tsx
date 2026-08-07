@@ -44,8 +44,8 @@ export default function RecentExpenses() {
             </div>
 
             <div className='mt-4 flex-1'>
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-4 items-center'>
-                    <div className="w-full h-55">
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-4 items-center justify-center'>
+                    <div className="w-full h-50 ">
                         <ChartPieDonutText />
                     </div>
 
@@ -58,13 +58,13 @@ export default function RecentExpenses() {
                                         className="border-b last:border-b-0"
                                     >
                                         <td className="py-2">
-                                            <span className="text-sm font-semibold capitalize">
+                                            <span className="text-xs font-semibold capitalize">
                                                 {item.category}
                                             </span>
                                         </td>
 
-                                        <td className="py-2 text-right">
-                                            <span className="text-sm font-semibold text-gray-500">
+                                        {/* <td className="py-2 text-right">
+                                            <span className="text-xs font-semibold text-gray-500">
                                                 {item.value.toLocaleString(
                                                     "pt-BR",
                                                     {
@@ -73,10 +73,10 @@ export default function RecentExpenses() {
                                                     }
                                                 )}
                                             </span>
-                                        </td>
+                                        </td> */}
 
                                         <td className="py-2 text-right">
-                                            <span className="text-sm font-semibold text-gray-500">
+                                            <span className="text-xs font-semibold text-gray-500">
                                                 {(
                                                     (item.value / totalExpenses) *
                                                     100

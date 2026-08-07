@@ -51,10 +51,10 @@ export default function ChartPieDonutText() {
 
     return (
         <div className="flex flex-col">
-            <div className="flex-1 pb-0">
+            <div className="pb-0">
                 <ChartContainer
                     config={chartConfig}
-                    className="mx-auto aspect-square max-h-[230px]"
+                    className="aspect-square max-h-[230px]"
                 >
                     <PieChart>
                         <ChartTooltip
