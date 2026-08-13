@@ -1,5 +1,7 @@
+import { User } from "@/validations/users";
+
 interface GreetingsProps {
-    name: string | undefined;
+    name: User['name'] | undefined;
 }
 
 export default function Greetings({ name }: GreetingsProps) {

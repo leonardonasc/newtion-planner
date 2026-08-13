@@ -1,5 +1,6 @@
-import { Banknote } from 'lucide-react'
+import { ArrowUpRight, Banknote } from 'lucide-react'
 import ChartPieDonutText from './chart-pie-donut-text'
+import Link from 'next/link'
 
 export default function RecentExpenses() {
 
@@ -17,16 +18,15 @@ export default function RecentExpenses() {
     )
 
     return (
-        <div className='relative card-gradient shadow-sm p-4 flex rounded-lg flex-col h-full'>
+        <div className='relative card-gradient shadow-sm p-4 flex rounded-lg flex-col h-full w-full self-stretch'>
             {/* coming soon overlay */}
-            {/* <div className='absolute inset-0 bg-black/60 rounded-lg backdrop-blur-[2px] z-10'>
+            <div className='absolute inset-0 bg-black/60 rounded-lg backdrop-blur-[2px] z-10'>
                 <div className='flex flex-col items-center justify-center h-full space-y-2'>
                     <span className='text-4xl text-gray-50 font-semibold'>
                         Em breve
                     </span>
                 </div>
-            </div> */}
-
+            </div>
 
             <div className='flex items-center justify-between w-full'>
                 <div className='flex items-center space-x-2'>
@@ -36,20 +36,18 @@ export default function RecentExpenses() {
                     </h2>
                 </div>
 
-                <a href="#">
-                    <span className='text-sm text-blue-500 font-semibold'>
-                        Ver gastos
-                    </span>
-                </a>
+                <Link href="/tasks" className='flex items-center space-x-1 border p-1 rounded-full border-blue-500'>
+                    <span className='text-sm text-blue-500 font-semibold'><ArrowUpRight size={16} /></span>
+                </Link>
             </div>
 
             <div className='mt-4 flex-1'>
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-4 items-center justify-center'>
-                    <div className="w-full h-50 ">
+                <div className='flex flex-col xl:flex-row items-stretch justify-between gap-4 h-full'>
+                    <div className="w-full">
                         <ChartPieDonutText />
                     </div>
 
-                    <div className="w-full">
+                    <div className="w-full flex items-center xl:hidden">
                         <table className="w-full">
                             <tbody>
                                 {chartData.map((item) => (

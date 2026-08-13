@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ArrowUpRightIcon } from "lucide-react";
+import Link from "next/link";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState("planning");
@@ -119,7 +120,7 @@ export default function Page() {
     }, {
       id: 24,
       description: "Fazer as páginas responsivas para web",
-      status: "planning",
+      status: "pending",
     }, {
       id: 25,
       description: "Corrigir o erro de fundo brando nas páginas protegidas",
@@ -137,12 +138,15 @@ export default function Page() {
       id: 28,
       description: "Corrigir a velocidade web, usar next/image nas imagens e validar os atrasos",
       status: "planning",
+    }, {
+      id: 29,
+      description: "Arrumar as tags nas notas, para comportar mais de uma tag",
+      status: "planning",
     }
 
 
   ];
   const tabs = [
-    { id: "all", label: "Todas" },
     { id: "planning", label: "Pendente" },
     { id: "progress", label: "Em desenvolvimento" },
     { id: "review", label: "Em revisão" },
@@ -152,68 +156,83 @@ export default function Page() {
   const filteredData = activeTab === "all" ? data : data.filter((item) => item.status === activeTab);
 
   return (
-    <div className="min-h-screen font-work-sans p-4 md:px-60 md:py-10 mt-20">
-      <header className="mb-8">
-        <h1 className="text-xl mb-4 font-semibold text-gray-900">
-          Mapping de tarefas
-        </h1>
+    <div className="min-h-screen bg-white font-work-sans">
+      <main className="mx-auto max-w-5xl px-6 py-16">
+        <header className="mb-12 flex flex-col">
+          <div className="mt-30 flex flex-col">
+            <Link
+              href="/blog"
+              className="mb-8 text-sm font-medium text-blue-600 hover:underline"
+            >
+              &larr; Voltar para o blog
+            </Link>
 
-        <p className="text-sm text-gray-600 font-normal md:text-lg">
-          Aqui estão todas as tarefas mapeadas até o momento e o seu respectivo
-          estado, lembrando que isso é apenas um mapeamento para usar na parte de desenvolvimento e será removido futuramente,
-          substituído por um roadmap profissional.
-        </p>
-      </header>
+            <h1 className="mb-4 text-xl font-semibold text-gray-900">
+              Mapping de tarefas
+            </h1>
 
-      <div className="flex gap-2 border-b border-gray-200 mb-6 overflow-x-auto">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`pb-3 px-2 text-sm font-normal border-b-2 transition-colors whitespace-nowrap ${activeTab === tab.id
-              ? "border-blue-600 text-blue-600"
-              : "border-transparent text-gray-500 hover:text-gray-900"
-              }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+            <p className="text-sm font-normal text-gray-600 md:text-lg">
+              Aqui estão todas as tarefas mapeadas até o momento e o seu
+              respectivo estado, lembrando que isso é apenas um mapeamento
+              para usar na parte de desenvolvimento e será removido
+              futuramente, substituído por um roadmap profissional.
+            </p>
+          </div>
+        </header>
 
-      <div className="flex flex-col gap-2 font-normal">
-        {filteredData.length > 0 ? (
-          filteredData.map((item) => (
+        <div className="mb-6 flex gap-2 overflow-x-auto border-b border-gray-200">
+          {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  className={`whitespace-nowrap px-3 py-2 text-sm font-medium ${
+                    activeTab === tab.id
+                      ? "border-b-2 border-blue-500 text-blue-500"
+                      : "text-gray-500 hover:text-gray-700"
+                  }`}
+                  onClick={() => setActiveTab(tab.id)}
+                >
+                  {tab.label}
+                </button>
+              ))}
+        </div>
+
+        <div className="flex flex-col gap-2 font-normal">
+          {filteredData.map((item) => (
             <div
               key={item.id}
-              className="border rounded-md p-3 hover:bg-gray-50 transition-colors"
+              className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 shadow-sm"
             >
-              {item.link ? (
-                <a
+              <div className="flex items-center gap-2">
+                <span
+                  className={`inline-block h-2 w-2 rounded-full ${
+                    item.status === "planning"
+                      ? "bg-yellow-500"
+                      : item.status === "progress"
+                      ? "bg-blue-500"
+                      : item.status === "review"
+                      ? "bg-purple-500"
+                      : item.status === "done"
+                      ? "bg-green-500"
+                      : "bg-gray-500"
+                  }`}
+                ></span>
+                <span>{item.description}</span>
+              </div>
+              {item.link && (
+                <Link
                   href={item.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex gap-x-1 items-center text-blue-800 hover:underline"
+                  className="flex items-center gap-1 text-sm font-medium text-blue-500 hover:underline"
                 >
-                  <span>{item.id} - </span>
-                  {item.description.charAt(0).toUpperCase() +
-                    item.description.slice(1)}
-                  <ArrowUpRightIcon size={15} className="ml-1" />
-                </a>
-              ) : (
-                <p className="text-gray-600">
-                  <span>{item.id} - </span>
-                  {item.description.charAt(0).toUpperCase() +
-                    item.description.slice(1)}
-                </p>
+                  <span>Acessar</span>
+                  <ArrowUpRightIcon size={16} />
+                </Link>
               )}
             </div>
-          ))
-        ) : (
-          <p className="text-gray-500 font-normal text-md">
-            Nenhuma tarefa encontrada.
-          </p>
-        )}
-      </div>
+          ))}
+        </div>
+      </main>
     </div>
   );
 }

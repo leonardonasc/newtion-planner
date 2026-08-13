@@ -64,7 +64,7 @@ export default function LandingNavbar() {
 
             {/* ================= DESKTOP ================= */}
 
-            <div className="hidden md:flex mx-auto mt-3 h-14 w-[95%] items-center justify-between rounded-full border border-zinc-200 bg-white/70 px-4 shadow backdrop-blur-md 2xl:w-[60%]">
+            <div className="hidden md:flex mx-auto mt-3 h-14 w-[95%] items-center justify-between rounded-md border border-zinc-200 bg-white/70 px-4 shadow backdrop-blur-md 2xl:w-[60%]">
 
                 <Link
                     href="/"
@@ -99,7 +99,14 @@ export default function LandingNavbar() {
                     ))}
 
                 </ul>
-
+                <div className="flex items-center gap-2">
+                    <a
+                        href="/dashboard"
+                        className="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-blue-600 bg-blue-500 transition"
+                    >
+                        Acessar o Newtion
+                    </a>
+                </div>
             </div>
 
         </nav>

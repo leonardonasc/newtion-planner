@@ -1,7 +1,6 @@
-import { CircleCheckBig, Square } from 'lucide-react'
-import React from 'react'
-import TaskTag from './task-tag'
+import { ArrowUpRight, CircleCheckBig, Square } from 'lucide-react'
 import PriorityTag from './priority-tag'
+import Link from 'next/link'
 
 interface Tasks {
 
@@ -23,9 +22,9 @@ export default function PendingTasks() {
                     <CircleCheckBig className='text-blue-500' size={16} />
                     <h2 className='text-sm font-semibold'>Tarefas Pendentes</h2>
                 </div>
-                <a href="#">
-                    <span className='text-sm text-blue-500 font-semibold'>Ver todas</span>
-                </a>
+                <Link href="/tasks" className='flex items-center space-x-1 border p-1 rounded-full border-blue-500'>
+                    <span className='text-sm text-blue-500 font-semibold'><ArrowUpRight size={16} /></span>
+                </Link>
             </div>
 
             <div className='mt-4 flex-1'>

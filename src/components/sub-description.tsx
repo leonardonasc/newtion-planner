@@ -12,7 +12,7 @@ export default function SubDescription({ title, description }: SubDescriptionPro
                 {title}
             </h2>
 
-            <p className="mx-auto mt-5 max-w-2xl text-lg font-normal leading-8 text-gray-500">
+            <p className="mx-auto mt-5 max-w-2xl text-lg font-normal leading-8 text-gray-700">
                 {description}
             </p>
         </>

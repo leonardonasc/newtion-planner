@@ -1,18 +1,48 @@
+import { cn } from '@/lib/utils'
 import React from 'react'
 
-interface MainTagProps {
-    priority?: 'low' | 'medium' | 'high';
+interface PriorityTagProps {
+    priority?: 'low' | 'medium' | 'high'
 }
 
-export default function PriorityTag({ priority }: MainTagProps) {
+export default function PriorityTag({ priority }: PriorityTagProps) {
+    const priorityStyles = {
+        low: {
+            container: 'bg-green-500/10',
+            text: 'text-green-500',
+        },
+        medium: {
+            container: 'bg-yellow-500/10',
+            text: 'text-yellow-500',
+        },
+        high: {
+            container: 'bg-red-500/10',
+            text: 'text-red-500',
+        },
+    }
 
-    const priorityColor = priority === 'low' ? 'green' : priority === 'medium' ? 'yellow' : priority === 'high' ? 'red' : 'gray';
-    const text = priority ? priority.charAt(0).toUpperCase() + priority.slice(1) : '';
+    if (!priority) return null
 
+    const styles = priorityStyles[priority]
+
+    const text =
+        priority.charAt(0).toUpperCase() + priority.slice(1)
 
     return (
-        <div className={`bg-${priorityColor}-200 text-xs px-2 py-1 rounded-full font-medium`}>
-            <span className={`text-${priorityColor}-700 font-semibold`}>{text}</span>
+        <div
+            className={cn(
+                'w-fit rounded-full px-2 py-1 text-xs font-medium',
+                styles.container
+            )}
+        >
+            <span
+                className={cn(
+                    'font-semibold',
+                    styles.text
+                )}
+            >
+                {text}
+            </span>
         </div>
     )
 }

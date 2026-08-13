@@ -1,6 +1,7 @@
 import { Newspaper } from 'lucide-react'
 import React from 'react'
 import TaskTag from './task-tag'
+import Link from 'next/link'
 
 export default function News() {
 
@@ -29,21 +30,24 @@ export default function News() {
     ]
 
     return (
-        <div>
+        <div className='lg:w-72 h-full flex flex-col gap-y-2 bg-card p-4 shadow-card rounded-md'>
             <div className='flex items-center space-x-2 mb-2'>
                 <Newspaper className='text-primary' size={16} />
                 <h1 className='text-lg font-semibold text-primary'>Novidades</h1>
             </div>
 
-            <ul className='grid grid-cols-1 space-y-2 md:gap-4 md:grid-cols-3 md:space-y-0'>
+            <ul className='flex flex-col gap-y-2 h-full'>
                 {news.map((item) => (
-                    <li key={item.id} className='flex flex-col space-y-1 rounded-lg border border-border p-4'>
+                    <li key={item.id} className='flex flex-col space-y-1 rounded-lg border border-border p-4 h-[33%]'>
                         <div className='flex items-center justify-between'>
                             <TaskTag text={item.type} />
                             <span className='text-sm text-muted-foreground'>{item.time}</span>
                         </div>
                         <h2 className='text-md font-semibold text-foreground'>{item.title}</h2>
-                        <p className='text-sm text-muted-foreground line-clamp-2 wrap-break-word'>{item.description}</p>
+                        <p className='text-sm text-muted-foreground line-clamp-3 wrap-break-word'>{item.description}</p>
+                        <Link href="#" className='text-sm text-primary font-semibold flex items-center space-x-1'>
+                            <span>Leia mais</span>
+                        </Link>
                     </li>
                 ))}
             </ul>

@@ -1,10 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Zap } from "lucide-react";
+import { CalendarDays, Coins, Gauge, Heart, ListChecks, TicketsPlane, Zap } from "lucide-react";
 import Tag from "./tag";
 import SubDescription from "./sub-description";
-import Image from "next/image";
 
 export default function InsideProject() {
   const data = [
@@ -13,39 +12,46 @@ export default function InsideProject() {
       title: "Dashboard",
       description:
         "Tenha uma visão geral de todas as suas atividades, tarefas e projetos em um só lugar.",
-      image: "/dashboard.png",
       pro: false,
+      icon: Gauge,
     },
     {
       id: 2,
       title: "Tarefas",
       description:
         "Gerencie tarefas, acompanhe o progresso e mantenha tudo organizado.",
-      image: "https://placehold.co/1200x800",
       pro: false,
+      icon: ListChecks
     },
     {
       id: 3,
       title: "Wishlists",
       description:
         "Salve ideias, produtos e objetivos para acompanhar futuramente.",
-      image: "https://placehold.co/1200x800",
       pro: false,
+      icon: Heart
     },
     {
       id: 4,
       title: "Controle de gastos",
       description:
         "Visualize despesas, acompanhe seu orçamento e tenha mais controle financeiro.",
-      image: "https://placehold.co/1200x800",
       pro: false,
+      icon: Coins
     },
     {
       id: 5,
       title: "Gestor de viagem",
       description: "Planeje suas viagens, acompanhe seus gastos e tenha tudo organizado.",
-      image: "https://placehold.co/1200x800",
       pro: true,
+      icon: TicketsPlane
+    },
+    {
+      id: 6,
+      title: "Calendário",
+      description: "Organize seus compromissos, eventos e prazos em um calendário intuitivo.",
+      pro: true,
+      icon: CalendarDays
     }
   ];
 
@@ -80,21 +86,11 @@ export default function InsideProject() {
                 viewport={{ once: true }}
                 className="group overflow-hidden rounded-3xl border border-gray-200 bg-white"
               >
-                <div className="overflow-hidden">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    unoptimized
-                    priority
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    width={1200}
-                    height={800}
-                    className="aspect-16/10 w-full object-cover transition duration-500 group-hover:scale-[1.03]"
-                  />
-                </div>
-
                 <div className="p-7">
-                  <div className="mb-4 flex items-center gap-2">
+                  <div className="flex h-16 w-16 mb-5 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                    <item.icon size={24} />
+                  </div>
+                  {/* <div className="my-4 flex items-center gap-2">
                     {item.pro &&
                       (<>
                         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-blue-600">
@@ -104,7 +100,7 @@ export default function InsideProject() {
                       </>)
                     }
 
-                  </div>
+                  </div> */}
 
                   <h3 className="text-2xl font-semibold text-gray-900">
                     {item.title}
@@ -113,6 +109,10 @@ export default function InsideProject() {
                   <p className="mt-3 leading-7 text-gray-500 font-normal">
                     {item.description}
                   </p>
+
+                  <ul>
+
+                  </ul>
                 </div>
               </motion.div>
             ))}

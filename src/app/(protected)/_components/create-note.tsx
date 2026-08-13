@@ -36,7 +36,7 @@ export default function CreateNote({ onClose }: CreateNoteProps) {
         <>
             <Button
                 variant="default"
-                className="text-white size-10 absolute bottom-4 right-4 rounded-lg p-0"
+                className="text-white size-10 rounded-md"
                 onClick={() => setOpen(true)}
             >
                 +

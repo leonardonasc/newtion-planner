@@ -1,13 +1,17 @@
-import { FileText } from 'lucide-react'
-import React from 'react'
+import { Note } from '@/validations/types'
+import { ArrowUpRight, FileText } from 'lucide-react'
+import Link from 'next/link'
 
-export default function RecentNotes() {
+interface RecentNotesProps {
+    notes: Note[]
+}
 
-    const notes = [
-        { id: 1, description: 'This is a description of note 1.', date: '23 de outubro de 2023' },
-        { id: 2, description: 'This is a description of note 2.', date: '12 de novembro de 2025' },
-        { id: 3, description: 'This is a description of note 3.', date: '4 de setembro de 2023' },
-    ]
+export default function RecentNotes({ notes }: RecentNotesProps) {
+
+    const convertDate = (date: Date) => {
+        const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' }
+        return new Date(date).toLocaleDateString('pt-BR', options)
+    }
 
     return (
         <div className="card-gradient shadow-sm p-4 flex rounded-lg flex-col h-full">
@@ -16,22 +20,24 @@ export default function RecentNotes() {
                     <FileText className='text-blue-500' size={16} />
                     <h2 className='text-sm font-semibold'>Notas Recentes</h2>
                 </div>
-                <a href="#">
-                    <span className='text-sm text-blue-500 font-semibold'>Ver todas</span>
-                </a>
+                <Link href="/notes" className='flex items-center space-x-1 border p-1 rounded-full border-blue-500'>
+                    <span className='text-sm text-blue-500 font-semibold'><ArrowUpRight size={16} /></span>
+                </Link>
             </div>
             <div>
                 <ul className='mt-4 space-y-2'>
-                    {notes.map((note) => (
-                        <li key={note.id} className="flex flex-col justify-between gap-2 p-2 rounded-md border bg-background">
-                            <div className="min-w-0 flex-1">
-                                <p className="text-xs text-primary line-clamp-2 wrap-break-word">
-                                    {note.description}
-                                </p>
-                            </div>
-                            <span className="text-xs text-muted-foreground">{note.date}</span>
-                        </li>
-                    ))}
+                    {/* slice 3 last items from the array */}
+                    {[...notes].sort((a, b) =>
+                        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                    )
+                        .slice(0, 3)
+                        .map((note) => (
+                            <li key={note.id} className='bg-card p-2 rounded-md border border-border flex flex-col'>
+                                <h3 className='font-semibold'>{note.title}</h3>
+                                <p className='text-xs text-muted-foreground'>{note.content}</p>
+                                <span className='text-xs text-muted-foreground'>{convertDate(note.createdAt)}</span>
+                            </li>
+                        ))}
                 </ul>
             </div>
         </div>
