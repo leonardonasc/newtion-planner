@@ -7,6 +7,9 @@ export default function AboutPage() {
             <main className="mx-auto max-w-5xl px-6 py-16">
                 <header className="mb-12 border-b border-gray-200 pb-8 flex flex-col">
                     <div className="mt-30 flex flex-col">
+                        <Link href="/blog" className="text-blue-600 font-medium text-sm hover:underline mb-8">
+                            &larr; Voltar para o blog
+                        </Link>
                         <span className="text-md font-bold uppercase tracking-wider text-blue-600">
                             Sobre
                         </span>
@@ -49,7 +52,7 @@ export default function AboutPage() {
                         </p>
 
                         <p className="leading-8 text-lg text-gray-600 font-normal">
-                            No momento, a plataforma está no início, porém já existem diversos recursos planejados e muitos outros em desenvolvimento. Conforme o projeto evolui, novas ideias e funcionalidades vêm sendo implementadas aos poucos. Caso tenha interesse, você pode acompanhar o progresso do projeto na página de <Link href="/mapping" className="text-blue-600 font-medium hover:underline">mapping</Link>.
+                            No momento, a plataforma está no início, porém já existem diversos recursos planejados e muitos outros em desenvolvimento. Conforme o projeto evolui, novas ideias e funcionalidades vêm sendo implementadas aos poucos. Caso tenha interesse, você pode acompanhar o progresso do projeto na página de <Link href="/blog/mapping" className="text-blue-600 font-medium hover:underline">mapping</Link>.
                         </p>
 
                         <p className="leading-8 text-lg text-gray-600 font-normal">

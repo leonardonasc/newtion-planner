@@ -81,13 +81,13 @@ export default function Pricing() {
                                 transition: { duration: 0.1 },
                             }}
                             className={`relative flex h-full flex-col rounded-3xl ${plan.popular
-                                    ? "border-2 border-primary bg-card shadow-card"
-                                    : "border border-border bg-card shadow-card"
+                                ? "border-2 border-blue-500 bg-white shadow-lg"
+                                : "border border-gray-200 bg-offwhite-50 shadow-lg"
                                 }`}
                         >
                             {plan.popular && (
                                 <div className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2">
-                                    <div className="rounded-full bg-primary px-4 py-1.5 text-sm font-medium text-primary-foreground shadow-lg">
+                                    <div className="rounded-full bg-blue-500 px-4 py-1.5 text-sm font-medium text-white shadow-lg">
                                         Mais popular
                                     </div>
                                 </div>
@@ -95,13 +95,13 @@ export default function Pricing() {
 
                             <div className="flex h-full flex-col p-8">
                                 <div>
-                                    <h3 className="text-2xl font-semibold text-foreground">
+                                    <h3 className="text-2xl font-semibold text-gray-700">
                                         {plan.title}
                                     </h3>
 
                                     <div>
                                         <div className="flex items-end gap-1">
-                                            <span className="text-5xl font-bold tracking-tight text-foreground">
+                                            <span className="text-5xl font-bold tracking-tight text-gray-700">
                                                 {plan.amount}
                                             </span>
 
@@ -114,13 +114,13 @@ export default function Pricing() {
                                     </div>
                                 </div>
 
-                                <div className="my-8 border-t border-dotted border-border" />
+                                <div className="my-8 border-t border-gray-400 border-dotted" />
 
                                 <ul className="flex-1 space-y-3">
                                     {plan.benefits.map((benefit) => (
                                         <li
                                             key={benefit.id}
-                                            className="flex items-center gap-3 text-muted-foreground"
+                                            className="flex items-center gap-3 text-gray-700"
                                         >
                                             <div>
                                                 <Check size={16} className="text-primary" />
@@ -135,8 +135,8 @@ export default function Pricing() {
 
                                 <Button
                                     className={`mt-10 h-12 w-full cursor-pointer rounded-xl text-base ${plan.popular
-                                            ? ""
-                                            : "border-border hover:border-border"
+                                        ? "text-white"
+                                        : "border-border hover:border-border"
                                         }`}
                                     variant={plan.popular ? "default" : "outline"}
                                     disabled={plan.amount === "Grátis"}

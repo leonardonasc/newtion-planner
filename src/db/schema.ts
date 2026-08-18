@@ -130,6 +130,22 @@ export const expenseTracker = pgTable("expenses_control", {
     .notNull(),
 });
 
+export const note = pgTable("note", {
+  id: text("id").primaryKey(),
+  title: text("title").notNull(),
+  // tag personal, work, study, etc
+  tag: text("tag").notNull().default("pessoal"),
+  content: text("content"),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => /* @__PURE__ */ new Date())
+    .notNull(),
+});
+
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),

@@ -1,58 +1,43 @@
-import { CircleCheckBig, Square } from 'lucide-react'
-import React from 'react'
-import TaskTag from './task-tag'
+import { ArrowUpRight, CircleCheckBig, Square } from 'lucide-react'
 import PriorityTag from './priority-tag'
+import Link from 'next/link'
+
+interface Tasks {
+
+}
 
 export default function PendingTasks() {
+
+    const tasks = [
+        { id: 1, description: 'This is a description of task 1.', priority: 'high' },
+        { id: 2, description: 'This is a description of task 2.', priority: 'medium' },
+        { id: 3, description: 'This is a description of task 3.', priority: 'low' },
+        { id: 4, description: 'This is a description of task 4.', priority: 'high' },
+    ]
+
     return (
-        <div className='card-gradient shadow-sm p-4 flex rounded-lg flex-col'>
+        <div className='card-gradient shadow-sm p-4 flex rounded-lg flex-col h-full'>
             <div className='flex items-center justify-between w-full'>
                 <div className='flex items-center space-x-2'>
                     <CircleCheckBig className='text-blue-500' size={16} />
-                    <h2 className='text-sm font-semibold'>Pending Tasks</h2>
+                    <h2 className='text-sm font-semibold'>Tarefas Pendentes</h2>
                 </div>
-                <TaskTag text="3" color="indigo" />
+                <Link href="/tasks" className='flex items-center space-x-1 border p-1 rounded-full border-blue-500'>
+                    <span className='text-sm text-blue-500 font-semibold'><ArrowUpRight size={16} /></span>
+                </Link>
             </div>
 
-            <div>
+            <div className='mt-4 flex-1'>
                 <ul className='mt-4 space-y-2'>
-                    <li className="flex items-center justify-between gap-2 p-2 border rounded-md shadow-card">
-                        <div className="flex items-center gap-2 min-w-0 flex-1">
-                            <Square className="text-primary shrink-0" size={16} />
-
-                            <p className="text-sm text-primary font-normal line-clamp-2 wrap-break-word">
-                                This is a description of task 1.
-                            </p>
-                        </div>
-
-                        <PriorityTag priority="high" />
-                    </li>
-
-                    {/* example tasks */}
-                    <li className="flex items-center justify-between gap-2 p-2 border rounded-md shadow-card">
-                        <div className="flex items-center gap-2 min-w-0 flex-1">
-                            <Square className="text-primary shrink-0" size={16} />
-
-                            <p className="text-sm text-primary font-normal line-clamp-2 wrap-break-word">
-                                This is a description of task 1.
-                            </p>
-                        </div>
-
-                        <PriorityTag priority="high" />
-                    </li>
-
-                    <li className="flex items-center justify-between gap-2 p-2 border rounded-md shadow-card">
-                        <div className="flex items-center gap-2 min-w-0 flex-1">
-                            <Square className="text-primary shrink-0" size={16} />
-
-                            <p className="text-sm text-primary font-normal line-clamp-2 wrap-break-word">
-                                This is a description of task 1.
-                            </p>
-                        </div>
-
-                        <PriorityTag priority="high" />
-                    </li>
-
+                    {tasks.map((task) => (
+                        <li key={task.id} className='flex items-center justify-between p-2 bg-background rounded-lg'>
+                            <div className='flex items-center space-x-2'>
+                                <Square className='text-primary' size={16} />
+                                <span className='text-sm'>{task.description}</span>
+                            </div>
+                            <PriorityTag priority={task.priority as 'low' | 'medium' | 'high'} />
+                        </li>
+                    ))}
                 </ul>
             </div>
         </div>

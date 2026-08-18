@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Work_Sans, EB_Garamond, Crimson_Text, Caveat, Annie_Use_Your_Telescope } from "next/font/google";
+import { Geist, Work_Sans, EB_Garamond, Crimson_Text, Caveat } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner"
@@ -16,12 +16,6 @@ const crimsonText = Crimson_Text({
   variable: "--font-crimson-text",
   subsets: ["latin"],
   weight: ["400", "600", "700"],
-});
-
-const annieUseYourTelescope = Annie_Use_Your_Telescope({
-  variable: "--font-annie-use-your-telescope",
-  subsets: ["latin"],
-  weight: ["400"],
 });
 
 const caveat = Caveat({
@@ -55,7 +49,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("h-full", "antialiased", geistSans.variable, workSans.variable, caveat.variable, "font-work-sans", ebGaramond.variable, "font-eb-garamond", crimsonText.variable, "font-crimson-text", annieUseYourTelescope.variable, "font-indie-flower")}
+      className={cn("h-full", "antialiased", geistSans.variable, workSans.variable, caveat.variable, "font-work-sans", ebGaramond.variable, "font-eb-garamond", crimsonText.variable, "font-crimson-text")}
       suppressHydrationWarning
     >
 
