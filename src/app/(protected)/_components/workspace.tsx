@@ -17,7 +17,7 @@ export default function Workspace({ todos, notes }: WorkspaceProps) {
 
     console.log(todos)
     return (
-        <main className="w-full flex flex-col lg:flex-row md:justify-between md:gap-x-6 mx-auto">
+        <main className="w-full flex flex-col lg:flex-row md:justify-between md:gap-x-6">
             <section className="flex flex-1 flex-col gap-y-4">
                 <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
                     <div className="h-full md:self-stretch xl:col-span-2">

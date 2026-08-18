@@ -11,8 +11,9 @@ export default function LandingNavbar() {
 
     const items = [
         { label: "Inicio", href: "/" },
-        { label: "Sobre", href: "/about" },
+        { label: "Sobre", href: "/blog/about" },
         { label: "Contato", href: "/contact" },
+        { label: "Blog", href: "/blog" },
     ];
 
     return (

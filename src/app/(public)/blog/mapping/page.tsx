@@ -123,12 +123,12 @@ export default function Page() {
       status: "pending",
     }, {
       id: 25,
-      description: "Corrigir o erro de fundo brando nas páginas protegidas",
+      description: "Corrigir o erro de fundo branco nas páginas protegidas",
       status: "done",
     }, {
       id: 26,
       description: "Fazer um proxy para não conseguir ir no login/register caso esteja logado",
-      status: "done",
+      status: "pending",
     }, {
       id: 27,
       description: "Fazer tela de calendário",

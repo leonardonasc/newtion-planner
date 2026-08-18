@@ -8,6 +8,7 @@ export default function Footer() {
         { label: "Repositório", href: "https://github.com/leonardonasc/newtion-planner" },
         { label: "Roadmap", href: "/blog/mapping" },
         { label: "Contato", href: "/contact" },
+        { label: "Blog", href: "/blog" },
     ]
 
     const secondary = [

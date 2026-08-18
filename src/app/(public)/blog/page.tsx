@@ -41,7 +41,7 @@ export default function Page() {
     }, [search])
 
     return (
-        <div className="mx-auto flex min-h-screen justify-center mt-40 md:mt-15 w-full max-w-5xl flex-col items-center px-5 py-2 mb-6">
+        <div className="mx-auto flex min-h-screen font-work-sans justify-center mt-40 md:mt-15 w-full max-w-5xl flex-col items-center px-5 py-2 mb-6">
             <header className="mb-12 flex w-full flex-col">
                 <h1 className="mb-4 text-4xl font-semibold md:text-6xl">
                     Newtion Blog

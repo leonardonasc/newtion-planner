@@ -141,12 +141,12 @@ export default function LandingMain() {
                     "
                 >
                     Centralize seu{" "}
-                    <motion.span className="relative inline-block mx-1 text-blue-500 font-caveat text-4xl md:text-5xl">
+                    <motion.span className="relative inline-block mx-1 text-blue-500 font-caveat text-4xl md:text-6xl">
                         planejamento
                         <motion.svg
                             viewBox="0 0 220 24"
                             aria-hidden="true"
-                            className="absolute -bottom-3 left-0 w-full overflow-visible -z-10"
+                            className="absolute -bottom-2 left-0 w-full overflow-visible -z-10"
                             initial={{ pathLength: 0 }}
                             animate={{ pathLength: 1 }}
                             transition={{
@@ -189,7 +189,6 @@ export default function LandingMain() {
                 <div className="flex w-full flex-col gap-4 font-work-sans sm:flex-row lg:flex-wrap sm:items-center">
                     <motion.div animate={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: -20 }} transition={{ duration: 1, delay: 0.4 }} className="w-full sm:w-auto flex flex-col gap-4 sm:flex-row lg:flex-wrap sm:items-center">
                         <Button asChild variant="default" className={`w-full p-6 font-semibold rounded-xl sm:w-auto`}
-                            onClick={() => { alert("Estamos repaginando o projeto, em breve estará disponível!"); }}
                         >
                             <div className="flex items-center justify-center text-primary">
                                 <a href="/dashboard" className="text-white">
