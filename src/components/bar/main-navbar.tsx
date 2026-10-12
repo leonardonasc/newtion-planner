@@ -8,6 +8,7 @@ import {
     CheckSquare,
     House,
     Menu,
+    MoreVertical,
     Notebook,
     Plane,
     Wallet,
@@ -17,6 +18,7 @@ import {
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { ModeToggle } from "../toggle-mode";
+import Image from "next/image";
 
 const links = [
     {
@@ -46,7 +48,16 @@ const links = [
     },
 ];
 
-export default function MainNavbar() {
+interface MainNavbarProps {
+    user?: {
+        id: string;
+        name: string;
+        email: string;
+        image: string | null | undefined;
+    } | null;
+}
+
+export default function MainNavbar({ user }: MainNavbarProps) {
     const pathname = usePathname();
     const [open, setOpen] = useState(false);
 
@@ -153,6 +164,33 @@ export default function MainNavbar() {
                         </Link>
                     ))}
                 </nav>
+
+                {/* TODO: FAZER A INTERFACE DO USUÁRIO */}
+                {user && (
+                    <div className="flex items-center gap-3 border-t p-4">
+                        <Image
+                            src={user.image || "/default-avatar.png"}
+                            alt="Avatar"
+                            width={40}
+                            height={40}
+                            className="rounded-full border"
+                        />
+
+                        <div className="min-w-0 flex-1">
+                            <p className="truncate text-sm font-medium">
+                                {user.name}
+                            </p>
+
+                            <p className="truncate text-xs text-muted-foreground">
+                                {user.email}
+                            </p>
+                        </div>
+
+                        <button className="rounded-md p-2 text-muted-foreground hover:bg-muted hover:text-foreground">
+                            <MoreVertical className="h-4 w-4" />
+                        </button>
+                    </div>
+                )}
 
                 <div className="border-t p-4 flex justify-center">
                     <ModeToggle />

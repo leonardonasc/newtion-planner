@@ -23,8 +23,8 @@ export default function NotesList({ notes }: NotesListProps) {
 
     return (
         <div>
-            <div className='flex flex-col md:flex-row md:justify-between md:items-center gap-y-4 mb-4'>
-                <PageHeader title="Notes" subtitle='Organize suas anotações' />
+            <div className='flex flex-col md:flex-row md:justify-between md:items-center gap-y-4 mb-4 lg:mb-10'>
+                <div className='md:w-100'> <PageHeader title="Notes" subtitle='Organize suas anotações' /></div>
                 <div className='flex gap-x-2 w-full md:justify-end'>
                     <Input placeholder='Pesquisar notas...' className='w-full h-10 rounded-md md:max-w-md' value={searchQuery} onChange={(e) => handleSearchChange(e.target.value)} />
                     <CreateNote />

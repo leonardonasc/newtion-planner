@@ -205,7 +205,6 @@ export default function LandingMain() {
                         >
                             <a
                                 href="https://github.com/leonardonasc/newtion-planner"
-                                target="_blank"
                                 rel="noopener noreferrer"
                                 className="group"
                             >

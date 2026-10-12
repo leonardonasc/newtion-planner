@@ -36,10 +36,11 @@ export default function CreateNote({ onClose }: CreateNoteProps) {
         <>
             <Button
                 variant="default"
-                className="text-white size-10 rounded-md"
+                className="text-white rounded-md"
                 onClick={() => setOpen(true)}
             >
-                +
+                <span className="hidden md:inline">Criar Nota</span>
+                <span className="md:hidden">+</span>
             </Button>
 
             {open && (
@@ -54,7 +55,7 @@ export default function CreateNote({ onClose }: CreateNoteProps) {
                             <button
                                 type="button"
                                 onClick={closeModal}
-                                className="text-primary hover:text-gray-900"
+                                className="text-primary hover:text-primary/80 transition hover:border rounded-full p-1"
                             >
                                 <X size={20} />
                             </button>

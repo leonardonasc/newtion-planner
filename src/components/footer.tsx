@@ -29,7 +29,7 @@ export default function Footer() {
                         <ul className="flex flex-col gap-y-1">
                             {primary.map((item) => (
                                 <li key={item.href} className="text-gray-500 font-work-sans font-medium text-md hover:cursor-pointer hover:text-blue-500 hover:underline underline-offset-2">
-                                    <Link href={item.href} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                                    <Link href={item.href} rel="noopener noreferrer" className="hover:underline">
                                         {item.label}
                                     </Link>
                                 </li>
@@ -41,7 +41,7 @@ export default function Footer() {
                         <ul className="flex flex-col gap-y-1">
                             {secondary.map((item) => (
                                 <li key={item.href} className="text-gray-500 font-work-sans font-medium text-md hover:cursor-pointer hover:text-blue-500 hover:underline underline-offset-2">
-                                    <Link href={item.href} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                                    <Link href={item.href} rel="noopener noreferrer" className="hover:underline">
                                         {item.label}
                                     </Link>
                                 </li>

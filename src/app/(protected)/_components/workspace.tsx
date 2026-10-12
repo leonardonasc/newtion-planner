@@ -15,7 +15,6 @@ type WorkspaceProps = {
 
 export default function Workspace({ todos, notes }: WorkspaceProps) {
 
-    console.log(todos)
     return (
         <main className="w-full flex flex-col lg:flex-row md:justify-between md:gap-x-6">
             <section className="flex flex-1 flex-col gap-y-4">
@@ -28,7 +27,7 @@ export default function Workspace({ todos, notes }: WorkspaceProps) {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 md:self-stretch">
+                <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 md:self-stretch h-full">
                     <div className="xl:col-span-1">
                         <RecentTravel />
                     </div>
