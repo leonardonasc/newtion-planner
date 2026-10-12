@@ -53,7 +53,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
 
-      <body className="min-h-full flex flex-col bg-offwhite-50">
+      <body className="min-h-full font-work-sans flex flex-col bg-offwhite-50">
         <CustomCursor />
         <SmoothScroll>
           {children}

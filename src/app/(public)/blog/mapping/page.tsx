@@ -142,6 +142,10 @@ export default function Page() {
       id: 29,
       description: "Arrumar as tags nas notas, para comportar mais de uma tag",
       status: "planning",
+    }, {
+      id: 30,
+      description: "Fazer a interface do user na navbar",
+      status: "planning",
     }
 
 
@@ -182,18 +186,17 @@ export default function Page() {
 
         <div className="mb-6 flex gap-2 overflow-x-auto border-b border-gray-200">
           {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  className={`whitespace-nowrap px-3 py-2 text-sm font-medium ${
-                    activeTab === tab.id
-                      ? "border-b-2 border-blue-500 text-blue-500"
-                      : "text-gray-500 hover:text-gray-700"
-                  }`}
-                  onClick={() => setActiveTab(tab.id)}
-                >
-                  {tab.label}
-                </button>
-              ))}
+            <button
+              key={tab.id}
+              className={`whitespace-nowrap px-3 py-2 text-sm font-medium ${activeTab === tab.id
+                  ? "border-b-2 border-blue-500 text-blue-500"
+                  : "text-gray-500 hover:text-gray-700"
+                }`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
 
         <div className="flex flex-col gap-2 font-normal">
@@ -204,24 +207,22 @@ export default function Page() {
             >
               <div className="flex items-center gap-2">
                 <span
-                  className={`inline-block h-2 w-2 rounded-full ${
-                    item.status === "planning"
+                  className={`inline-block h-2 w-2 rounded-full ${item.status === "planning"
                       ? "bg-yellow-500"
                       : item.status === "progress"
-                      ? "bg-blue-500"
-                      : item.status === "review"
-                      ? "bg-purple-500"
-                      : item.status === "done"
-                      ? "bg-green-500"
-                      : "bg-gray-500"
-                  }`}
+                        ? "bg-blue-500"
+                        : item.status === "review"
+                          ? "bg-purple-500"
+                          : item.status === "done"
+                            ? "bg-green-500"
+                            : "bg-gray-500"
+                    }`}
                 ></span>
                 <span>{item.description}</span>
               </div>
               {item.link && (
                 <Link
                   href={item.link}
-                  target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1 text-sm font-medium text-blue-500 hover:underline"
                 >
